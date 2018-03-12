@@ -1,36 +1,28 @@
 import React from 'react'
 import { StyleSheet, Button, Text, View, Image } from 'react-native'
 import { StackNavigator } from 'react-navigation'
+import { Ionicons, Feather } from '@expo/vector-icons'
 
-class LogoTitle extends React.Component {
-  render() {
-    return (
-      <Image
-        source={require('./src/evubc-car.jpg')}
-        style={{ width: 380, height: 38 }}
-      />
-    );
-  }
-}
-
-// class LogoEVCar extends React.Component {
-//   render() {
-//     return (
-//       <Image
-//         source={require('./src/evubc-logo.png')}
-//         style={{ width: 90, height: 78, marginTop: 400 }}
-//       />
-//     );
-//   }
-// }
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    headerTitle: 'SpotBot',
+  headerTitle: (
+                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                  <View style={{ marginLeft: 20}}>
+                    <Ionicons name='md-menu' size={28} color='black' />
+                  </View>
+                  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{ fontSize: 26 }} >SpotBot</Text>
+                  </View>
+                  <View style={{ justifyContent: 'flex-end', marginRight:20 } }>
+                    <Feather name='filter' size={28} color='black'/>
+                  </View>
+                </View>)
   }
 
   render() {
     return (
+      
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Map Screen</Text>
       <Button
@@ -40,7 +32,6 @@ class HomeScreen extends React.Component {
           spotLabel: 'UBC01',
         })}
       />
-      {/* <LogoEVCar/> */}
     </View>
     )
   }
@@ -100,7 +91,7 @@ const RootStack = StackNavigator(
     /* The header config from HomeScreen is now here */
     navigationOptions: {
       headerStyle: {
-        backgroundColor: '#f4511e',
+        backgroundColor: '#d3d3d3',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -109,7 +100,6 @@ const RootStack = StackNavigator(
     }
   }
 );
-
 
 export default class App extends React.Component {
   render() {

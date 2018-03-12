@@ -2,7 +2,8 @@ import React from 'react'
 import { StyleSheet, Button, Text, View, Image } from 'react-native'
 import {MapView, Notifications } from 'expo';
 import { StackNavigator, TabBarBottom } from 'react-navigation';
-import MapHome from './component/MapHome.js'
+import MapHome from './component/MapHome'
+import Slot from './component/Slot'
 
 
 class LogoTitle extends React.Component {
@@ -12,6 +13,20 @@ class LogoTitle extends React.Component {
         source={require('./src/evubc-car.jpg')}
         style={{ width: 380, height: 38 }}
       />
+    );
+  }
+}
+
+class SlotsScreen extends React.Component {
+  render() {
+    var {params} = this.props.navigation.state;
+    const slots = params.slots.map((slot, index) => {
+      return (<Slot label={slot.label} key={index}  occupied={slot.occupied} accessible={slot.accessible} spot_information={slot.spot_information} />);
+    });
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+       {slots}
+      </View>
     );
   }
 }
@@ -65,19 +80,19 @@ class HomeScreen extends React.Component {
                   longitude: -123.255521
                 },
                 slots: [{
-                  label: 'spot1',
+                  label: 'alpha',
                   occupied: true,
                   accessible: false,
                   spot_information: "this is spot 1"
                   },
                   {
-                  label: 'spot2',
+                  label: 'bravo',
                   occupied: true,
                   accessible: false,
                   spot_information: "this is spot 1"
                   },
                   {
-                  label: 'spot3',
+                  label: 'charlie',
                   occupied: true,
                   accessible: false,
                   spot_information: "this is spot 1"
@@ -92,19 +107,19 @@ class HomeScreen extends React.Component {
                   longitude: -123.243056
                 },
                 slots: [{
-                  label: 'spot1',
+                  label: 'raspberry',
                   occupied: true,
                   accessible: false,
                   spot_information: "this is spot 1"
                   },
                   {
-                  label: 'spot2',
+                  label: 'kiwi',
                   occupied: true,
                   accessible: false,
                   spot_information: "this is spot 1"
                   },
                   {
-                  label: 'spot3',
+                  label: 'oranges',
                   occupied: true,
                   accessible: false,
                   spot_information: "this is spot 1"
@@ -122,7 +137,7 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
-      <MapHome parking_areas={this.state.parking_areas} mapRegion={this.state.mapRegion}>
+      <MapHome parking_areas={this.state.parking_areas} mapRegion={this.state.mapRegion} navigation={this.props.navigation}>
         <Button
           title="Login / Sign up"
           onPress={() => this.props.navigation.navigate('Details', {
@@ -202,7 +217,7 @@ const RootStack = StackNavigator(
 );
 
 
-export default class App extends React.Component {
+class App extends React.Component {
   render() {
     return <RootStack />;
   }
@@ -246,3 +261,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export default StackNavigator(
+  {
+    Home: { screen: HomeScreen },
+    Slots: { screen: SlotsScreen },
+  });

@@ -26,7 +26,7 @@ class LogoTitle extends React.Component {
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    headerTitle: <LogoTitle />,
+    headerTitle: 'SpotBot',
   }
 
   render() {

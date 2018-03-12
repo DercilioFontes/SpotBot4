@@ -5,20 +5,26 @@ import { Ionicons, Feather } from '@expo/vector-icons'
 
 
 class HomeScreen extends React.Component {
-  static navigationOptions = {
-  headerTitle: (
-                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                  <View style={{ marginLeft: 20}}>
-                    <Ionicons name='md-menu' size={28} color='black' />
-                  </View>
-                  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={{ fontSize: 26 }} >SpotBot</Text>
-                  </View>
-                  <View style={{ justifyContent: 'flex-end', marginRight:20 } }>
-                    <Feather name='filter' size={28} color='black'/>
-                  </View>
-                </View>)
+  static navigationOptions = ({ navigation }) => {
+    const params = navigation.state.params || {}
+
+    return {
+      headerTitle: 'SpotBot',
+      headerRight: (
+        <Button
+          onPress={() => alert('This is a button!')}
+          title='Info'
+          color="#fff"
+        /> ),
+      headerLeft: (
+        <Button
+          onPress={() => navigation.navigate('MyModal')}
+          title={'\u2630'}
+          color="#fff"
+        /> )
+    }
   }
+
 
   render() {
     return (
@@ -34,6 +40,20 @@ class HomeScreen extends React.Component {
       />
     </View>
     )
+  }
+}
+
+class ModalScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text style={{ fontSize: 30 }}>This is a modal!</Text>
+        <Button
+          onPress={() => this.props.navigation.goBack()}
+          title="Dismiss"
+        />
+      </View>
+    );
   }
 }
 
@@ -77,7 +97,7 @@ class DetailsScreen extends React.Component {
   }
 }
 
-const RootStack = StackNavigator(
+const MainStack = StackNavigator(
   {
     Home: {
       screen: HomeScreen,
@@ -98,6 +118,21 @@ const RootStack = StackNavigator(
         fontWeight: 'bold',
       },
     }
+  }
+);
+
+const RootStack = StackNavigator(
+  {
+    Main: {
+      screen: MainStack,
+    },
+    MyModal: {
+      screen: ModalScreen,
+    },
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
   }
 );
 

@@ -37,13 +37,15 @@ class SlotsScreen extends React.Component {
     }
   render() {
     var {params} = this.props.navigation.state;
+    const currentDate = new Date();
+    const startTime = new Date(currentDate.getTime() + (30 * 60 * 1000)).toLocaleString();
+    const endTime = new Date(currentDate.getTime() + (60 * 60 * 1000)).toLocaleString();
 
 
     const slotList = params.slots.map((slots, index) => {
-
        return (
         <View>
-          <Slot key={index} slot={slots} key={index} user_id={params.user_id} showSlot={this.showSlot.bind(this)} />
+          <Slot key={index} slot={slots} user_id={params.user_id} showSlot={this.showSlot.bind(this)} />
         </View>)
      })
 
@@ -54,6 +56,10 @@ class SlotsScreen extends React.Component {
         <View style={styles.modalView}>
           <Text>{this.state.spot.label}</Text>
           <Text>{this.state.spot.spot_information}</Text>
+          <Text>Start Time </Text>
+          <Text>{startTime}</Text>
+          <Text>End time </Text>
+          <Text>{endTime}</Text>
           <TouchableOpacity onPress={()=>this.setState({showModal: false})}><Text style={styles.reserveButton}>Reserve</Text></TouchableOpacity>
         </View>
        </Modal>

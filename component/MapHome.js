@@ -7,6 +7,7 @@ import { StackNavigator } from 'react-navigation'
 
 export default class MapHome extends React.Component {
 
+
   static navigationOptions = {
     headerTitle: 'SpotBot',
   }
@@ -15,7 +16,7 @@ export default class MapHome extends React.Component {
     const parkingArea = this.props.parking_areas.filter(
       marker => marker.coordinates.latitude === e.nativeEvent.coordinate.latitude
       && marker.coordinates.longitude === e.nativeEvent.coordinate.longitude )
-    navigate('Slots', {slots: parkingArea[0].slots})
+    navigate('Slots', {slots: parkingArea[0].slots, user_id: this.props.user_id})
   }
 
   render() {

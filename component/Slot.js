@@ -1,13 +1,27 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Modal, TouchableOpacity} from 'react-native';
 import React, {Component} from 'react';
-function Slot({label, occupied, accessible, spot_information}) {
+
+
+export default function Slot({slot, user_id, showSlot}) {
   return (
     <View>
-     <Text>{label}</Text>
-     <Text>{occupied}</Text>
-     <Text>{accessible}</Text>
-     <Text>{spot_information}</Text>
+      <TouchableOpacity onPress={()=>showSlot(slot, user_id)}><Text>{slot.label}</Text></TouchableOpacity>
+      <Text>{slot.occupied}</Text>
+      <Text>{slot.accessible}</Text>
+      <Text>{slot.spot_information}</Text>
     </View>
   )
 }
-export default Slot;
+
+const styles = StyleSheet.create({
+  modalView: {
+    backgroundColor: '#aaa',
+    height: 350,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    width: 500
+  }
+})

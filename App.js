@@ -1,9 +1,10 @@
 import React from 'react'
 import { StyleSheet, Button, Text, View, Image, Modal, TouchableOpacity } from 'react-native'
 import {MapView, Notifications } from 'expo';
-import { StackNavigator, TabBarBottom } from 'react-navigation';
+import { StackNavigator, TabBarBottom, DrawerNavigator } from 'react-navigation';
 import MapHome from './component/MapHome'
 import Slot from './component/Slot'
+import SlotsScreen from './component/SlotsScreen'
 
 
 class LogoTitle extends React.Component {
@@ -17,56 +18,6 @@ class LogoTitle extends React.Component {
   }
 }
 
-class SlotsScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showModal: false,
-      user_id: 2,
-      spot: {
-        spot_id: 1,
-        label: 'spot1',
-        occupied: true,
-        accessible: false,
-        spot_information: "this is spot 1"
-      }
-    }
-  }
-  showSlot(slot, user_id) {
-      this.setState({showModal: true, user_id: user_id, spot: slot})
-    }
-  render() {
-    var {params} = this.props.navigation.state;
-    const currentDate = new Date();
-    const startTime = new Date(currentDate.getTime() + (30 * 60 * 1000)).toLocaleString();
-    const endTime = new Date(currentDate.getTime() + (60 * 60 * 1000)).toLocaleString();
-
-
-    const slotList = params.slots.map((slots, index) => {
-       return (
-        <View>
-          <Slot key={index} slot={slots} user_id={params.user_id} showSlot={this.showSlot.bind(this)} />
-        </View>)
-     })
-
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-       {slotList}
-       <Modal  visible={this.state.showModal} onRequestClose={()=>console.log('modal')}>
-        <View style={styles.modalView}>
-          <Text>{this.state.spot.label}</Text>
-          <Text>{this.state.spot.spot_information}</Text>
-          <Text>Start Time </Text>
-          <Text>{startTime}</Text>
-          <Text>End time </Text>
-          <Text>{endTime}</Text>
-          <TouchableOpacity onPress={()=>this.setState({showModal: false})}><Text style={styles.reserveButton}>Reserve</Text></TouchableOpacity>
-        </View>
-       </Modal>
-      </View>
-      )
-  }
-}
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -179,6 +130,7 @@ class HomeScreen extends React.Component {
             };
         }
 
+
   static navigationOptions = {
     headerTitle: 'SpotBot',
   }
@@ -188,13 +140,6 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <MapHome parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion} navigation={this.props.navigation}>
-        <Button
-          title="Login / Sign up"
-          onPress={() => this.props.navigation.navigate('Details', {
-            spotId: 4,
-            spotLabel: 'UBC01',
-          })}
-        />
       </MapHome>
     )
   }
@@ -327,8 +272,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StackNavigator(
-  {
+export default StackNavigator({
     Home: { screen: HomeScreen },
-    Slots: { screen: SlotsScreen },
+    Slots: { screen: SlotsScreen }
+
   });

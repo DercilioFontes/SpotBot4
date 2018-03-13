@@ -7,7 +7,6 @@ import { StackNavigator } from 'react-navigation'
 
 export default class MapHome extends React.Component {
 
-
   static navigationOptions = {
     headerTitle: 'SpotBot',
   }

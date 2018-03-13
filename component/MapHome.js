@@ -11,11 +11,12 @@ export default class MapHome extends React.Component {
     headerTitle: 'SpotBot',
   }
   onMapPress(e) {
-    const { navigate } = this.props.navigation;
+    // navigate('Slots', {slots: parkingArea[0].slots, user_id: this.props.user_id})
     const parkingArea = this.props.parking_areas.filter(
       marker => marker.coordinates.latitude === e.nativeEvent.coordinate.latitude
       && marker.coordinates.longitude === e.nativeEvent.coordinate.longitude )
-    navigate('Slots', {slots: parkingArea[0].slots, user_id: this.props.user_id})
+    this.props.onMapPress(parkingArea[0]);
+
   }
 
   render() {

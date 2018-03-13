@@ -36,6 +36,7 @@ class HomeScreen extends React.Component {
               user_id: 2,
               name: 'prerana'
             },
+            currentArea: 0,
             parking_areas: [{
                 title: 'Marker1',
                 parkingAreaStatus: 'full',
@@ -135,12 +136,35 @@ class HomeScreen extends React.Component {
     headerTitle: 'SpotBot',
   }
 
-
+    onMapPress(parkingArea) {
+      alert(parkingArea.title)
+      this.setState({
+        currentArea: parkingArea,
+        isFirstLoad: true
+      })
+    }
 
   render() {
+    // return (
+    //   <MapHome parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion} navigation={this.props.navigation}>
+    //   </MapHome>
+    // )
+
+    const drawerVisible = true;
     return (
-      <MapHome parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion} navigation={this.props.navigation}>
-      </MapHome>
+      <View>
+        <View style={{ height: drawerVisible ? '80%' : '100%', backgroundColor: '#f00'}}>
+          <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion} navigation={this.props.navigation}>
+          </MapHome>
+        </View>
+        {
+          drawerVisible &&
+          <View style={{ height: '20%', backgroundColor: '#0f0'}}>
+          {/*<SlotsScreen slots={this.state.parkingArea[this.state.currentArea].slots, user_id: this.props.user_id} /)*/}
+        </View>
+        }
+
+      </View>
     )
   }
 }
@@ -212,7 +236,7 @@ const RootStack = StackNavigator(
 );
 
 
-class App extends React.Component {
+export default class App extends React.Component {
   render() {
     return <RootStack />;
   }
@@ -272,8 +296,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StackNavigator({
-    Home: { screen: HomeScreen },
-    Slots: { screen: SlotsScreen }
+// export default StackNavigator({
+//     Home: { screen: HomeScreen },
+//     Slots: { screen: SlotsScreen },
 
-  });
+//   }, {
+//     mode: 'modal'
+//   });

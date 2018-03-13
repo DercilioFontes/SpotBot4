@@ -1,7 +1,8 @@
 import React from 'react'
-import { StyleSheet, Button, Text, View, Image, Modal, TouchableOpacity } from 'react-native'
+import { StyleSheet, Button, Text, View, Image, TouchableOpacity } from 'react-native'
 import {MapView, Notifications } from 'expo';
 import { StackNavigator, TabBarBottom, DrawerNavigator } from 'react-navigation';
+import Modal from "react-native-modal";
 import MapHome from './MapHome'
 import Slot from './Slot'
 
@@ -25,23 +26,24 @@ export default class SlotsScreen extends React.Component {
       this.setState({showModal: true, user_id: user_id, spot: slot})
     }
   render() {
-    var {params} = this.props.navigation.state;
+    // var {params} = this.props.navigation.state;
     const currentDate = new Date();
     const startTime = new Date(currentDate.getTime() + (30 * 60 * 1000)).toLocaleString();
     const endTime = new Date(currentDate.getTime() + (60 * 60 * 1000)).toLocaleString();
 
 
-    const slotList = params.slots.map((slots, index) => {
+    const slotList = this.props.slots.map((slots, index) => {
        return (
         <View>
-          <Slot key={index} slot={slots} user_id={params.user_id} showSlot={this.showSlot.bind(this)} />
-        </View>)
+          <Slot key={index} slot={slots} showSlot={this.showSlot.bind(this)} />
+        </View>
+        )
      })
 
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
        {slotList}
-       <Modal  visible={this.state.showModal} onRequestClose={()=>console.log('modal')}>
+       <Modal isVisible={this.state.showModal} onRequestClose={() => console.log('modal')}>
         <View style={styles.modalView}>
           <Text>{this.state.spot.label}</Text>
           <Text>{this.state.spot.spot_information}</Text>
@@ -49,13 +51,14 @@ export default class SlotsScreen extends React.Component {
           <Text>{startTime}</Text>
           <Text>End time </Text>
           <Text>{endTime}</Text>
-          <TouchableOpacity onPress={()=>this.setState({showModal: false})}><Text style={styles.reserveButton}>Reserve</Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => this.setState({showModal: false})}><Text style={styles.reserveButton}>Reserve</Text></TouchableOpacity>
         </View>
        </Modal>
       </View>
       )
   }
 }
+
 const styles = StyleSheet.create({
   modalView: {
     backgroundColor:'#aaa',
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     bottom: 0,
-    width: 400,
+    width: 100,
   },
   reserveButton: {
     backgroundColor: '#333',
@@ -108,3 +111,4 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+

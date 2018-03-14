@@ -36,7 +36,36 @@ class HomeScreen extends React.Component {
               user_id: 2,
               name: 'prerana'
             },
-            currentArea: 0,
+            currentArea: {
+                title: 'Marker1',
+                parkingAreaStatus: 'full',
+                description: 'Description about spot1',
+                coordinates: {
+                  latitude: 49.269966,
+                  longitude: -123.251043
+                },
+                slots: [{
+                  spot_id: 1,
+                  label: 'spot1',
+                  occupied: true,
+                  accessible: false,
+                  spot_information: "this is spot 1"
+                  },
+                  {
+                  spot_id: 1,
+                  label: 'spot2',
+                  occupied: true,
+                  accessible: false,
+                  spot_information: "this is spot 1"
+                  },
+                  {
+                  spot_id: 1,
+                  label: 'spot3',
+                  occupied: true,
+                  accessible: false,
+                  spot_information: "this is spot 1"
+                }]
+              },
             parking_areas: [{
                 title: 'Marker1',
                 parkingAreaStatus: 'full',
@@ -137,12 +166,10 @@ class HomeScreen extends React.Component {
   }
 
     onMapPress(parkingArea) {
-      alert(parkingArea.title)
       this.setState({
         currentArea: parkingArea,
-        // isFirstLoad: true
+         isFirstLoad: true
       })
-      alert(this.state.currentArea)
     }
 
   render() {
@@ -151,15 +178,20 @@ class HomeScreen extends React.Component {
     //   </MapHome>
     // )
 
+
     const drawerVisible = true;
     return (
       <View>
-        <View style={{ height: drawerVisible ? '80%' : '100%', backgroundColor: '#f00'}}>
+        <View style={{ height: drawerVisible ? '50%' : '100%', backgroundColor: '#f00'}}>
           <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion} navigation={this.props.navigation}>
           </MapHome>
         </View>
+             {/*&&*/}
+        <View style={{ height: '50%', backgroundColor: '#0f0'}}>
 
+          <SlotsScreen slots={this.state.currentArea.slots} />
 
+        </View>
       </View>
     )
   }

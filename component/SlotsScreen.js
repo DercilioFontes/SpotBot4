@@ -1,10 +1,10 @@
 import React from 'react'
-import { StyleSheet, Button, Text, View, Image, TouchableOpacity } from 'react-native'
+import { ScrollView, StyleSheet, Button, Text, View, Image, Modal,Icon, TouchableOpacity } from 'react-native'
 import {MapView, Notifications } from 'expo';
 import { StackNavigator, TabBarBottom, DrawerNavigator } from 'react-navigation';
-import Modal from "react-native-modal";
 import MapHome from './MapHome'
 import Slot from './Slot'
+import ReserveSpot from './ReserveSpot'
 
 
 export default class SlotsScreen extends React.Component {
@@ -23,38 +23,30 @@ export default class SlotsScreen extends React.Component {
     }
   }
   showSlot(slot, user_id) {
-      this.setState({showModal: true, user_id: user_id, spot: slot})
-    }
-  render() {
-    // var {params} = this.props.navigation.state;
-    const currentDate = new Date();
-    const startTime = new Date(currentDate.getTime() + (30 * 60 * 1000)).toLocaleString();
-    const endTime = new Date(currentDate.getTime() + (60 * 60 * 1000)).toLocaleString();
+    this.setState({showModal: true, user_id: user_id, spot: slot})
+  }
 
+  render() {
 
     const slotList = this.props.slots.map((slots, index) => {
        return (
-        <View>
-          <Slot key={index} slot={slots} showSlot={this.showSlot.bind(this)} />
-        </View>
+          <View>
+            <Slot key={index} slot={slots} showSlot={this.showSlot.bind(this)} />
+          </View>
         )
      })
 
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-       {slotList}
-       <Modal isVisible={this.state.showModal} onRequestClose={() => console.log('modal')}>
-        <View style={styles.modalView}>
-          <Text>{this.state.spot.label}</Text>
-          <Text>{this.state.spot.spot_information}</Text>
-          <Text>Start Time </Text>
-          <Text>{startTime}</Text>
-          <Text>End time </Text>
-          <Text>{endTime}</Text>
-          <TouchableOpacity onPress={() => this.setState({showModal: false})}><Text style={styles.reserveButton}>Reserve</Text></TouchableOpacity>
+      <ScrollView>
+        <View style={{backgroundColor: '#f00'}}>
+         {slotList}
         </View>
-       </Modal>
-      </View>
+        { this.state.showModal &&
+
+            <ReserveSpot spot={this.state.spot} showModal={this.state.showModal}/>
+
+        }
+      </ScrollView>
       )
   }
 }
@@ -62,12 +54,10 @@ export default class SlotsScreen extends React.Component {
 const styles = StyleSheet.create({
   modalView: {
     backgroundColor:'#aaa',
-    height: 250,
     justifyContent:'center',
     alignItems: 'center',
     position: 'absolute',
-    bottom: 0,
-    width: 100,
+    bottom: 0
   },
   reserveButton: {
     backgroundColor: '#333',

@@ -5,6 +5,7 @@ import { StackNavigator, TabBarBottom, DrawerNavigator } from 'react-navigation'
 import MapHome from './component/MapHome'
 import Slot from './component/Slot'
 import SlotsScreen from './component/SlotsScreen'
+import {MaterialIcons} from '@expo/vector-icons'
 
 
 class LogoTitle extends React.Component {
@@ -23,7 +24,7 @@ class HomeScreen extends React.Component {
   constructor(props) {
         super(props);
         this.state = {
-            isFirstLoad: false,
+            showSlotsDetails: false,
             annotations: [],
             mapRegion: {
               latitude: 49.269966,
@@ -68,7 +69,7 @@ class HomeScreen extends React.Component {
               },
             parking_areas: [{
                 title: 'Marker1',
-                parkingAreaStatus: 'full',
+                parkingAreaStatus: 'reserved',
                 description: 'Description about spot1',
                 coordinates: {
                   latitude: 49.269966,
@@ -84,8 +85,8 @@ class HomeScreen extends React.Component {
                   {
                   spot_id: 1,
                   label: 'spot2',
-                  occupied: true,
-                  accessible: false,
+                  occupied: false,
+                  accessible: true,
                   spot_information: "this is spot 1"
                   },
                   {
@@ -108,7 +109,7 @@ class HomeScreen extends React.Component {
                   spot_id: 1,
                   label: 'alpha',
                   occupied: true,
-                  accessible: false,
+                  accessible: true,
                   spot_information: "this is spot 1"
                   },
                   {
@@ -145,14 +146,42 @@ class HomeScreen extends React.Component {
                   spot_id: 1,
                   label: 'kiwi',
                   occupied: true,
+                  accessible: true,
+                  spot_information: "this is spot 1"
+                  },
+                  {
+                  spot_id: 1,
+                  label: 'raspberry',
+                  occupied: true,
                   accessible: false,
                   spot_information: "this is spot 1"
                   },
                   {
                   spot_id: 1,
-                  label: 'oranges',
+                  label: 'kiwi',
+                  occupied: true,
+                  accessible: true,
+                  spot_information: "this is spot 1"
+                  },
+                  {
+                  spot_id: 1,
+                  label: 'kiwi',
+                  occupied: true,
+                  accessible: true,
+                  spot_information: "this is spot 1"
+                  },
+                  {
+                  spot_id: 1,
+                  label: 'raspberry',
                   occupied: true,
                   accessible: false,
+                  spot_information: "this is spot 1"
+                  },
+                  {
+                  spot_id: 1,
+                  label: 'kiwi',
+                  occupied: true,
+                  accessible: true,
                   spot_information: "this is spot 1"
                 }]
               },
@@ -168,48 +197,52 @@ class HomeScreen extends React.Component {
     onMapPress(parkingArea) {
       this.setState({
         currentArea: parkingArea,
-         isFirstLoad: true
+         showSlotsDetails: true
       })
     }
 
      closeSlot() {
       this.setState({
-         isFirstLoad: false
+         showSlotsDetails: false
       })
+    }
+
+    componentDidMount() {
+      var newParkingStatus = [...this.state.parking_areas]
+      newParkingStatus.forEach(
+        (parkingArea, index) => {
+        const totalSlot = parkingArea.slots.length;
+        const occupied = parkingArea.slots.filter(slot => slot.occupied === true)
+              parkingArea.description = `Total slots: ${totalSlot}`
+          if(occupied.length === totalSlot) {
+              parkingArea.parkingAreaStatus = 'full'
+          }
+        }
+      )
+      this.setState({parking_areas: newParkingStatus});
     }
 
 
   render() {
-    // return (
-    //   <MapHome parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion} navigation={this.props.navigation}>
-    //   </MapHome>
-    // )
-
-
 
     return (
       <View>
-        <View style={{ height: this.state.isFirstLoad ? '50%' : '100%', backgroundColor: '#f00'}}>
+        <View style={{ height: this.state.showSlotsDetails ? '50%' : '100%', backgroundColor: '#f00'}}>
           <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion} navigation={this.props.navigation}>
           </MapHome>
         </View>
-        { this.state.isFirstLoad &&
+        { this.state.showSlotsDetails &&
           <View style={{ height: '50%', backgroundColor: '#0f0'}}>
+          <MaterialIcons name='filter-list' size={30}/>
+
              <Button
                 onPress={this.closeSlot.bind(this)}
                 title="Close"
                 color="#841584"
-
               />
-
-
               <SlotsScreen slots={this.state.currentArea.slots} />
-
             </View>
         }
-
-
-
       </View>
     )
   }

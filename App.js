@@ -23,7 +23,7 @@ class HomeScreen extends React.Component {
   constructor(props) {
         super(props);
         this.state = {
-            isFirstLoad: true,
+            isFirstLoad: false,
             annotations: [],
             mapRegion: {
               latitude: 49.269966,
@@ -140,8 +140,9 @@ class HomeScreen extends React.Component {
       alert(parkingArea.title)
       this.setState({
         currentArea: parkingArea,
-        isFirstLoad: true
+        // isFirstLoad: true
       })
+      alert(this.state.currentArea)
     }
 
   render() {
@@ -157,12 +158,7 @@ class HomeScreen extends React.Component {
           <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion} navigation={this.props.navigation}>
           </MapHome>
         </View>
-        {
-          drawerVisible &&
-          <View style={{ height: '20%', backgroundColor: '#0f0'}}>
-          {/*<SlotsScreen slots={this.state.parkingArea[this.state.currentArea].slots, user_id: this.props.user_id} /)*/}
-        </View>
-        }
+
 
       </View>
     )

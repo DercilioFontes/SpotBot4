@@ -172,6 +172,13 @@ class HomeScreen extends React.Component {
       })
     }
 
+     closeSlot() {
+      this.setState({
+         isFirstLoad: false
+      })
+    }
+
+
   render() {
     // return (
     //   <MapHome parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion} navigation={this.props.navigation}>
@@ -179,19 +186,30 @@ class HomeScreen extends React.Component {
     // )
 
 
-    const drawerVisible = true;
+
     return (
       <View>
-        <View style={{ height: drawerVisible ? '50%' : '100%', backgroundColor: '#f00'}}>
+        <View style={{ height: this.state.isFirstLoad ? '50%' : '100%', backgroundColor: '#f00'}}>
           <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion} navigation={this.props.navigation}>
           </MapHome>
         </View>
-             {/*&&*/}
-        <View style={{ height: '50%', backgroundColor: '#0f0'}}>
+        { this.state.isFirstLoad &&
+          <View style={{ height: '50%', backgroundColor: '#0f0'}}>
+             <Button
+                onPress={this.closeSlot.bind(this)}
+                title="Close"
+                color="#841584"
 
-          <SlotsScreen slots={this.state.currentArea.slots} />
+              />
 
-        </View>
+
+              <SlotsScreen slots={this.state.currentArea.slots} />
+
+            </View>
+        }
+
+
+
       </View>
     )
   }

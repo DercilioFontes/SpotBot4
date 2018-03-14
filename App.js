@@ -3,9 +3,9 @@ import { StyleSheet, Button, Text, View, Image, TouchableHighlight, ActivityIndi
 import { StackNavigator } from 'react-navigation'
 import { Ionicons, Feather } from '@expo/vector-icons'
 import SignUpComponent from './d-component/signup-screen'
+import LoginComponent from './d-component/login-screen'
 
 const STORAGE_KEY = {}
-
 
 // Main Screen
 class HomeScreen extends React.Component {
@@ -31,18 +31,18 @@ class HomeScreen extends React.Component {
 
 
   render() {
+
     return (
-      
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Map Screen</Text>
-      
-    </View>
+        <Text>Map Screen</Text>
+      </View>
     )
   }
 }
 
 // Modal of the headers button
 class ModalScreen extends React.Component {
+
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -60,7 +60,6 @@ class ModalScreen extends React.Component {
           title="Dismiss"
         />
       </View>
-
     );
   }
 }
@@ -71,9 +70,7 @@ class SignUpScreen extends React.Component {
     super(props)
     this.state = {
       navigationOptions: this.navigationOptions
-    }
-  
-    
+    } 
   }
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -94,11 +91,20 @@ class SignUpScreen extends React.Component {
 }
 
 class LoginScreen extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      navigationOptions: this.navigationOptions
+    }
+  }
+
+  
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
     
     return {
-      title: params ? params.spotLabel : 'A Nested Details Screen',
+      title: 'Login',
       headerStyle: {
         backgroundColor: navigationOptions.headerTintColor,
       },
@@ -108,28 +114,7 @@ class LoginScreen extends React.Component {
 
   render() {
 
-    const { params } = this.props.navigation.state;
-    const spotId = params ? params.spotId : null;
-    const spotLabel = params ? params.spotLabel : null;
-
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ marginBottom: 10 }}>Login / Sign up</Text>
-        <Text>Spot picked: {spotLabel}</Text>
-        {/* <Button
-          title="Go to Details... again"
-          onPress={() => this.props.navigation.navigate('Details')}
-        /> */}
-        {/* <Button
-          title="Update the title"
-          onPress={() => this.props.navigation.setParams({spotLabel: 'Updated!'})}
-        /> */}
-        <Button
-          title="Home"
-          onPress={() => this.props.navigation.goBack()}
-        />
-      </View>
-    );
+    return ( <LoginComponent navigation={this.state.navigationOptions}/>)
   }
 }
 

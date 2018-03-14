@@ -10,41 +10,23 @@ const Form = t.form.Form
 
 // Config of the form data and options
 const User = t.struct({
-  name: t.String,
-  licensePlate: t.String,
   email: t.String,
   password: t.String,
-  passwordConfirmation: t.String
 })
 
 // Options of the form data
 const options = {
   fields: {
-    name: {
-
-    },
-    licensePlate: {
-
-    },
     email: {
       keyboardType: 'email-address'
     },
     password: { 
       secureTextEntry: true
-    },
-    passwordConfirmation: {
-      secureTextEntry: true
-      // hasError: true,
-      // error: (value) => {
-      //   if(value.password !== value.passwordConfirmation) {
-      //     return "Passowords doesn't macth!"
-      //   }
-      // }
     }
   }
 }
 
-class SignUpScreen extends React.Component {
+class LoginScreen extends React.Component {
 
   constructor(props) {
     super(props)
@@ -52,7 +34,6 @@ class SignUpScreen extends React.Component {
       showProgress: false
     }
   }
-
 
   // async _onValueChange(item, selectedValue) {
   //   try {
@@ -62,7 +43,7 @@ class SignUpScreen extends React.Component {
   //   }
   // }
 
-  _userSignup() {
+  _userLogin() {
     let value = this.refs.form.getValue()
 
     // REMOVE THIS!!!!!!
@@ -73,7 +54,7 @@ class SignUpScreen extends React.Component {
       // Active ActivityIndicator 
       this.setState({showProgress: true})
 
-      fetch("https://spot-bot-server.herokuapp.com/users", {
+      fetch("https://spot-bot-server.herokuapp.com/login", {
         method: "POST", 
         headers: {
           'Accept': 'application/json',
@@ -81,11 +62,8 @@ class SignUpScreen extends React.Component {
         },
         body: JSON.stringify({
           user: {
-            name: value.name, 
-            license_plate: value.licensePlate, 
             email: value.email,
             password: value.password,
-            password_confirmation: value.passwordConfirmation
           }
         })
       })
@@ -153,7 +131,7 @@ class SignUpScreen extends React.Component {
         marginTop: 20
       }
     });
-    
+
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Form
@@ -161,7 +139,7 @@ class SignUpScreen extends React.Component {
           type={User}
           options={options}
         />
-         <TouchableHighlight style={styles.button} onPress={this._userSignup.bind(this)} underlayColor='#99d9f4'>
+         <TouchableHighlight style={styles.button} onPress={this._userLogin.bind(this)} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableHighlight>
         
@@ -174,4 +152,4 @@ class SignUpScreen extends React.Component {
   }
 }
 
-export default SignUpScreen
+export default LoginScreen

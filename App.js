@@ -5,8 +5,8 @@ import { StackNavigator } from 'react-navigation'
 import { Ionicons, Feather, MaterialIcons } from '@expo/vector-icons'
 
 // Our components
-import SignUpComponent from './components/signup-screen'
-import LoginComponent from './components/login-screen'
+import SignUpComponent from './components/SignupScreen'
+import LoginComponent from './components/LoginScreen'
 import MapHome from './components/MapHome'
 import Slot from './components/Slot'
 import SlotsScreen from './components/SlotsScreen'

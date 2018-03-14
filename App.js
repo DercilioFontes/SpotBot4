@@ -1,14 +1,191 @@
 import React from 'react'
-import { StyleSheet, Button, Text, View, Image, TouchableHighlight, ActivityIndicator, AlertIOS, AsyncStorage } from 'react-native'
+import { StyleSheet, Button, Text, View, Image, TouchableHighlight, ActivityIndicator, AlertIOS, AsyncStorage, TouchableOpacity } from 'react-native'
+import { MapView, Notifications } from 'expo'
 import { StackNavigator } from 'react-navigation'
-import { Ionicons, Feather } from '@expo/vector-icons'
-import SignUpComponent from './d-component/signup-screen'
-import LoginComponent from './d-component/login-screen'
+import { Ionicons, Feather, MaterialIcons } from '@expo/vector-icons'
+
+// Our components
+import SignUpComponent from './components/signup-screen'
+import LoginComponent from './components/login-screen'
+import MapHome from './components/MapHome'
+import Slot from './components/Slot'
+import SlotsScreen from './components/SlotsScreen'
+
 
 const STORAGE_KEY = {}
 
 // Main Screen
 class HomeScreen extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+        showSlotsDetails: false,
+        annotations: [],
+        mapRegion: {
+          latitude: 49.269966,
+          longitude: -123.251043,
+          latitudeDelta: 0.004,
+          longitudeDelta: 0.04,
+          title: "UBC parking slot"
+        },
+        users: {
+          user_id: 2,
+          name: 'prerana'
+        },
+        currentArea: {
+            title: 'Marker1',
+            parkingAreaStatus: 'full',
+            description: 'Description about spot1',
+            coordinates: {
+              latitude: 49.269966,
+              longitude: -123.251043
+            },
+            slots: [{
+              spot_id: 1,
+              label: 'spot1',
+              occupied: true,
+              accessible: false,
+              spot_information: "this is spot 1"
+              },
+              {
+              spot_id: 1,
+              label: 'spot2',
+              occupied: true,
+              accessible: false,
+              spot_information: "this is spot 1"
+              },
+              {
+              spot_id: 1,
+              label: 'spot3',
+              occupied: true,
+              accessible: false,
+              spot_information: "this is spot 1"
+            }]
+          },
+        parking_areas: [{
+            title: 'Marker1',
+            parkingAreaStatus: 'reserved',
+            description: 'Description about spot1',
+            coordinates: {
+              latitude: 49.269966,
+              longitude: -123.251043
+            },
+            slots: [{
+              spot_id: 1,
+              label: 'spot1',
+              occupied: true,
+              accessible: false,
+              spot_information: "this is spot 1"
+              },
+              {
+              spot_id: 1,
+              label: 'spot2',
+              occupied: false,
+              accessible: true,
+              spot_information: "this is spot 1"
+              },
+              {
+              spot_id: 1,
+              label: 'spot3',
+              occupied: true,
+              accessible: false,
+              spot_information: "this is spot 1"
+            }]
+          },
+          {
+            title: 'Marker2',
+            description: 'Description about spot2',
+            parkingAreaStatus: 'reserved',
+            coordinates: {
+              latitude: 49.264554,
+              longitude: -123.255521
+            },
+            slots: [{
+              spot_id: 1,
+              label: 'alpha',
+              occupied: true,
+              accessible: true,
+              spot_information: "this is spot 1"
+              },
+              {
+              spot_id: 1,
+              label: 'bravo',
+              occupied: true,
+              accessible: false,
+              spot_information: "this is spot 1"
+              },
+              {
+              spot_id: 1,
+              label: 'charlie',
+              occupied: true,
+              accessible: false,
+              spot_information: "this is spot 1"
+            }]
+          },
+          {
+            title: 'Marker3',
+            description: 'Description about spot3',
+            parkingAreaStatus: 'reserved',
+            coordinates: {
+              latitude: 49.261811,
+              longitude: -123.243056
+            },
+            slots: [{
+              spot_id: 1,
+              label: 'raspberry',
+              occupied: true,
+              accessible: false,
+              spot_information: "this is spot 1"
+              },
+              {
+              spot_id: 1,
+              label: 'kiwi',
+              occupied: true,
+              accessible: true,
+              spot_information: "this is spot 1"
+              },
+              {
+              spot_id: 1,
+              label: 'raspberry',
+              occupied: true,
+              accessible: false,
+              spot_information: "this is spot 1"
+              },
+              {
+              spot_id: 1,
+              label: 'kiwi',
+              occupied: true,
+              accessible: true,
+              spot_information: "this is spot 1"
+              },
+              {
+              spot_id: 1,
+              label: 'kiwi',
+              occupied: true,
+              accessible: true,
+              spot_information: "this is spot 1"
+              },
+              {
+              spot_id: 1,
+              label: 'raspberry',
+              occupied: true,
+              accessible: false,
+              spot_information: "this is spot 1"
+              },
+              {
+              spot_id: 1,
+              label: 'kiwi',
+              occupied: true,
+              accessible: true,
+              spot_information: "this is spot 1"
+            }]
+          },
+          ]
+        };
+    }
+
+
   static navigationOptions = ({ navigation }) => {
     const params = navigation.state.params || {}
 
@@ -29,12 +206,55 @@ class HomeScreen extends React.Component {
     }
   }
 
+  onMapPress(parkingArea) {
+    this.setState({
+      currentArea: parkingArea,
+       showSlotsDetails: true
+    })
+  }
+
+  closeSlot() {
+    this.setState({
+       showSlotsDetails: false
+    })
+  }
+
+  componentDidMount() {
+    var newParkingStatus = [...this.state.parking_areas]
+    newParkingStatus.forEach(
+      (parkingArea, index) => {
+      const totalSlot = parkingArea.slots.length;
+      const occupied = parkingArea.slots.filter(slot => slot.occupied === true)
+            parkingArea.description = `Total slots: ${totalSlot}`
+        if(occupied.length === totalSlot) {
+            parkingArea.parkingAreaStatus = 'full'
+        }
+      }
+    )
+    this.setState({parking_areas: newParkingStatus});
+  }
+
 
   render() {
 
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Map Screen</Text>
+      <View>
+        <View style={{ height: this.state.showSlotsDetails ? '50%' : '100%', backgroundColor: '#f00'}}>
+          <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion} navigation={this.props.navigation}>
+          </MapHome>
+        </View>
+        { this.state.showSlotsDetails &&
+          <View style={{ height: '50%', backgroundColor: '#0f0'}}>
+          <MaterialIcons name='filter-list' size={30}/>
+
+             <Button
+                onPress={this.closeSlot.bind(this)}
+                title="Close"
+                color="#841584"
+              />
+              <SlotsScreen slots={this.state.currentArea.slots} />
+            </View>
+        }
       </View>
     )
   }

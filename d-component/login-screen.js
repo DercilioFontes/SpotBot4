@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Button, Text, View, Image, TouchableHighlight, 
-  ActivityIndicator, AlertIOS, AsyncStorage } from 'react-native'
+  ActivityIndicator, AlertIOS, AsyncStorage, KeyboardAvoidingView } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { Ionicons, Feather } from '@expo/vector-icons'
 
@@ -133,21 +133,23 @@ class LoginScreen extends React.Component {
     });
 
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Form
-          ref="form"
-          type={User}
-          options={options}
-        />
-         <TouchableHighlight style={styles.button} onPress={this._userLogin.bind(this)} underlayColor='#99d9f4'>
-          <Text style={styles.buttonText}>Save</Text>
-        </TouchableHighlight>
-        
-        <ActivityIndicator
-        animating={this.state.showProgress}
-        size='large'
-        style={styles.loader}/>
-      </View>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
+        <View style={{ flex: 1, alignSelf: 'auto', justifyContent: 'center', padding: 20 }}>
+          <Form
+            ref="form"
+            type={User}
+            options={options}
+          />
+          <TouchableHighlight style={styles.button} onPress={this._userLogin.bind(this)} underlayColor='#99d9f4'>
+            <Text style={styles.buttonText}>Save</Text>
+          </TouchableHighlight>
+          
+          <ActivityIndicator
+          animating={this.state.showProgress}
+          size='large'
+          style={styles.loader}/>
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 }

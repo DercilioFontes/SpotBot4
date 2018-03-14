@@ -1,12 +1,29 @@
 import React from 'react'
 import { StyleSheet, Button, Text, View, Image, TouchableHighlight, 
-  ActivityIndicator, AlertIOS, AsyncStorage } from 'react-native'
+  ActivityIndicator, AlertIOS, AsyncStorage, KeyboardAvoidingView } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { Ionicons, Feather } from '@expo/vector-icons'
 
 // to use in the forms
 import t from 'tcomb-form-native'
+import _ from 'lodash'
 const Form = t.form.Form
+const stylesheet = _.cloneDeep(Form.stylesheet)
+
+// Form stylesheet
+// stylesheet.textbox.normal.borderWidth = 0;
+// stylesheet.textbox.error.borderWidth = 0;
+// stylesheet.textbox.normal.marginBottom = 0;
+// stylesheet.textbox.error.marginBottom = 0;
+
+// stylesheet.textboxView.normal.borderWidth = 0;
+// stylesheet.textboxView.error.borderWidth = 0;
+// stylesheet.textboxView.normal.borderRadius = 0;
+// stylesheet.textboxView.error.borderRadius = 0;
+// stylesheet.textboxView.normal.borderBottomWidth = 1;
+// stylesheet.textboxView.error.borderBottomWidth = 1;
+// stylesheet.textbox.normal.marginBottom = 5;
+// stylesheet.textbox.error.marginBottom = 5;
 
 // Config of the form data and options
 const User = t.struct({
@@ -19,9 +36,10 @@ const User = t.struct({
 
 // Options of the form data
 const options = {
+  stylesheet: stylesheet,
   fields: {
     name: {
-
+      stylesheet: stylesheet
     },
     licensePlate: {
 
@@ -123,19 +141,14 @@ class SignUpScreen extends React.Component {
   render() {
 
     const styles = StyleSheet.create({
-      container: {
-        justifyContent: 'center',
-        marginTop: 50,
-        padding: 20,
-        backgroundColor: '#ffffff',
-      },
-      title: {
-        fontSize: 30,
-        alignSelf: 'center',
-        marginBottom: 30
-      },
+      // container: {
+      //   justifyContent: 'center',
+      //   marginTop: 50,
+      //   padding: 20,
+      //   backgroundColor: '#ffffff',
+      // },
       buttonText: {
-        fontSize: 18,
+        fontSize: 20,
         color: 'white',
         alignSelf: 'center'
       },
@@ -145,7 +158,7 @@ class SignUpScreen extends React.Component {
         borderColor: '#48BBEC',
         borderWidth: 1,
         borderRadius: 8,
-        marginBottom: 10,
+        marginBottom: 5,
         alignSelf: 'stretch',
         justifyContent: 'center'
       },
@@ -155,7 +168,8 @@ class SignUpScreen extends React.Component {
     });
     
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
+      <View style={{ flex: 1, alignSelf: 'auto', justifyContent: 'center', padding: 20 }}>
         <Form
           ref="form"
           type={User}
@@ -170,6 +184,7 @@ class SignUpScreen extends React.Component {
         size='large'
         style={styles.loader}/>
       </View>
+      </KeyboardAvoidingView>
     );
   }
 }

@@ -7,7 +7,7 @@ export default class ReserveSpot extends React.Component {
     <View style={styles.reserveModal}>
       <Text>{this.props.spot.label}</Text>
       <Text>{this.props.spot.spot_information}</Text>
-      <TouchableOpacity onReserveButtonPress={() => this.setState({showModal: false})}><Text >Reserve</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() =>alert('press')}><Text >Reserve</Text></TouchableOpacity>
     </View>
   )}
 }

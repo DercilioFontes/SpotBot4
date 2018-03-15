@@ -28,6 +28,7 @@ export default class MapHome extends React.Component {
         return <View style={styles.reserved} />
       }
     }
+
     return (
       <MapView
         style={styles.map}
@@ -85,6 +86,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   map: {
-    flex: 1,
+    flex: 1
   },
 });

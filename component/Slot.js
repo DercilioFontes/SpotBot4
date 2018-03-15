@@ -8,12 +8,15 @@ export default function Slot({slot, user_id, showSlot}) {
 
   return (
     <View>
+      {!slot.occupied &&
+        <View>
       <TouchableOpacity onPress={() => showSlot(slot, user_id)}><Text>{slot.label}</Text></TouchableOpacity>
-      <Text>{slot.occupied}</Text>
       <Text>{slot.accessible &&
         <MaterialIcons name='accessible' size={30}/>
       }</Text>
       <Text>{slot.spot_information}</Text>
+      </View>
+      }
     </View>
   )
 }

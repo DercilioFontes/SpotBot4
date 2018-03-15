@@ -43,7 +43,7 @@ class HomeScreen extends React.Component {
                 description: 'Description about spot1',
                 coordinates: {
                   latitude: 49.269966,
-                  longitude: -123.251043
+                  longitude: -123.251043,
                 },
                 slots: [{
                   spot_id: 1,
@@ -195,10 +195,12 @@ class HomeScreen extends React.Component {
   }
 
     onMapPress(parkingArea) {
-      this.setState({
-        currentArea: parkingArea,
-         showSlotsDetails: true
-      })
+      if(parkingArea.parkingAreaStatus !== 'full'){
+        this.setState({
+          currentArea: parkingArea,
+           showSlotsDetails: true
+        })
+      }
     }
 
      closeSlot() {
@@ -215,7 +217,8 @@ class HomeScreen extends React.Component {
         const occupied = parkingArea.slots.filter(slot => slot.occupied === true)
               parkingArea.description = `Total slots: ${totalSlot}`
           if(occupied.length === totalSlot) {
-              parkingArea.parkingAreaStatus = 'full'
+              parkingArea.parkingAreaStatus = 'full',
+              parkingArea.description = `Total slots: ${totalSlot} Status:Full`
           }
         }
       )
@@ -223,18 +226,18 @@ class HomeScreen extends React.Component {
     }
 
 
+
   render() {
 
     return (
       <View>
         <View style={{ height: this.state.showSlotsDetails ? '50%' : '100%', backgroundColor: '#f00'}}>
-          <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion} navigation={this.props.navigation}>
+          <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation}>
           </MapHome>
         </View>
         { this.state.showSlotsDetails &&
           <View style={{ height: '50%', backgroundColor: '#0f0'}}>
           <MaterialIcons name='filter-list' size={30}/>
-
              <Button
                 onPress={this.closeSlot.bind(this)}
                 title="Close"
@@ -243,6 +246,7 @@ class HomeScreen extends React.Component {
               <SlotsScreen slots={this.state.currentArea.slots} />
             </View>
         }
+
       </View>
     )
   }
@@ -369,6 +373,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    height: '100%'
   },
   map: {
     flex: 1,

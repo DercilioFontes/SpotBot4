@@ -63,7 +63,7 @@ class HomeScreen extends React.Component {
                   spot_id: 1,
                   label: 'spot3',
                   occupied: true,
-                  accessible: false,
+                  accessible: true,
                   spot_information: "this is spot 1"
                 }]
               },
@@ -190,6 +190,19 @@ class HomeScreen extends React.Component {
         }
 
 
+//fetch parking area from database
+
+  componetWillMount() {
+    this.fetchParkingArea();
+  }
+  fetchParkingArea = async () => {
+    const response = await fetch('http://127.0.0.1:3000/');
+    const json = await response.json();
+    this.setState({parking_areas: json.results})
+  }
+
+
+
   static navigationOptions = {
     headerTitle: 'SpotBot',
   }
@@ -222,10 +235,14 @@ class HomeScreen extends React.Component {
           }
         }
       )
-      this.setState({parking_areas: newParkingStatus});
     }
-
-
+    filterAccessibility() {
+      var newParking = this.state.currentArea;
+      const accessibles = newParking.slots.filter(slot => slot.aaccessible === true);
+      alert(newParking.slots[1].accessible)
+      newParking.slots = accessibles;
+      // this.setState({currentArea: newParkingStatus});
+    }
 
   render() {
 
@@ -237,13 +254,13 @@ class HomeScreen extends React.Component {
         </View>
         { this.state.showSlotsDetails &&
           <View style={{ height: '50%', backgroundColor: '#0f0'}}>
-          <MaterialIcons name='filter-list' size={30}/>
+          <MaterialIcons onPress={this.filterAccessibility.bind(this)} name='filter-list' size={30}/>
              <Button
                 onPress={this.closeSlot.bind(this)}
                 title="Close"
                 color="#841584"
               />
-              <SlotsScreen slots={this.state.currentArea.slots} />
+              <SlotsScreen user_id={this.state.user_id} slots={this.state.currentArea.slots} />
             </View>
         }
 

@@ -38,6 +38,7 @@ export default class MapHome extends React.Component {
 
       {this.props.parking_areas.map((marker, index) => (
         <MapView.Marker key={index}
+          zIndex={9999}
           title = {marker.title}
           coordinate = {marker.coordinates}
           description = {marker.description}

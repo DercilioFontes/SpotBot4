@@ -28,6 +28,7 @@ export default class MapHome extends React.Component {
         return <View style={styles.reserved} />
       }
     }
+
     return (
       <MapView
         style={styles.map}
@@ -37,6 +38,7 @@ export default class MapHome extends React.Component {
 
       {this.props.parking_areas.map((marker, index) => (
         <MapView.Marker key={index}
+          zIndex={9999}
           title = {marker.title}
           coordinate = {marker.coordinates}
           description = {marker.description}
@@ -85,6 +87,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   map: {
-    flex: 1,
+    flex: 1
   },
 });

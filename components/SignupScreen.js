@@ -4,6 +4,8 @@ import { StyleSheet, Button, Text, View, Image, TouchableHighlight,
 import { StackNavigator } from 'react-navigation'
 import { Ionicons, Feather } from '@expo/vector-icons'
 
+
+
 // to use in the forms
 import t from 'tcomb-form-native'
 import _ from 'lodash'
@@ -71,14 +73,13 @@ class SignUpScreen extends React.Component {
     }
   }
 
-
-  // async _onValueChange(item, selectedValue) {
-  //   try {
-  //     await AsyncStorage.setItem(item, selectedValue)
-  //   } catch (error) {
-  //     // console.log('AsyncStorage error: ' + error.message)
-  //   }
-  // }
+  async _onValueChange(item, selectedValue) {
+    try {
+      await AsyncStorage.setItem(item, selectedValue)
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message)
+    }
+  }
 
   _userSignup() {
     let value = this.refs.form.getValue()
@@ -121,9 +122,10 @@ class SignUpScreen extends React.Component {
     })
     .then((responseData) => {
       console.log(responseData)
-      //  this.setState({ success: true })
-      // this._onValueChange(STORAGE_KEY, responseData.id_token)
-      // AlertIOS
+      this._onValueChange('ID_TOKEN', responseData.id_token),
+      AlertIOS.alert(
+        'Signup Success!'
+      )
     })
     .catch((err) => {
       this.setState(err)
@@ -131,9 +133,6 @@ class SignUpScreen extends React.Component {
     })
     .finally(() => {
       this.setState({showProgress: false})
-
-      // REMOVE THIS ???????????
-      // console.log(STORAGE_KEY)
     })
     }
   }

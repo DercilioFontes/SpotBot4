@@ -11,15 +11,14 @@ import MapHome from './components/MapHome'
 import Slot from './components/Slot'
 import SlotsScreen from './components/SlotsScreen'
 
-
-const STORAGE_KEY = {}
-
 // Main Screen
 class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+        user: {},
+        token: '',
         showSlotsDetails: false,
         annotations: [],
         mapRegion: {
@@ -217,6 +216,31 @@ class HomeScreen extends React.Component {
     this.setState({
        showSlotsDetails: false
     })
+  }
+
+  async componentWillMount() {
+    var token
+    try {
+      await AsyncStorage.multiGet(['token', 'user']).then((data) => {
+        if(data[0][1]) {
+          token = data[0][1] || null
+          return data[1][1] // I can pass a function here to make a fetch (GET request with route users/id) to get the user or other data
+        }
+      }).then((user) => {
+        if(user) {
+          return user.json()
+        } else {
+          return null
+        }
+      }).then((user) => {
+        this.setState({
+          user: user,
+          token: token
+        })
+      }) 
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message)
+    }
   }
 
   componentDidMount() {

@@ -4,6 +4,7 @@ import { StyleSheet, Button, Text, View, Image, TouchableHighlight,
 import { StackNavigator } from 'react-navigation'
 // import ReactOnRails from 'react-on-rails'
 import { Ionicons, Feather } from '@expo/vector-icons'
+import evcarLogo from '../src/evubc-logo.png'
 
 
 // to use in the forms
@@ -36,6 +37,14 @@ const User = t.struct({
   passwordConfirmation: t.String
 })
 
+// const value = {
+//   name: '',
+//   licensePlate: '',
+//   email: '',
+//   password: '',
+//   passwordConfirmation: ''
+// }
+
 // Options of the form data
 const options = {
   stylesheet: stylesheet,
@@ -47,29 +56,33 @@ const options = {
 
     },
     email: {
-      keyboardType: 'email-address'
+      keyboardType: 'email-address',
+      error: 'Insert a valid email'
     },
     password: { 
       secureTextEntry: true
     },
     passwordConfirmation: {
-      secureTextEntry: true
-      // hasError: true,
-      // error: (value) => {
+      secureTextEntry: true,
+      // hasError: (value) => {
       //   if(value.password !== value.passwordConfirmation) {
-      //     return "Passowords doesn't macth!"
+      //     return true
+      //   } else {
+      //     return false
       //   }
-      // }
+      // },
+      // error: "Passowords doesn't macth!"
     }
   }
 }
+
 
 class SignUpScreen extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      showProgress: false
+      showProgress: false,
     }
   }
 
@@ -83,6 +96,9 @@ class SignUpScreen extends React.Component {
 
   _userSignup() {
     let value = this.refs.form.getValue()
+    // if(value.passwordConfirmation !== '') {
+    //   options.passwordConfirmation.hasError(value)
+    // }
 
     // REMOVE THIS!!!!!!
     console.log(value)
@@ -197,26 +213,30 @@ class SignUpScreen extends React.Component {
       },
       loader: {
         marginTop: 20
+      },
+      logo: {
+        width: 60,
+        height: 50,
+        margin: 0
       }
     });
     
     return (
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
-      <View style={{ flex: 1, alignSelf: 'auto', justifyContent: 'center', padding: 20 }}>
+      <KeyboardAvoidingView style={{ flex: 1, alignSelf: 'auto', justifyContent: 'center', padding: 20 }} behavior={"padding"}>
         <Form
           ref="form"
           type={User}
           options={options}
         />
          <TouchableHighlight style={styles.button} onPress={this._userSignup.bind(this)} underlayColor='#99d9f4'>
-          <Text style={styles.buttonText}>Save</Text>
+          <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableHighlight>
         
         <ActivityIndicator
         animating={this.state.showProgress}
         size='large'
         style={styles.loader}/>
-      </View>
+        <View style={{ height: 60 }} />
       </KeyboardAvoidingView>
     );
   }

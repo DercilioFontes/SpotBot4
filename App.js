@@ -1,7 +1,7 @@
 import React from 'react'
-import { StyleSheet, Button, Text, View, Image, TouchableHighlight, ActivityIndicator, AlertIOS, AsyncStorage, TouchableOpacity } from 'react-native'
+import { StyleSheet, Button, Text, View, Image, TouchableHighlight, ActivityIndicator, AlertIOS, AsyncStorage, TouchableOpacity, ImageBackground} from 'react-native'
 import { MapView, Notifications } from 'expo'
-import { StackNavigator } from 'react-navigation'
+import { StackNavigator, DrawerNavigator } from 'react-navigation'
 import { Ionicons, Feather, MaterialIcons } from '@expo/vector-icons'
 
 // Our components
@@ -10,6 +10,21 @@ import LoginComponent from './components/LoginScreen'
 import MapHome from './components/MapHome'
 import Slot from './components/Slot'
 import SlotsScreen from './components/SlotsScreen'
+import Drawer from './components/Drawer'
+
+
+const DrawerExample = DrawerNavigator (
+  {
+    Login: {
+      screen: Drawer
+    }
+  },
+  {
+      initialRouteName: 'Login',
+      drawerPosition: 'lefts'
+  }
+)
+
 
 
 const STORAGE_KEY = {}
@@ -202,7 +217,7 @@ class HomeScreen extends React.Component {
         <Button
           onPress={() => navigation.navigate('MyModal')}
           title={'\u2630'}
-          color="#fff"
+          color={params.headerTintColor}
         /> )
     }
   }
@@ -267,22 +282,26 @@ class HomeScreen extends React.Component {
 class ModalScreen extends React.Component {
 
   render() {
+    const pic = require('./assets/vancouver.jpg')
+
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ fontSize: 30 }}>SpotBot App</Text>
-        <Button
+      <ImageBackground source= {pic} style={{ opacity: .7,  flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text style={styles.main_header }>SpotBot</Text>
+        <Text
+          style={styles.buttonOutline}
           title="Login"
           onPress={() => this.props.navigation.navigate('Login')}
-        />
-        <Button
+        >LOGIN</Text>
+        <Text
+          style={styles.buttonFilledIn}
           title="Sign up"
           onPress={() => this.props.navigation.navigate('SignUp')}
-        />
+        >SIGNUP</Text>
         <Button
           onPress={() => this.props.navigation.goBack()}
           title="Dismiss"
         />
-      </View>
+      </ImageBackground>
     );
   }
 }
@@ -293,12 +312,12 @@ class SignUpScreen extends React.Component {
     super(props)
     this.state = {
       navigationOptions: this.navigationOptions
-    } 
+    }
   }
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
-    
+
     return {
       title: 'Sign Up',
       headerStyle: {
@@ -310,7 +329,7 @@ class SignUpScreen extends React.Component {
 
   render() {
     return ( <SignUpComponent navigation={this.state.navigationOptions}/>)
-  }  
+  }
 }
 
 class LoginScreen extends React.Component {
@@ -322,10 +341,10 @@ class LoginScreen extends React.Component {
     }
   }
 
-  
+
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
-    
+
     return {
       title: 'Login',
       headerStyle: {
@@ -358,9 +377,9 @@ const MainStack = StackNavigator(
     /* The header config from HomeScreen is now here */
     navigationOptions: {
       headerStyle: {
-        backgroundColor: '#d3d3d3',
+        backgroundColor: 'green',
       },
-      headerTintColor: '#fff',
+      headerTintColor: 'orange',
       headerTitleStyle: {
         fontWeight: 'bold',
       },
@@ -378,11 +397,47 @@ const RootStack = StackNavigator(
     },
   },
   {
-    mode: 'modal',
+    mode: 'drawer',
     headerMode: 'none',
   }
 );
 
+const styles = StyleSheet.create({
+  buttonOutline: {
+    borderWidth:2,
+    borderColor: 'white',
+    color: 'white',
+    padding: 10,
+    paddingHorizontal: 30,
+    fontSize: 20,
+    // backgroundColor: 'red',
+    borderStyle: 'solid',
+    // borderRadius: 10,
+    width:200,
+    textAlign: 'center',
+    margin: 15
+  },
+  buttonFilledIn: {
+    borderWidth:2,
+    borderColor: 'white',
+    color: 'grey',
+    padding: 10,
+    paddingHorizontal: 30,
+    fontSize: 20,
+    width:200,
+    textAlign: 'center',
+    backgroundColor: 'white',
+    borderStyle: 'solid',
+    borderRadius: 10,
+    margin: 15
+  },
+  main_header: {
+    fontSize: 50,
+    color: 'black',
+    marginBottom: 200
+
+  }
+});
 export default class App extends React.Component {
   render() {
     return <RootStack />;

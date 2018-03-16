@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Button, Text, View, Image, TouchableHighlight, 
+import { StyleSheet, Button, Text, View, Image, TouchableHighlight,
   ActivityIndicator, AlertIOS, AsyncStorage, KeyboardAvoidingView } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { Ionicons, Feather } from '@expo/vector-icons'
@@ -20,7 +20,7 @@ const options = {
     email: {
       keyboardType: 'email-address'
     },
-    password: { 
+    password: {
       secureTextEntry: true
     }
   }
@@ -51,11 +51,11 @@ class LoginScreen extends React.Component {
 
     if (value) {
 
-      // Active ActivityIndicator 
+      // Active ActivityIndicator
       this.setState({showProgress: true})
 
       fetch("https://spot-bot-server.herokuapp.com/login", {
-        method: "POST", 
+        method: "POST",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -105,7 +105,7 @@ class LoginScreen extends React.Component {
         justifyContent: 'center',
         marginTop: 50,
         padding: 20,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#fff',
       },
       title: {
         fontSize: 30,
@@ -143,7 +143,7 @@ class LoginScreen extends React.Component {
           <TouchableHighlight style={styles.button} onPress={this._userLogin.bind(this)} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Save</Text>
           </TouchableHighlight>
-          
+
           <ActivityIndicator
           animating={this.state.showProgress}
           size='large'

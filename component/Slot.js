@@ -4,11 +4,10 @@ import {MaterialIcons} from '@expo/vector-icons'
 
 
 export default function Slot({slot, user_id, showSlot}) {
-  //Database connection
-
+  //Database connectio
   return (
     <View>
-      {!slot.occupied &&
+      {slot.availability &&
         <View>
       <TouchableOpacity onPress={() => showSlot(slot, user_id)}><Text>{slot.label}</Text></TouchableOpacity>
       <Text>{slot.accessible &&

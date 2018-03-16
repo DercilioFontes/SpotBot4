@@ -3,8 +3,7 @@ import React, {Component} from 'react';
 
 export default class ReserveSpot extends React.Component {
   reserveSpot() {
-    alert(this.props.user_id)
-    fetch(`http://127.0.0.1:3000/:${this.props.spot_id}/reservations`, {
+    fetch(`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
         method: "POST",
         headers: {
           'Accept': 'application/json',

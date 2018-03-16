@@ -38,7 +38,7 @@ class HomeScreen extends React.Component {
               name: 'prerana'
             },
             currentArea: {
-                title: 'Marker1',
+                title: 'Marker1111',
                 parkingAreaStatus: 'full',
                 description: 'Description about spot1',
                 coordinates: {
@@ -48,27 +48,27 @@ class HomeScreen extends React.Component {
                 slots: [{
                   spot_id: 1,
                   label: 'spot1',
-                  occupied: true,
+                  availability: true,
                   accessible: false,
                   spot_information: "this is spot 1"
                   },
                   {
                   spot_id: 1,
                   label: 'spot2',
-                  occupied: true,
+                  availability: true,
                   accessible: false,
                   spot_information: "this is spot 1"
                   },
                   {
                   spot_id: 1,
                   label: 'spot3',
-                  occupied: true,
+                  availability: true,
                   accessible: true,
                   spot_information: "this is spot 1"
                 }]
               },
             parking_areas: [{
-                title: 'Marker1',
+                title: 'Marker123',
                 parkingAreaStatus: 'reserved',
                 description: 'Description about spot1',
                 coordinates: {
@@ -78,21 +78,21 @@ class HomeScreen extends React.Component {
                 slots: [{
                   spot_id: 1,
                   label: 'spot1',
-                  occupied: true,
+                  availability: true,
                   accessible: false,
                   spot_information: "this is spot 1"
                   },
                   {
                   spot_id: 1,
                   label: 'spot2',
-                  occupied: false,
+                  availability: false,
                   accessible: true,
                   spot_information: "this is spot 1"
                   },
                   {
                   spot_id: 1,
                   label: 'spot3',
-                  occupied: true,
+                  availability: true,
                   accessible: false,
                   spot_information: "this is spot 1"
                 }]
@@ -108,21 +108,21 @@ class HomeScreen extends React.Component {
                 slots: [{
                   spot_id: 1,
                   label: 'alpha',
-                  occupied: true,
+                  availability: true,
                   accessible: true,
                   spot_information: "this is spot 1"
                   },
                   {
                   spot_id: 1,
                   label: 'bravo',
-                  occupied: true,
+                  availability: true,
                   accessible: false,
                   spot_information: "this is spot 1"
                   },
                   {
                   spot_id: 1,
                   label: 'charlie',
-                  occupied: true,
+                  availability: true,
                   accessible: false,
                   spot_information: "this is spot 1"
                 }]
@@ -138,49 +138,49 @@ class HomeScreen extends React.Component {
                 slots: [{
                   spot_id: 1,
                   label: 'raspberry',
-                  occupied: true,
+                  availability: true,
                   accessible: false,
                   spot_information: "this is spot 1"
                   },
                   {
                   spot_id: 1,
                   label: 'kiwi',
-                  occupied: true,
+                  availability: true,
                   accessible: true,
                   spot_information: "this is spot 1"
                   },
                   {
                   spot_id: 1,
                   label: 'raspberry',
-                  occupied: true,
+                  availability: true,
                   accessible: false,
                   spot_information: "this is spot 1"
                   },
                   {
                   spot_id: 1,
                   label: 'kiwi',
-                  occupied: true,
+                  availability: true,
                   accessible: true,
                   spot_information: "this is spot 1"
                   },
                   {
                   spot_id: 1,
                   label: 'kiwi',
-                  occupied: true,
+                  availability: true,
                   accessible: true,
                   spot_information: "this is spot 1"
                   },
                   {
                   spot_id: 1,
                   label: 'raspberry',
-                  occupied: true,
+                  availability: true,
                   accessible: false,
                   spot_information: "this is spot 1"
                   },
                   {
                   spot_id: 1,
                   label: 'kiwi',
-                  occupied: true,
+                  availability: true,
                   accessible: true,
                   spot_information: "this is spot 1"
                 }]
@@ -190,17 +190,34 @@ class HomeScreen extends React.Component {
         }
 
 
-//fetch parking area from database
+// fetch parking area from database
 
-  componetWillMount() {
-    this.fetchParkingArea();
-  }
-  fetchParkingArea = async () => {
-    const response = await fetch('http://127.0.0.1:3000/');
-    const json = await response.json();
-    this.setState({parking_areas: json.results})
-  }
+  // componentWillMount() {
+  //   this.fetchParkingArea();
+  // }
 
+  // fetchParkingArea = async () => {
+  //   const response = await fetch('http://127.0.0.1:3000/');
+  //   const parking_areas_obj = await response.json();
+  //   const raw_parking_areas = parking_areas_obj.parking_areas;
+  //   return raw_parking_areas.map((raw_area) => {
+  //     // raw_area.title = raw_area.parking_area_name;
+  //     // return raw_area;
+  //     return {
+  //       parking_area_id: raw_area.parking_area.id,
+  //       title: raw_area.parking_area.parking_area_name,
+  //       description: raw_area.parking_area.parking_area_name,
+  //       parkingAreaStatus: 'full',
+  //       coordinates: {
+  //         latitude: raw_area.parking_area.latitude,
+  //         longitude: raw_area.parking_area.longitude,
+  //       },
+  //       slots: parking_areas_obj.parking_areas[0].spots
+  //     }
+  //   })
+  //   // this.setState({parking_areas: tidy_parking_areas})
+  //   // console.log(this.state.parking_areas);
+  // }
 
 
   static navigationOptions = {
@@ -223,18 +240,64 @@ class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
-      var newParkingStatus = [...this.state.parking_areas]
-      newParkingStatus.forEach(
-        (parkingArea, index) => {
-        const totalSlot = parkingArea.slots.length;
-        const occupied = parkingArea.slots.filter(slot => slot.occupied === true)
-              parkingArea.description = `Total slots: ${totalSlot}`
-          if(occupied.length === totalSlot) {
-              parkingArea.parkingAreaStatus = 'full',
-              parkingArea.description = `Total slots: ${totalSlot} Status:Full`
-          }
-        }
-      )
+
+      function transformRaw(pa) {
+        console.log('pa inside transformRaw', pa)
+        return pa.parking_areas.map(raw_area => {
+          return {
+                parking_area_id: raw_area.parking_area.id,
+                title: raw_area.parking_area.parking_area_name,
+                description: raw_area.parking_area.parking_area_name,
+                parkingAreaStatus:'reserved',
+                coordinates: {
+                  latitude: raw_area.parking_area.latitude,
+                  longitude: raw_area.parking_area.longitude,
+                },
+                slots: raw_area.spots
+                // slots: parking_areas_obj.parking_areas[0].spots
+              }
+        })
+      }
+
+      function availability(parkingAreas) {
+        return parkingAreas.map((parkingArea) => {
+          const totalSlot = parkingArea.slots.length;
+          const unavailable_spots = parkingArea.slots.filter(slot => slot.availability === false)
+                console.log("green", availability);
+                parkingArea.description = `Total slots: ${totalSlot}`
+            if(unavailable_spots.length === totalSlot) {
+                parkingArea.parkingAreaStatus = 'full',
+                parkingArea.description = `Total slots: ${totalSlot} Status:Full`
+            }
+
+          return parkingArea;
+        });
+      }
+
+      const that = this;
+      // const parkingAreas = this.fetchParkingArea();
+      // console.log("parking check", parkingAreas)
+      fetch('http://127.0.0.1:3000/')
+        .then(res => res.json())
+        .then(transformRaw)
+        .then(availability)
+        .then(newParkingStatus => that.setState({parking_areas: newParkingStatus}))
+        // .then(test => console.log('teeeeeeeeest', test));
+
+
+      // var newParkingStatus = [...this.state.parking_areas]
+      // parkingAreas.forEach(
+      //   (parkingArea, index) => {
+      //   const totalSlot = parkingArea.slots.length;
+      //   const availability = parkingArea.slots.filter(slot => slot.availability === true)
+      //         parkingArea.description = `Total slots: ${totalSlot}`
+      //     if(availability.length === totalSlot) {
+      //         parkingArea.parkingAreaStatus = 'full',
+      //         parkingArea.description = `Total slots: ${totalSlot} Status:Full`
+      //     }
+      //   }
+      // )
+      // this.setState({parking_areas: newParkingStatus});
     }
     filterAccessibility() {
       var newParking = this.state.currentArea;
@@ -245,7 +308,6 @@ class HomeScreen extends React.Component {
     }
 
   render() {
-
     return (
       <View>
         <View style={{ height: this.state.showSlotsDetails ? '50%' : '100%', backgroundColor: '#f00'}}>
@@ -294,14 +356,6 @@ class DetailsScreen extends React.Component {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text style={{ marginBottom: 10 }}>Login / Sign up</Text>
         <Text>Spot picked: {spotLabel}</Text>
-        {/* <Button
-          title="Go to Details... again"
-          onPress={() => this.props.navigation.navigate('Details')}
-        /> */}
-        {/* <Button
-          title="Update the title"
-          onPress={() => this.props.navigation.setParams({spotLabel: 'Updated!'})}
-        /> */}
         <Button
           title="Go back"
           onPress={() => this.props.navigation.goBack()}

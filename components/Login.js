@@ -4,6 +4,7 @@ import { StyleSheet, Button, Text, View, Image, TouchableHighlight,
 import { StackNavigator } from 'react-navigation'
 import { Ionicons, Feather } from '@expo/vector-icons'
 
+
 // to use in the forms
 import t from 'tcomb-form-native'
 const Form = t.form.Form
@@ -35,13 +36,37 @@ class LoginScreen extends React.Component {
     }
   }
 
-  // async _onValueChange(item, selectedValue) {
-  //   try {
-  //     await AsyncStorage.setItem(item, selectedValue)
-  //   } catch (error) {
-  //     // console.log('AsyncStorage error: ' + error.message)
-  //   }
-  // }
+  async _storeToken(responseData) {
+    try {
+      await AsyncStorage.setItem('token', responseData.jwt)
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message)
+    }
+  }
+
+//   async _getTokenAndUser() {
+//     try {
+//       await AsyncStorage.multiGet(['token', 'user']).then((data) => {
+//         // if(data[0][1]) {
+//         //   token = data[0][1] || null
+//           return data
+//           // [1][1] // I can pass a function here to make a fetch (GET request with route users/id) to get the user or other data
+//         // }
+//       }).then((tokenAnduser) => {
+//         if(tokenAnduser) {
+//           return tokenAnduser.json()
+//         } else {
+//           return null
+//         }
+//       console.log('AsyncStorage error: ' + error.message)
+//     }).then((tokenAnduserObj) => {
+//       console.log(tokenAnduserObj)
+//     })
+//   } catch(error) {
+//     console.log(error.message)
+//   }
+// }
+
 
   _userLogin() {
     let value = this.refs.form.getValue()
@@ -54,14 +79,16 @@ class LoginScreen extends React.Component {
       // Active ActivityIndicator
       this.setState({showProgress: true})
 
-      fetch("https://spot-bot-server.herokuapp.com/login", {
+
+
+      fetch("http://127.0.0.1:3000/api/user_token", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          user: {
+          auth: {
             email: value.email,
             password: value.password,
           }
@@ -81,9 +108,7 @@ class LoginScreen extends React.Component {
     })
     .then((responseData) => {
       console.log(responseData)
-      //  this.setState({ success: true })
-      // this._onValueChange(STORAGE_KEY, responseData.id_token)
-      // AlertIOS
+      this._storeToken(responseData)
     })
     .catch((err) => {
       this.setState(err)
@@ -91,9 +116,7 @@ class LoginScreen extends React.Component {
     })
     .finally(() => {
       this.setState({showProgress: false})
-
-      // REMOVE THIS ???????????
-      // console.log(STORAGE_KEY)
+      console.log(this.props.navigation.goBack())
     })
     }
   }

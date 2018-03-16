@@ -2,8 +2,8 @@ import React from 'react'
 import { StyleSheet, Button, Text, View, Image, TouchableHighlight, 
   ActivityIndicator, AlertIOS, AsyncStorage, KeyboardAvoidingView } from 'react-native'
 import { StackNavigator } from 'react-navigation'
+// import ReactOnRails from 'react-on-rails'
 import { Ionicons, Feather } from '@expo/vector-icons'
-
 
 
 // to use in the forms
@@ -73,9 +73,9 @@ class SignUpScreen extends React.Component {
     }
   }
 
-  async _onValueChange(item, selectedValue) {
+  async _storeToken(responseData) {
     try {
-      await AsyncStorage.setItem(item, selectedValue)
+      await AsyncStorage.setItem('token', responseData.jwt)
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message)
     }
@@ -92,11 +92,13 @@ class SignUpScreen extends React.Component {
       // Active ActivityIndicator 
       this.setState({showProgress: true})
 
-      fetch("https://spot-bot-server.herokuapp.com/users", {
+      fetch("http://127.0.0.1:3000/users", {
         method: "POST", 
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          // 'X-CSRF-Token': 'jkhvadgdjhdkjgadjahsvdgc'
+          // 'authencity_token': ReactOnRails.authenticityToken()
         },
         body: JSON.stringify({
           user: {
@@ -109,31 +111,63 @@ class SignUpScreen extends React.Component {
         })
       })
       .then((response) => {
-      if(response.status >= 200 && response.status < 300) {
-        return response
-      }
-      throw {
-        badCredentials: response.status == 401,
-        unknownError: response.status != 401
-      }
-    })
-    .then((response) => {
-      return response.json()
-    })
-    .then((responseData) => {
-      console.log(responseData)
-      this._onValueChange('ID_TOKEN', responseData.id_token),
-      AlertIOS.alert(
-        'Signup Success!'
-      )
-    })
-    .catch((err) => {
-      this.setState(err)
-      console.log(err)
-    })
-    .finally(() => {
-      this.setState({showProgress: false})
-    })
+        if(response.status >= 200 && response.status < 300) {
+          return response
+        }
+        throw {
+          badCredentials: response.status == 401,
+          unknownError: response.status != 401
+        }
+      })
+      .then((response) => {
+        return response.json()
+      })
+      .then((responseData) => {
+        console.log(responseData)
+      
+        // Make a POST request with email and password to set user Token
+        fetch("http://127.0.0.1:3000/api/user_token", {
+          method: "POST", 
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            auth: {
+              email: responseData.email,
+              password: responseData.password,
+            }
+          })
+        })
+        .then((response) => {
+          if(response.status >= 200 && response.status < 300) {
+            return response
+          }
+          throw {
+            badCredentials: response.status == 401,
+            unknownError: response.status != 401
+          }
+        })
+        .then((response) => {
+          return response.json()
+        })
+        .then((responseData) => {
+          console.log(responseData)
+          this._storeToken(responseData)
+        })
+        .catch((err) => {
+          this.setState(err)
+          console.log(err)
+        })
+      })    
+      .catch((err) => {
+        this.setState(err)
+        console.log(err)
+      })
+      .finally(() => {
+        this.setState({showProgress: false})
+      console.log(this.props.navigation.goBack())
+      })
     }
   }
 

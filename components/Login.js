@@ -36,43 +36,36 @@ class LoginScreen extends React.Component {
     }
   }
 
-  async _storeTokenAndUser(responseData) {
+  async _storeToken(responseData) {
     try {
-      await AsyncStorage.setItem(
-        // [
-        // [
-          'token', responseData.jwt
-        // ],
-        // ['user', responseData.user]
-      // ]
-    )
+      await AsyncStorage.setItem('token', responseData.jwt)
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message)
     }
   }
 
-  async _getTokenAndUser() {
-    try {
-      await AsyncStorage.multiGet(['token', 'user']).then((data) => {
-        // if(data[0][1]) {
-        //   token = data[0][1] || null
-          return data
-          // [1][1] // I can pass a function here to make a fetch (GET request with route users/id) to get the user or other data
-        // }
-      }).then((tokenAnduser) => {
-        if(tokenAnduser) {
-          return tokenAnduser.json()
-        } else {
-          return null
-        }
-      console.log('AsyncStorage error: ' + error.message)
-    }).then((tokenAnduserObj) => {
-      console.log(tokenAnduserObj)
-    })
-  } catch(error) {
-    console.log(error.message)
-  }
-}
+//   async _getTokenAndUser() {
+//     try {
+//       await AsyncStorage.multiGet(['token', 'user']).then((data) => {
+//         // if(data[0][1]) {
+//         //   token = data[0][1] || null
+//           return data
+//           // [1][1] // I can pass a function here to make a fetch (GET request with route users/id) to get the user or other data
+//         // }
+//       }).then((tokenAnduser) => {
+//         if(tokenAnduser) {
+//           return tokenAnduser.json()
+//         } else {
+//           return null
+//         }
+//       console.log('AsyncStorage error: ' + error.message)
+//     }).then((tokenAnduserObj) => {
+//       console.log(tokenAnduserObj)
+//     })
+//   } catch(error) {
+//     console.log(error.message)
+//   }
+// }
   
 
   _userLogin() {
@@ -113,10 +106,7 @@ class LoginScreen extends React.Component {
     })
     .then((responseData) => {
       console.log(responseData)
-      AlertIOS.alert(
-        'Login Success!'
-      )
-      this._storeTokenAndUser(responseData)
+      this._storeToken(responseData)
     })
     .catch((err) => {
       this.setState(err)
@@ -124,7 +114,7 @@ class LoginScreen extends React.Component {
     })
     .finally(() => {
       this.setState({showProgress: false})
-      console.log()
+      console.log(this.props.navigation.goBack())
     })
     }
   }

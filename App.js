@@ -5,14 +5,11 @@ import { StackNavigator } from 'react-navigation'
 import { Ionicons, Feather, MaterialIcons } from '@expo/vector-icons'
 
 // Our components
-import SignUpComponent from './components/SignupScreen'
-import LoginComponent from './components/LoginScreen'
+import SignUpComponent from './components/Signup'
+import LoginComponent from './components/Login'
 import MapHome from './components/MapHome'
 import Slot from './components/Slot'
 import SlotsScreen from './components/SlotsScreen'
-
-
-const STORAGE_KEY = {}
 
 // Main Screen
 class HomeScreen extends React.Component {
@@ -31,7 +28,7 @@ class HomeScreen extends React.Component {
         },
         users: {
           user_id: 2,
-          name: 'prerana'
+          name: 'empty'
         },
         currentArea: {
             title: 'Marker1',
@@ -191,7 +188,7 @@ class HomeScreen extends React.Component {
     const params = navigation.state.params || {}
 
     return {
-      headerTitle: 'SpotBot',
+      headerTitle: `SpotBot`,
       headerRight: (
         <Button
           onPress={() => alert('This is a button!')}
@@ -222,6 +219,31 @@ class HomeScreen extends React.Component {
     })
   }
 
+  async componentWillMount() {
+    var token
+    try {
+      await AsyncStorage.multiGet(['token', 'user']).then((data) => {
+        if(data[0][1]) {
+          token = data[0][1] || null
+          return data[1][1] // I can pass a function here to make a fetch (GET request with route users/id) to get the user or other data
+        }
+      }).then((user) => {
+        if(user) {
+          return user.json()
+        } else {
+          return null
+        }
+      }).then((user) => {
+        this.setState({
+          user: user,
+          token: token
+        })
+      }) 
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message)
+    }
+  }
+
   componentDidMount() {
     var newParkingStatus = [...this.state.parking_areas]
     newParkingStatus.forEach(
@@ -242,6 +264,7 @@ class HomeScreen extends React.Component {
 
     return (
       <View>
+        <Text>User: {this.state.users.name}</Text>
         <View style={{ height: this.state.showSlotsDetails ? '50%' : '100%', backgroundColor: '#f00'}}>
           <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation}>
           </MapHome>
@@ -309,7 +332,7 @@ class SignUpScreen extends React.Component {
   }
 
   render() {
-    return ( <SignUpComponent navigation={this.state.navigationOptions}/>)
+    return ( <SignUpComponent navigation={this.props.navigation}/>)
   }  
 }
 
@@ -337,7 +360,7 @@ class LoginScreen extends React.Component {
 
   render() {
 
-    return ( <LoginComponent navigation={this.state.navigationOptions}/>)
+    return ( <LoginComponent navigation={this.props.navigation}/>)
   }
 }
 

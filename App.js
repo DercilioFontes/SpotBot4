@@ -279,7 +279,6 @@ class HomeScreen extends React.Component {
 
     return (
       <View>
-        <Text>User: {this.state.users.name}</Text>
         <View style={{ height: this.state.showSlotsDetails ? '50%' : '100%', backgroundColor: '#f00'}}>
           <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation}>
           </MapHome>

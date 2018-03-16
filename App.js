@@ -260,23 +260,77 @@ class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
-    var newParkingStatus = [...this.state.parking_areas]
-    newParkingStatus.forEach(
-      (parkingArea, index) => {
-      const totalSlot = parkingArea.slots.length;
-      const occupied = parkingArea.slots.filter(slot => slot.occupied === true)
-            parkingArea.description = `Total slots: ${totalSlot}`
-        if(occupied.length === totalSlot) {
-            parkingArea.parkingAreaStatus = 'full',
-            parkingArea.description = `Total slots: ${totalSlot} Status:Full`
-        }
-      }
-    )
+
+    function transformRaw(pa) {
+      console.log('pa inside transformRaw', pa)
+      return pa.parking_areas.map(raw_area => {
+        return {
+              parking_area_id: raw_area.parking_area.id,
+              title: raw_area.parking_area.parking_area_name,
+              description: raw_area.parking_area.parking_area_name,
+              parkingAreaStatus:'reserved',
+              coordinates: {
+                latitude: raw_area.parking_area.latitude,
+                longitude: raw_area.parking_area.longitude,
+              },
+              slots: raw_area.spots
+
+            }
+      })
+    }
+
+    function availability(parkingAreas) {
+      return parkingAreas.map((parkingArea) => {
+        const totalSlot = parkingArea.slots.length;
+        const unavailable_spots = parkingArea.slots.filter(slot => slot.availability === false)
+              console.log("green", availability);
+              parkingArea.description = `Total slots: ${totalSlot}`
+          if(unavailable_spots.length === totalSlot) {
+              parkingArea.parkingAreaStatus = 'full',
+              parkingArea.description = `Total slots: ${totalSlot} Status:Full`
+          }
+
+        return parkingArea;
+      });
+    }
+
+    const that = this;
+    // const parkingAreas = this.fetchParkingArea();
+    // console.log("parking check", parkingAreas)
+    fetch('http://127.0.0.1:3000/')
+      .then(res => res.json())
+      .then(transformRaw)
+      .then(availability)
+      .then(newParkingStatus => that.setState({parking_areas: newParkingStatus}))
+      // .then(test => console.log('teeeeeeeeest', test));
+
+
+    // var newParkingStatus = [...this.state.parking_areas]
+    // parkingAreas.forEach(
+    //   (parkingArea, index) => {
+    //   const totalSlot = parkingArea.slots.length;
+    //   const availability = parkingArea.slots.filter(slot => slot.availability === true)
+    //         parkingArea.description = `Total slots: ${totalSlot}`
+    //     if(availability.length === totalSlot) {
+    //         parkingArea.parkingAreaStatus = 'full',
+    //         parkingArea.description = `Total slots: ${totalSlot} Status:Full`
+    //     }
+    //   }
+    // )
+    // this.setState({parking_areas: newParkingStatus});
+  }
+  filterAccessibility() {
+    var newParking = this.state.currentArea;
+    const accessibles = this.state.currentArea.slots.filter(slot => slot.accessible === true && slot.availability === true);
+    console.log(accessibles);
+    this.setState({
+      currentArea:{slots: accessibles},
+      showSlotsDetails: true
+    })
   }
 
 
   render() {
-
     return (
       <View>
         <View style={{ height: this.state.showSlotsDetails ? '50%' : '100%', backgroundColor: '#f00'}}>
@@ -285,13 +339,13 @@ class HomeScreen extends React.Component {
         </View>
         { this.state.showSlotsDetails &&
           <View style={{ height: '50%', backgroundColor: '#0f0'}}>
-          <MaterialIcons  name='filter-list' size={30}/>
+          <MaterialIcons onPress={this.filterAccessibility.bind(this)} name='filter-list' size={30}/>
              <Button
                 onPress={this.closeSlot.bind(this)}
                 title="Close"
                 color="#841584"
               />
-              <SlotsScreen user_id={this.state.user_id} slots={this.state.currentArea.slots} />
+              <SlotsScreen key={1} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
             </View>
         }
 

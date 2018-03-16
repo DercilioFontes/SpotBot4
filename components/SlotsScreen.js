@@ -16,7 +16,7 @@ export default class SlotsScreen extends React.Component {
       spot: {
         spot_id: 1,
         label: 'spot1',
-        occupied: true,
+        availability: true,
         accessible: false,
         spot_information: "this is spot 1"
       }
@@ -27,24 +27,23 @@ export default class SlotsScreen extends React.Component {
   }
 
   render() {
-
-    const slotList = this.props.slots.map((slots, index) => {
+    const slotsAvailable = this.props.slots.filter(slot => slot.availability === true)
+    const slotList = slotsAvailable.map((slots, index) => {
        return (
           <View>
-            <Slot key={index} slot={slots} showSlot={this.showSlot.bind(this)} />
+          {
+            <Slot key={index} slot={slots} user_id={this.state.user_id} showSlot={this.showSlot.bind(this)} />
+          }
           </View>
         )
      })
-
     return (
       <ScrollView>
         <View style={{backgroundColor: '#f00'}}>
          {slotList}
         </View>
         { this.state.showModal &&
-
-            <ReserveSpot spot={this.state.spot} showModal={this.state.showModal}/>
-
+            <ReserveSpot spot={this.state.spot} user_id={this.state.user_id} />
         }
       </ScrollView>
       )

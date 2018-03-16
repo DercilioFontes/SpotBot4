@@ -26,7 +26,6 @@ export default class SlotsScreen extends React.Component {
     this.setState({showModal: true, user_id: user_id, spot: slot})
   }
 
-
   render() {
     const slotsAvailable = this.props.slots.filter(slot => slot.availability === true)
     const slotList = slotsAvailable.map((slots, index) => {
@@ -38,14 +37,13 @@ export default class SlotsScreen extends React.Component {
           </View>
         )
      })
-
     return (
       <ScrollView>
         <View style={{backgroundColor: '#f00'}}>
          {slotList}
         </View>
         { this.state.showModal &&
-            <ReserveSpot spot={this.state.spot} user_id={this.state.user_id} showModal={this.state.showModal}/>
+            <ReserveSpot spot={this.state.spot} user_id={this.state.user_id} />
         }
       </ScrollView>
       )

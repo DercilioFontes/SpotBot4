@@ -254,7 +254,7 @@ class HomeScreen extends React.Component {
                   longitude: raw_area.parking_area.longitude,
                 },
                 slots: raw_area.spots
-                // slots: parking_areas_obj.parking_areas[0].spots
+
               }
         })
       }
@@ -301,10 +301,12 @@ class HomeScreen extends React.Component {
     }
     filterAccessibility() {
       var newParking = this.state.currentArea;
-      const accessibles = newParking.slots.filter(slot => slot.aaccessible === true);
-      alert(newParking.slots[1].accessible)
-      newParking.slots = accessibles;
-      // this.setState({currentArea: newParkingStatus});
+      const accessibles = this.state.currentArea.slots.filter(slot => slot.accessible === true && slot.availability === true);
+      console.log(accessibles);
+      this.setState({
+        currentArea:{slots: accessibles},
+        showSlotsDetails: true
+      })
     }
 
   render() {
@@ -322,7 +324,7 @@ class HomeScreen extends React.Component {
                 title="Close"
                 color="#841584"
               />
-              <SlotsScreen user_id={this.state.user_id} slots={this.state.currentArea.slots} />
+              <SlotsScreen key={1} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
             </View>
         }
 

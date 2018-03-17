@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Button, Text, View, Image, TouchableHighlight, ActivityIndicator, AlertIOS, AsyncStorage, TouchableOpacity, ImageBackground, Modal} from 'react-native'
 import { MapView, Notifications } from 'expo'
 import { StackNavigator, DrawerNavigator } from 'react-navigation'
-import { Ionicons, Feather, MaterialIcons } from '@expo/vector-icons'
+import { Ionicons, Feather, MaterialIcons, FontAwesome } from '@expo/vector-icons'
 
 // Our components
 import SignUpComponent from './components/Signup'
@@ -35,10 +35,10 @@ class HomeScreen extends React.Component {
         showSlotsDetails: false,
         annotations: [],
         mapRegion: {
-          latitude: 49.269966,
-          longitude: -123.251043,
+          latitude: 49.26,
+          longitude: -123.25,
           latitudeDelta: 0.004,
-          longitudeDelta: 0.04,
+          longitudeDelta: 0.024,
           title: "UBC parking slot"
         },
         users: {
@@ -259,9 +259,10 @@ class HomeScreen extends React.Component {
     }
   }
 
-  componentDidMount() {
 
-    function transformRaw(pa) {
+
+
+  transformRaw(pa) {
       console.log('pa inside transformRaw', pa)
       return pa.parking_areas.map(raw_area => {
         return {
@@ -275,79 +276,82 @@ class HomeScreen extends React.Component {
               },
               slots: raw_area.spots
 
-            }
-      })
-    }
-
-    function availability(parkingAreas) {
-      return parkingAreas.map((parkingArea) => {
-        const totalSlot = parkingArea.slots.length;
-        const unavailable_spots = parkingArea.slots.filter(slot => slot.availability === false)
-              console.log("green", availability);
-              parkingArea.description = `Total slots: ${totalSlot}`
-          if(unavailable_spots.length === totalSlot) {
-              parkingArea.parkingAreaStatus = 'full',
-              parkingArea.description = `Total slots: ${totalSlot} Status:Full`
-          }
-
-        return parkingArea;
-      });
-    }
-
-    const that = this;
-    // const parkingAreas = this.fetchParkingArea();
-    // console.log("parking check", parkingAreas)
-    fetch('http://127.0.0.1:3000/')
-      .then(res => res.json())
-      .then((transformRaw) => {
-        console.log(transformRaw)
-      })
-      .then(availability)
-      .then(newParkingStatus => that.setState({parking_areas: newParkingStatus}))
-      // .then(test => console.log('teeeeeeeeest', test));
-
-
-    // var newParkingStatus = [...this.state.parking_areas]
-    // parkingAreas.forEach(
-    //   (parkingArea, index) => {
-    //   const totalSlot = parkingArea.slots.length;
-    //   const availability = parkingArea.slots.filter(slot => slot.availability === true)
-    //         parkingArea.description = `Total slots: ${totalSlot}`
-    //     if(availability.length === totalSlot) {
-    //         parkingArea.parkingAreaStatus = 'full',
-    //         parkingArea.description = `Total slots: ${totalSlot} Status:Full`
-    //     }
-    //   }
-    // )
-    // this.setState({parking_areas: newParkingStatus});
-  }
-  filterAccessibility() {
-    var newParking = this.state.currentArea;
-    const accessibles = this.state.currentArea.slots.filter(slot => slot.accessible === true && slot.availability === true);
-    console.log(accessibles);
-    this.setState({
-      currentArea:{slots: accessibles},
-      showSlotsDetails: true
+        }
     })
   }
+
+
+  availability(parkingAreas) {
+    console.log("availPAs", parkingAreas);
+    return parkingAreas.map((parkingArea) => {
+      console.log("I am a parking area, you should park in me:", parkingArea);
+      const totalSlot = parkingArea.slots.length;
+      const unavailable_spots = parkingArea.slots.filter(slot => slot.availability === false)
+      parkingArea.description = `Total slots: ${totalSlot}`
+      if (unavailable_spots.length === totalSlot) {
+          parkingArea.parkingAreaStatus = 'full',
+          parkingArea.description = `Total slots: ${totalSlot} Status:Full`
+      }
+
+      return parkingArea;
+    });
+  }
+
+
+
+
+
+    componentDidMount() {
+
+
+
+      const that = this;
+      fetch('http://127.0.0.1:3000/')
+        .then(res => res.json())
+        .then(this.transformRaw)
+        .then(this.availability)
+        .then(newParkingStatus =>
+          {
+
+            that.setState({parking_areas: newParkingStatus})
+        })
+    }
+
+    filterAccessibility() {
+      var newParking = this.state.currentArea;
+      const accessibles = this.state.currentArea.slots.filter(slot => slot.accessible === true && slot.availability === true);
+      console.log(accessibles);
+      this.setState({
+        currentArea:{slots: accessibles},
+        showSlotsDetails: true
+      })
+    }
+
+    homePage(newParkingArea) {
+      const transformRawParking = this.transformRaw(newParkingArea);
+      this.setState({
+        showSlotsDetails: false,
+        parking_areas: this.availability(transformRawParking)
+      })
+     console.log("parking area",this.state.parking_areas);
+
+    }
 
 
   render() {
     return (
       <View>
-        <View style={{ height: this.state.showSlotsDetails ? '50%' : '100%', backgroundColor: '#f00'}}>
+        <View style={{ height: this.state.showSlotsDetails ? '50%' : '100%', backgroundColor: '#d0e7a6'}}>
           <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation}>
           </MapHome>
         </View>
         { this.state.showSlotsDetails &&
-          <View style={{ height: '50%', backgroundColor: '#0f0'}}>
-          <MaterialIcons onPress={this.filterAccessibility.bind(this)} name='filter-list' size={30}/>
-             <Button
+          <View style={{ height: '50%', backgroundColor: '#d0e7a6'}}>
+            <MaterialIcons style={{display:'inline'}} onPress={this.filterAccessibility.bind(this)} name='filter-list' size={30}/>
+             <FontAwesome style={{position:'absolute', top: 3, right: 5}} name='close' size={30}
                 onPress={this.closeSlot.bind(this)}
-                title="Close"
-                color="#841584"
               />
-              <SlotsScreen key={1} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
+              <SlotsScreen homePage={this.homePage.bind(this)} key={1} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
             </View>
         }
 
@@ -356,9 +360,8 @@ class HomeScreen extends React.Component {
   }
 }
 
-// Modal of the headers button
-class ModalScreen extends React.Component {
 
+class ModalScreen extends React.Component {
   render() {
     const pic = require('./assets/vancouver.jpg')
 

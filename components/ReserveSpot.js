@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, Modal, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, Modal, TouchableOpacity, Image} from 'react-native';
 import React, {Component} from 'react';
-import { Notifications, Permissions } from 'expo';
+import { Notifications, Permissions, Constants } from 'expo';
+import {FontAwesome} from '@expo/vector-icons'
 
 
 export default class ReserveSpot extends React.Component {
@@ -8,12 +9,13 @@ export default class ReserveSpot extends React.Component {
     let result = await
     Permissions.askAsync(Permissions.NOTIFICATIONS);
     if (result.status === 'granted') {
-     console.log('Notification permissions granted.')
+     console.log('Notification permissions granted.');
+    } else {
+      console.log('Permissions not granted.');
     }
   }
 
-  reserveSpot(localNotification, schedulingOptions) {
-      Notifications.scheduleLocalNotificationAsync(localNotification, schedulingOptions);
+  reserveSpot() {
     fetch(`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
         method: "POST",
         headers: {
@@ -28,7 +30,7 @@ export default class ReserveSpot extends React.Component {
         })
       })
       .then((response) => {
-        console.log(response);
+        // console.log("reserve response from database",response);
       if(response.status >= 200 && response.status < 300) {
         return response
       }
@@ -41,10 +43,9 @@ export default class ReserveSpot extends React.Component {
       return response.json()
     })
     .then((responseData) => {
-      console.log(responseData)
-      //  this.setState({ success: true })
-      // this._onValueChange(STORAGE_KEY, responseData.id_token)
-      // AlertIOS
+      console.log("parking spot",  responseData)
+       this.props.reserveClick(responseData);
+
     })
     .catch((err) => {
       this.setState(err)
@@ -53,19 +54,18 @@ export default class ReserveSpot extends React.Component {
     .finally(() => {
       this.setState({showProgress: false})
 
-      // REMOVE THIS ???????????
-      // console.log(STORAGE_KEY)
     })
 
     }
   render () {
+    Notifications.cancelAllScheduledNotificationsAsync();
     const localNotification = {
-    title: 'Hi',
-    body: 'You have 5 min left', // (string) — body text of the notification.
+    title: 'hi ',
+    body: 'u have 5 min', // (string) — body text of the notification.
     ios: { // (optional) (object) — notification configuration specific to iOS.
       sound: true // (optional) (boolean) — if true, play a sound. Default: false.
     },
-android: // (optional) (object) — notification configuration specific to Android.
+    android: // (optional) (object) — notification configuration specific to Android.
     {
       sound: true, // (optional) (boolean) — if true, play a sound. Default: false.
       //icon (optional) (string) — URL of icon to display in notification drawer.
@@ -77,30 +77,38 @@ android: // (optional) (object) — notification configuration specific to Andro
     }
   };
 
-
-  const schedulingOptions = {
-    time: (new Date()).getTime() + 3000
+  let t = new Date();
+    t.setSeconds(t.getSeconds() + 10);
+    const schedulingOptions = {
+    time: t, // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+    // repeat: repeat
   };
+
+  Notifications.scheduleLocalNotificationAsync(localNotification, schedulingOptions);
+
 
     return(
     <View style={styles.reserveModal}>
-      <Text>{this.props.spot.label}</Text>
-      <Text>{this.props.spot.spot_information}</Text>
-      <TouchableOpacity onPress={this.reserveSpot.bind(this,localNotification, schedulingOptions )}><Text >Reserve</Text></TouchableOpacity>
+        <Image style={styles.image} source={require('../images/map.jpg')} />
+        <FontAwesome name='car' style={styles.carIcon} color='#d0e7a6' size={100}/>
+        <Text style={styles.text}>{this.props.spot.label}</Text>
+        <Text style={styles.information}>{this.props.spot.spot_information}</Text>
+        <TouchableOpacity style={styles.reserveButton} onPress={this.reserveSpot.bind(this)}><Text style={styles.textButton}>Reserve</Text></TouchableOpacity>
     </View>
   )}
 }
 
 const styles = StyleSheet.create({
   reserveButton: {
-    backgroundColor: '#aaa',
-    height: 350,
-    justifyContent: 'center',
+    backgroundColor: '#d0e7a6',
+    height: 30,
     alignItems: 'center',
+    width: 100,
+    padding: 5,
     position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: 500
+    bottom: 10,
+    right: 130,
+    color: 'white'
   },
   reserveModal: {
     position: 'absolute',
@@ -108,8 +116,33 @@ const styles = StyleSheet.create({
     width: '100%',
     bottom: 0,
     left: 0,
-    backgroundColor: '#bbb'
-
+    backgroundColor: 'white',
+    fontFamily: 'Cochin',
+    textAlign: 'center'
+  },
+  image: {
+    borderWidth: 1,
+    height: 140,
+    opacity: 0.3
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    padding: 10,textAlign: 'center'
+  },
+  information: {
+    fontSize: 15,
+    textAlign: 'center'
+  },
+  carIcon: {
+    position: 'absolute',
+    right: 130,
+    top: 15,
+  },
+  textButton: {
+    color: 'white',
+    fontWeight: 'bold',
   }
 
 })
+

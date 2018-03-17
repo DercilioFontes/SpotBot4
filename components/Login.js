@@ -154,7 +154,6 @@ class LoginScreen extends React.Component {
         marginTop: 20
       }
     });
-
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
         <View style={{ flex: 1, alignSelf: 'auto', justifyContent: 'center', padding: 20 }}>

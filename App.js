@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Button, Text, View, Image, TouchableHighlight, ActivityIndicator, AlertIOS, AsyncStorage, TouchableOpacity, ImageBackground} from 'react-native'
+import { StyleSheet, Button, Text, View, Image, TouchableHighlight, ActivityIndicator, AlertIOS, AsyncStorage, TouchableOpacity, ImageBackground, Modal} from 'react-native'
 import { MapView, Notifications } from 'expo'
 import { StackNavigator, DrawerNavigator } from 'react-navigation'
 import { Ionicons, Feather, MaterialIcons } from '@expo/vector-icons'
@@ -299,7 +299,9 @@ class HomeScreen extends React.Component {
     // console.log("parking check", parkingAreas)
     fetch('http://127.0.0.1:3000/')
       .then(res => res.json())
-      .then(transformRaw)
+      .then((transformRaw) => {
+        console.log(transformRaw)
+      })
       .then(availability)
       .then(newParkingStatus => that.setState({parking_areas: newParkingStatus}))
       // .then(test => console.log('teeeeeeeeest', test));
@@ -361,7 +363,8 @@ class ModalScreen extends React.Component {
     const pic = require('./assets/vancouver.jpg')
 
     return (
-      <ImageBackground source= {pic} style={{ opacity: .7,  flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <ImageBackground transparent = {true} source= {pic} style={{ width: 200, opacity: .7,  flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
         <Text style={styles.main_header }>SpotBot</Text>
         <Text
           style={styles.buttonOutline}

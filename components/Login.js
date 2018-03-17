@@ -81,7 +81,7 @@ class LoginScreen extends React.Component {
 
 
 
-      fetch("https://spot-bot-server.herokuapp.com/user_token", {
+      fetch("http://127.0.0.1:3000/user_token", {
         method: "POST",
         headers: {
           'Accept': 'application/json',

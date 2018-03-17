@@ -106,24 +106,14 @@ const styles = StyleSheet.create({
     width: 100,
     padding: 5,
     position: 'absolute',
-    bottom: 10,
-    right: 130,
+    top: 250,
+    right: 150,
     color: 'white'
-  },
-  reserveModal: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    bottom: 0,
-    left: 0,
-    backgroundColor: 'white',
-    fontFamily: 'Cochin',
-    textAlign: 'center'
   },
   image: {
     borderWidth: 1,
     height: 140,
-    opacity: 0.3
+    opacity: 0.5
   },
   text: {
     fontSize: 20,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Button, Text, View, Image, TouchableHighlight, 
+import { StyleSheet, Button, Text, View, Image, TouchableHighlight,
   ActivityIndicator, AlertIOS, AsyncStorage, KeyboardAvoidingView } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 // import ReactOnRails from 'react-on-rails'
@@ -49,7 +49,7 @@ const options = {
     email: {
       keyboardType: 'email-address'
     },
-    password: { 
+    password: {
       secureTextEntry: true
     },
     passwordConfirmation: {
@@ -89,11 +89,11 @@ class SignUpScreen extends React.Component {
 
     if (value) {
 
-      // Active ActivityIndicator 
+      // Active ActivityIndicator
       this.setState({showProgress: true})
 
       fetch("http://127.0.0.1:3000/users", {
-        method: "POST", 
+        method: "POST",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -102,8 +102,8 @@ class SignUpScreen extends React.Component {
         },
         body: JSON.stringify({
           user: {
-            name: value.name, 
-            license_plate: value.licensePlate, 
+            name: value.name,
+            license_plate: value.licensePlate,
             email: value.email,
             password: value.password,
             password_confirmation: value.passwordConfirmation
@@ -124,10 +124,10 @@ class SignUpScreen extends React.Component {
       })
       .then((responseData) => {
         console.log(responseData)
-      
+
         // Make a POST request with email and password to set user Token
-        fetch("http://127.0.0.1:3000/api/user_token", {
-          method: "POST", 
+        fetch("http://127.0.0.1:3000/user_token", {
+          method: "POST",
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -159,7 +159,7 @@ class SignUpScreen extends React.Component {
           this.setState(err)
           console.log(err)
         })
-      })    
+      })
       .catch((err) => {
         this.setState(err)
         console.log(err)
@@ -199,7 +199,7 @@ class SignUpScreen extends React.Component {
         marginTop: 20
       }
     });
-    
+
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
       <View style={{ flex: 1, alignSelf: 'auto', justifyContent: 'center', padding: 20 }}>
@@ -211,7 +211,7 @@ class SignUpScreen extends React.Component {
          <TouchableHighlight style={styles.button} onPress={this._userSignup.bind(this)} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableHighlight>
-        
+
         <ActivityIndicator
         animating={this.state.showProgress}
         size='large'

@@ -331,7 +331,7 @@ class HomeScreen extends React.Component {
           </MapHome>
         </View>
         { this.state.showSlotsDetails &&
-          <View style={{ height: '50%', backgroundColor: '#d0e7a6'}}>
+          <View style={{ height: '50%', backgroundColor: 'white'}}>
             <MaterialIcons style={{display:'inline'}} onPress={this.filterAccessibility.bind(this)} name='filter-list' size={30}/>
              <FontAwesome style={{position:'absolute', top: 3, right: 5}} name='close' size={30}
                 onPress={this.closeSlot.bind(this)}

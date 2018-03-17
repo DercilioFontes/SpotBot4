@@ -46,10 +46,10 @@ export default class SlotsScreen extends React.Component {
       <ScrollView>
         <View style={{backgroundColor: '#d0e7a6'}}>
          {slotList}
-        </View>
         { this.state.showModal &&
             <ReserveSpot spot={this.state.spot} reserveClick={this.reserveClick.bind(this)} user_id={this.state.user_id} />
         }
+        </View>
       </ScrollView>
       )
   }

@@ -20,10 +20,10 @@ class HomeScreen extends React.Component {
         showSlotsDetails: false,
         annotations: [],
         mapRegion: {
-          latitude: 49.269966,
-          longitude: -123.251043,
+          latitude: 49.26,
+          longitude: -123.25,
           latitudeDelta: 0.004,
-          longitudeDelta: 0.04,
+          longitudeDelta: 0.024,
           title: "UBC parking slot"
         },
         users: {
@@ -333,7 +333,7 @@ class HomeScreen extends React.Component {
         { this.state.showSlotsDetails &&
           <View style={{ height: '50%', backgroundColor: '#d0e7a6'}}>
             <MaterialIcons style={{display:'inline'}} onPress={this.filterAccessibility.bind(this)} name='filter-list' size={30}/>
-             <FontAwesome style={{position:'absolute', top: 3, right: 5}} name='close'  size={30}
+             <FontAwesome style={{position:'absolute', top: 3, right: 5}} name='close' size={30}
                 onPress={this.closeSlot.bind(this)}
               />
               <SlotsScreen homePage={this.homePage.bind(this)} key={1} user_id={this.state.user_id} slots={this.state.currentArea.slots} />

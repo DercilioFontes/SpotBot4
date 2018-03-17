@@ -238,15 +238,16 @@ class HomeScreen extends React.Component {
           user: user,
           token: token
         })
-      }) 
+      })
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message)
     }
   }
 
-  componentDidMount() {
 
-    function transformRaw(pa) {
+
+
+  transformRaw(pa) {
       console.log('pa inside transformRaw', pa)
       return pa.parking_areas.map(raw_area => {
         return {
@@ -260,59 +261,66 @@ class HomeScreen extends React.Component {
               },
               slots: raw_area.spots
 
-            }
+        }
+    })
+  }
+
+
+  availability(parkingAreas) {
+    console.log("availPAs", parkingAreas);
+    return parkingAreas.map((parkingArea) => {
+      console.log("I am a parking area, you should park in me:", parkingArea);
+      const totalSlot = parkingArea.slots.length;
+      const unavailable_spots = parkingArea.slots.filter(slot => slot.availability === false)
+      parkingArea.description = `Total slots: ${totalSlot}`
+      if (unavailable_spots.length === totalSlot) {
+          parkingArea.parkingAreaStatus = 'full',
+          parkingArea.description = `Total slots: ${totalSlot} Status:Full`
+      }
+
+      return parkingArea;
+    });
+  }
+
+
+
+
+
+    componentDidMount() {
+
+
+
+      const that = this;
+      fetch('http://127.0.0.1:3000/')
+        .then(res => res.json())
+        .then(this.transformRaw)
+        .then(this.availability)
+        .then(newParkingStatus =>
+          {
+
+            that.setState({parking_areas: newParkingStatus})
+        })
+    }
+
+    filterAccessibility() {
+      var newParking = this.state.currentArea;
+      const accessibles = this.state.currentArea.slots.filter(slot => slot.accessible === true && slot.availability === true);
+      console.log(accessibles);
+      this.setState({
+        currentArea:{slots: accessibles},
+        showSlotsDetails: true
       })
     }
 
-    function availability(parkingAreas) {
-      return parkingAreas.map((parkingArea) => {
-        const totalSlot = parkingArea.slots.length;
-        const unavailable_spots = parkingArea.slots.filter(slot => slot.availability === false)
-              console.log("green", availability);
-              parkingArea.description = `Total slots: ${totalSlot}`
-          if(unavailable_spots.length === totalSlot) {
-              parkingArea.parkingAreaStatus = 'full',
-              parkingArea.description = `Total slots: ${totalSlot} Status:Full`
-          }
+    homePage(newParkingArea) {
+      const transformRawParking = this.transformRaw(newParkingArea);
+      this.setState({
+        showSlotsDetails: false,
+        parking_areas: this.availability(transformRawParking)
+      })
+     console.log("parking area",this.state.parking_areas);
 
-        return parkingArea;
-      });
     }
-
-    const that = this;
-    // const parkingAreas = this.fetchParkingArea();
-    // console.log("parking check", parkingAreas)
-    fetch('http://127.0.0.1:3000/')
-      .then(res => res.json())
-      .then(transformRaw)
-      .then(availability)
-      .then(newParkingStatus => that.setState({parking_areas: newParkingStatus}))
-      // .then(test => console.log('teeeeeeeeest', test));
-
-
-    // var newParkingStatus = [...this.state.parking_areas]
-    // parkingAreas.forEach(
-    //   (parkingArea, index) => {
-    //   const totalSlot = parkingArea.slots.length;
-    //   const availability = parkingArea.slots.filter(slot => slot.availability === true)
-    //         parkingArea.description = `Total slots: ${totalSlot}`
-    //     if(availability.length === totalSlot) {
-    //         parkingArea.parkingAreaStatus = 'full',
-    //         parkingArea.description = `Total slots: ${totalSlot} Status:Full`
-    //     }
-    //   }
-    // )
-    // this.setState({parking_areas: newParkingStatus});
-  }
-  filterAccessibility() {
-    var newParking = this.state.currentArea;
-    const accessibles = this.state.currentArea.slots.filter(slot => slot.accessible === true && slot.availability === true);
-    console.log(accessibles);
-    this.setState({
-      currentArea:{slots: accessibles},
-      showSlotsDetails: true
-    })
-  }
 
 
   render() {
@@ -330,7 +338,7 @@ class HomeScreen extends React.Component {
                 title="Close"
                 color="#841584"
               />
-              <SlotsScreen key={1} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
+              <SlotsScreen homePage={this.homePage.bind(this)} key={1} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
             </View>
         }
 
@@ -339,7 +347,7 @@ class HomeScreen extends React.Component {
   }
 }
 
-// Modal of the headers button
+
 class ModalScreen extends React.Component {
 
   render() {
@@ -369,12 +377,12 @@ class SignUpScreen extends React.Component {
     super(props)
     this.state = {
       navigationOptions: this.navigationOptions
-    } 
+    }
   }
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
-    
+
     return {
       title: 'Sign Up',
       headerStyle: {
@@ -386,7 +394,7 @@ class SignUpScreen extends React.Component {
 
   render() {
     return ( <SignUpComponent navigation={this.props.navigation}/>)
-  }  
+  }
 }
 
 class LoginScreen extends React.Component {
@@ -398,10 +406,10 @@ class LoginScreen extends React.Component {
     }
   }
 
-  
+
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
-    
+
     return {
       title: 'Login',
       headerStyle: {

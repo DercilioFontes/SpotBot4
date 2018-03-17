@@ -13,7 +13,7 @@ export default class ReserveSpot extends React.Component {
   }
 
   reserveSpot(localNotification, schedulingOptions) {
-      Notifications.scheduleLocalNotificationAsync(localNotification, schedulingOptions);
+    Notifications.scheduleLocalNotificationAsync(localNotification, schedulingOptions);
     fetch(`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
         method: "POST",
         headers: {
@@ -28,7 +28,7 @@ export default class ReserveSpot extends React.Component {
         })
       })
       .then((response) => {
-        console.log(response);
+        // console.log("reserve response from database",response);
       if(response.status >= 200 && response.status < 300) {
         return response
       }
@@ -42,9 +42,8 @@ export default class ReserveSpot extends React.Component {
     })
     .then((responseData) => {
       console.log(responseData)
-      //  this.setState({ success: true })
-      // this._onValueChange(STORAGE_KEY, responseData.id_token)
-      // AlertIOS
+       this.props.reserveClick(responseData);
+
     })
     .catch((err) => {
       this.setState(err)
@@ -79,14 +78,14 @@ android: // (optional) (object) — notification configuration specific to Andro
 
 
   const schedulingOptions = {
-    time: (new Date()).getTime() + 3000
+    time: new Date().getTime() + 3000
   };
 
     return(
     <View style={styles.reserveModal}>
       <Text>{this.props.spot.label}</Text>
       <Text>{this.props.spot.spot_information}</Text>
-      <TouchableOpacity onPress={this.reserveSpot.bind(this,localNotification, schedulingOptions )}><Text >Reserve</Text></TouchableOpacity>
+      <TouchableOpacity onPress={this.reserveSpot.bind(this)}><Text >Reserve</Text></TouchableOpacity>
     </View>
   )}
 }
@@ -113,3 +112,4 @@ const styles = StyleSheet.create({
   }
 
 })
+

@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, Modal, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, Modal, TouchableOpacity, Image} from 'react-native';
 import React, {Component} from 'react';
 import { Notifications, Permissions } from 'expo';
+import {FontAwesome} from '@expo/vector-icons'
 
 
 export default class ReserveSpot extends React.Component {
@@ -13,7 +14,7 @@ export default class ReserveSpot extends React.Component {
   }
 
   reserveSpot(localNotification, schedulingOptions) {
-    Notifications.scheduleLocalNotificationAsync(localNotification, schedulingOptions);
+    // Notifications.scheduleLocalNotificationAsync(localNotification, schedulingOptions);
     fetch(`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
         method: "POST",
         headers: {
@@ -41,7 +42,7 @@ export default class ReserveSpot extends React.Component {
       return response.json()
     })
     .then((responseData) => {
-      console.log(responseData)
+      console.log("parking spot",  responseData)
        this.props.reserveClick(responseData);
 
     })
@@ -52,54 +53,55 @@ export default class ReserveSpot extends React.Component {
     .finally(() => {
       this.setState({showProgress: false})
 
-      // REMOVE THIS ???????????
-      // console.log(STORAGE_KEY)
     })
 
     }
   render () {
-    const localNotification = {
-    title: 'Hi',
-    body: 'You have 5 min left', // (string) — body text of the notification.
-    ios: { // (optional) (object) — notification configuration specific to iOS.
-      sound: true // (optional) (boolean) — if true, play a sound. Default: false.
-    },
-android: // (optional) (object) — notification configuration specific to Android.
-    {
-      sound: true, // (optional) (boolean) — if true, play a sound. Default: false.
-      //icon (optional) (string) — URL of icon to display in notification drawer.
-      //color (optional) (string) — color of the notification icon in notification drawer.
-      priority: 'high', // (optional) (min | low | high | max) — android may present notifications according to the priority, for example a high priority notification will likely to be shown as a heads-up notification.
-      sticky: false, // (optional) (boolean) — if true, the notification will be sticky and not dismissable by user. The notification must be programmatically dismissed. Default: false.
-      vibrate: true // (optional) (boolean or array) — if true, vibrate the device. An array can be supplied to specify the vibration pattern, e.g. - [ 0, 500 ].
-      // link (optional) (string) — external link to open when notification is selected.
-    }
-  };
+//     const localNotification = {
+//     title: 'Hi',
+//     body: 'You have 5 min left', // (string) — body text of the notification.
+//     ios: { // (optional) (object) — notification configuration specific to iOS.
+//       sound: true // (optional) (boolean) — if true, play a sound. Default: false.
+//     },
+// android: // (optional) (object) — notification configuration specific to Android.
+//     {
+//       sound: true, // (optional) (boolean) — if true, play a sound. Default: false.
+//       //icon (optional) (string) — URL of icon to display in notification drawer.
+//       //color (optional) (string) — color of the notification icon in notification drawer.
+//       priority: 'high', // (optional) (min | low | high | max) — android may present notifications according to the priority, for example a high priority notification will likely to be shown as a heads-up notification.
+//       sticky: false, // (optional) (boolean) — if true, the notification will be sticky and not dismissable by user. The notification must be programmatically dismissed. Default: false.
+//       vibrate: true // (optional) (boolean or array) — if true, vibrate the device. An array can be supplied to specify the vibration pattern, e.g. - [ 0, 500 ].
+//       // link (optional) (string) — external link to open when notification is selected.
+//     }
+//   };
 
 
-  const schedulingOptions = {
-    time: new Date().getTime() + 3000
-  };
+//   const schedulingOptions = {
+//     time: new Date().getTime() + 3000
+//   };
 
     return(
     <View style={styles.reserveModal}>
-      <Text>{this.props.spot.label}</Text>
-      <Text>{this.props.spot.spot_information}</Text>
-      <TouchableOpacity onPress={this.reserveSpot.bind(this)}><Text >Reserve</Text></TouchableOpacity>
+        <Image style={styles.image} source={require('../images/map.jpg')} />
+        <FontAwesome name='car' style={styles.carIcon} color='#d0e7a6' size={100}/>
+        <Text style={styles.text}>{this.props.spot.label}</Text>
+        <Text style={styles.information}>{this.props.spot.spot_information}</Text>
+        <TouchableOpacity style={styles.reserveButton} onPress={this.reserveSpot.bind(this)}><Text style={styles.textButton}>Reserve</Text></TouchableOpacity>
     </View>
   )}
 }
 
 const styles = StyleSheet.create({
   reserveButton: {
-    backgroundColor: '#aaa',
-    height: 350,
-    justifyContent: 'center',
+    backgroundColor: '#d0e7a6',
+    height: 30,
     alignItems: 'center',
+    width: 100,
+    padding: 5,
     position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: 500
+    bottom: 10,
+    right: 130,
+    color: 'white'
   },
   reserveModal: {
     position: 'absolute',
@@ -107,8 +109,32 @@ const styles = StyleSheet.create({
     width: '100%',
     bottom: 0,
     left: 0,
-    backgroundColor: '#bbb'
-
+    backgroundColor: 'white',
+    fontFamily: 'Cochin',
+    textAlign: 'center'
+  },
+  image: {
+    borderWidth: 1,
+    height: 140,
+    opacity: 0.3
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    padding: 10,textAlign: 'center'
+  },
+  information: {
+    fontSize: 15,
+    textAlign: 'center'
+  },
+  carIcon: {
+    position: 'absolute',
+    right: 130,
+    top: 15,
+  },
+  textButton: {
+    color: 'white',
+    fontWeight: 'bold',
   }
 
 })

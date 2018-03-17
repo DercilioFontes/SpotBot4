@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Button, Text, View, Image, TouchableHighlight, ActivityIndicator, AlertIOS, AsyncStorage, TouchableOpacity } from 'react-native'
 import { MapView, Notifications } from 'expo'
 import { StackNavigator } from 'react-navigation'
-import { Ionicons, Feather, MaterialIcons } from '@expo/vector-icons'
+import { Ionicons, Feather, MaterialIcons, FontAwesome } from '@expo/vector-icons'
 
 // Our components
 import SignUpComponent from './components/Signup'
@@ -326,17 +326,15 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View>
-        <View style={{ height: this.state.showSlotsDetails ? '50%' : '100%', backgroundColor: '#f00'}}>
+        <View style={{ height: this.state.showSlotsDetails ? '50%' : '100%', backgroundColor: '#d0e7a6'}}>
           <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation}>
           </MapHome>
         </View>
         { this.state.showSlotsDetails &&
-          <View style={{ height: '50%', backgroundColor: '#0f0'}}>
-          <MaterialIcons onPress={this.filterAccessibility.bind(this)} name='filter-list' size={30}/>
-             <Button
+          <View style={{ height: '50%', backgroundColor: '#d0e7a6'}}>
+            <MaterialIcons style={{display:'inline'}} onPress={this.filterAccessibility.bind(this)} name='filter-list' size={30}/>
+             <FontAwesome style={{position:'absolute', top: 3, right: 5}} name='close'  size={30}
                 onPress={this.closeSlot.bind(this)}
-                title="Close"
-                color="#841584"
               />
               <SlotsScreen homePage={this.homePage.bind(this)} key={1} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
             </View>
@@ -349,7 +347,6 @@ class HomeScreen extends React.Component {
 
 
 class ModalScreen extends React.Component {
-
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

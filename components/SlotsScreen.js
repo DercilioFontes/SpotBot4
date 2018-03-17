@@ -44,7 +44,7 @@ export default class SlotsScreen extends React.Component {
      })
     return (
       <ScrollView>
-        <View style={{backgroundColor: '#f00'}}>
+        <View style={{backgroundColor: '#d0e7a6'}}>
          {slotList}
         </View>
         { this.state.showModal &&

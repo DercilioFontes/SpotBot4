@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Button, Text, View, Image, TouchableHighlight, 
+import { StyleSheet, Button, Text, View, Image, TouchableHighlight,
   ActivityIndicator, AlertIOS, AsyncStorage, KeyboardAvoidingView } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { Ionicons, Feather } from '@expo/vector-icons'
@@ -21,7 +21,7 @@ const options = {
     email: {
       keyboardType: 'email-address'
     },
-    password: { 
+    password: {
       secureTextEntry: true
     }
   }
@@ -66,7 +66,7 @@ class LoginScreen extends React.Component {
 //     console.log(error.message)
 //   }
 // }
-  
+
 
   _userLogin() {
     let value = this.refs.form.getValue()
@@ -76,11 +76,11 @@ class LoginScreen extends React.Component {
 
     if (value) {
 
-      // Active ActivityIndicator 
+      // Active ActivityIndicator
       this.setState({showProgress: true})
 
       fetch("http://127.0.0.1:3000/api/user_token", {
-        method: "POST", 
+        method: "POST",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -152,7 +152,6 @@ class LoginScreen extends React.Component {
         marginTop: 20
       }
     });
-
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
         <View style={{ flex: 1, alignSelf: 'auto', justifyContent: 'center', padding: 20 }}>
@@ -164,7 +163,7 @@ class LoginScreen extends React.Component {
           <TouchableHighlight style={styles.button} onPress={this._userLogin.bind(this)} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Save</Text>
           </TouchableHighlight>
-          
+
           <ActivityIndicator
           animating={this.state.showProgress}
           size='large'

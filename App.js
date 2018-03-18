@@ -11,7 +11,7 @@ import MapHome from './components/MapHome'
 import Slot from './components/Slot'
 import SlotsScreen from './components/SlotsScreen'
 import SearchSpot from './components/SearchSpot'
-import { typography} from 'react-native-material-design-styles';
+import { typography } from 'react-native-material-design-styles';
 const typographyStyle = StyleSheet.create(typography);
 import parkingAreasDB from './db/database'
 

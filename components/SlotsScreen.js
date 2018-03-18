@@ -2,6 +2,7 @@ import React from 'react'
 import { ScrollView, StyleSheet, Button, Text, View, Image, Modal,Icon, TouchableOpacity } from 'react-native'
 import {MapView, Notifications } from 'expo';
 import { StackNavigator, TabBarBottom, DrawerNavigator } from 'react-navigation';
+import uuid from 'uuid/v1'
 import MapHome from './MapHome'
 import Slot from './Slot'
 import ReserveSpot from './ReserveSpot'
@@ -34,11 +35,11 @@ export default class SlotsScreen extends React.Component {
 
   render() {
     const slotsAvailable = this.props.slots.filter(slot => slot.availability === true)
-    const slotList = slotsAvailable.map((spot, index) => {
+    const slotList = slotsAvailable.map((spot) => {
        return (
-          <View>
+          <View key={uuid()} >
           {
-            <Slot key={index} spot={spot} user_id={this.state.user_id} showSlot={this.showSlot.bind(this)} />
+            <Slot spot={spot} user_id={this.state.user_id} showSlot={this.showSlot.bind(this)} />
           }
           </View>
         )

@@ -27,7 +27,6 @@
     "react-native-search-bar": "^3.4.0",
     "react-native-vector-icons": "^4.5.0",
     "react-navigation": "^1.5.1",
-    "react-on-rails": "^10.1.3",
     "tcomb-form-native": "^0.6.11"
   }
 }

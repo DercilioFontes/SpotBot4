@@ -13,17 +13,7 @@ import SlotsScreen from './components/SlotsScreen'
 import Drawer from './components/Drawer'
 
 
-const DrawerExample = DrawerNavigator (
-  {
-    Login: {
-      screen: Drawer
-    }
-  },
-  {
-      initialRouteName: 'Login',
-      drawerPosition: 'lefts'
-  }
-)
+
 
 
 // Main Screen
@@ -203,7 +193,10 @@ class HomeScreen extends React.Component {
     const params = navigation.state.params || {}
 
     return {
-      headerTitle: `SpotBot`,
+      headerTitleStyle: {
+        fontFamily: 'American Typewriter'
+      },
+      headerTitle: `SPOTBOT`,
       headerRight: (
         <Button
           onPress={() => alert('This is a button!')}
@@ -214,7 +207,7 @@ class HomeScreen extends React.Component {
         <Button
           onPress={() => navigation.navigate('MyModal')}
           title={'\u2630'}
-          color={params.headerTintColor}
+          color="#FFF"
         /> )
     }
   }
@@ -362,11 +355,18 @@ class HomeScreen extends React.Component {
 
 
 class ModalScreen extends React.Component {
+  state = {
+    visibleModal: null,
+  }
+
+
+
+
   render() {
     const pic = require('./assets/vancouver.jpg')
 
     return (
-      <ImageBackground transparent = {true} source= {pic} style={{ width: 200, opacity: .7,  flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <ImageBackground transparent = {true} source= {pic} style={{ opacity: .7,  flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
         <Text style={styles.main_header }>SpotBot</Text>
         <Text
@@ -461,9 +461,9 @@ const MainStack = StackNavigator(
     /* The header config from HomeScreen is now here */
     navigationOptions: {
       headerStyle: {
-        backgroundColor: 'green',
+        backgroundColor: '#333',
       },
-      headerTintColor: 'orange',
+      headerTintColor: '#245FD4',
       headerTitleStyle: {
         fontWeight: 'bold',
       },

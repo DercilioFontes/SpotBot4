@@ -12,7 +12,7 @@ export default class Drawer extends React.Component {
       const pic = require('../assets/vancouver.jpg')
 
       return (
-        <ImageBackground source= {pic} style={{ opacity: .7,  flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ImageBackground source= {pic} style={{ width:200, opacity: .7,  flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <Text style={styles.main_header }>SpotBot</Text>
           <Text
             style={styles.buttonOutline}

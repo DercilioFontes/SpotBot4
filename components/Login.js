@@ -1,9 +1,8 @@
 import React from 'react'
-import { StyleSheet, Button, Text, View, Image, TouchableHighlight,
-  ActivityIndicator, AlertIOS, AsyncStorage, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text, View, TouchableHighlight,
+  ActivityIndicator, AsyncStorage, KeyboardAvoidingView } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { Ionicons, Feather } from '@expo/vector-icons'
-
 
 // to use in the forms
 import t from 'tcomb-form-native'
@@ -12,7 +11,7 @@ const Form = t.form.Form
 // Config of the form data and options
 const User = t.struct({
   email: t.String,
-  password: t.String,
+  password: t.String
 })
 
 // Options of the form data
@@ -28,59 +27,33 @@ const options = {
 }
 
 class LoginScreen extends React.Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       showProgress: false
     }
   }
 
-  async _storeToken(responseData) {
+  async _storeToken (responseData) {
     try {
       await AsyncStorage.setItem('token', responseData.jwt)
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message)
     }
   }
-
-//   async _getTokenAndUser() {
-//     try {
-//       await AsyncStorage.multiGet(['token', 'user']).then((data) => {
-//         // if(data[0][1]) {
-//         //   token = data[0][1] || null
-//           return data
-//           // [1][1] // I can pass a function here to make a fetch (GET request with route users/id) to get the user or other data
-//         // }
-//       }).then((tokenAnduser) => {
-//         if(tokenAnduser) {
-//           return tokenAnduser.json()
-//         } else {
-//           return null
-//         }
-//       console.log('AsyncStorage error: ' + error.message)
-//     }).then((tokenAnduserObj) => {
-//       console.log(tokenAnduserObj)
-//     })
-//   } catch(error) {
-//     console.log(error.message)
-//   }
-// }
-
-
-  _userLogin() {
+  
+  _userLogin () {
     let value = this.refs.form.getValue()
 
     // REMOVE THIS!!!!!!
     console.log(value)
 
     if (value) {
-
       // Active ActivityIndicator
       this.setState({showProgress: true})
 
-      fetch("http://127.0.0.1:3000/api/user_token", {
-        method: "POST",
+      fetch('http://127.0.0.1:3000/user_token', {
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -88,45 +61,44 @@ class LoginScreen extends React.Component {
         body: JSON.stringify({
           auth: {
             email: value.email,
-            password: value.password,
+            password: value.password
           }
         })
       })
-      .then((response) => {
-      if(response.status >= 200 && response.status < 300) {
-        return response
-      }
-      throw {
-        badCredentials: response.status == 401,
-        unknownError: response.status != 401
-      }
-    })
-    .then((response) => {
-      return response.json()
-    })
-    .then((responseData) => {
-      console.log(responseData)
-      this._storeToken(responseData)
-    })
-    .catch((err) => {
-      this.setState(err)
-      console.log(err)
-    })
-    .finally(() => {
-      this.setState({showProgress: false})
-      console.log(this.props.navigation.goBack())
-    })
+        .then((response) => {
+          if (response.status >= 200 && response.status < 300) {
+            return response
+          }
+          throw {
+            badCredentials: response.status === 401,
+            unknownError: response.status !== 401
+          }
+        })
+        .then((response) => {
+          return response.json()
+        })
+        .then((responseData) => {
+          console.log(responseData)
+          this._storeToken(responseData)
+        })
+        .catch((err) => {
+          this.setState(err)
+          console.log(err)
+        })
+        .finally(() => {
+          this.setState({showProgress: false})
+          console.log(this.props.navigation.goBack())
+        })
     }
   }
 
-  render() {
-
+  render () {
     const styles = StyleSheet.create({
       container: {
         justifyContent: 'center',
         marginTop: 50,
         padding: 20,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#ffffff'
       },
       title: {
         fontSize: 30,
@@ -151,9 +123,9 @@ class LoginScreen extends React.Component {
       loader: {
         marginTop: 20
       }
-    });
+    })
     return (
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={'padding'}>
         <View style={{ flex: 1, alignSelf: 'auto', justifyContent: 'center', padding: 20 }}>
           <Form
             ref="form"
@@ -165,12 +137,12 @@ class LoginScreen extends React.Component {
           </TouchableHighlight>
 
           <ActivityIndicator
-          animating={this.state.showProgress}
-          size='large'
-          style={styles.loader}/>
+            animating={this.state.showProgress}
+            size='large'
+            style={styles.loader}/>
         </View>
       </KeyboardAvoidingView>
-    );
+    )
   }
 }
 

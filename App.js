@@ -10,7 +10,11 @@ import LoginComponent from './components/Login'
 import MapHome from './components/MapHome'
 import Slot from './components/Slot'
 import SlotsScreen from './components/SlotsScreen'
+import SearchSpot from './components/SearchSpot'
+import { typography} from 'react-native-material-design-styles';
+const typographyStyle = StyleSheet.create(typography);
 import parkingAreasDB from './db/database'
+
 
 // Main Screen
 class HomeScreen extends React.Component {
@@ -18,6 +22,7 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchSpotStatus: false,
         showSlotsDetails: false,
         annotations: [],
         mapRegion: {
@@ -67,14 +72,20 @@ class HomeScreen extends React.Component {
 
 
 
+
+
   static navigationOptions = ({ navigation }) => {
+    function searchSpot() {
+      alert('uou');
+
+    }
     const params = navigation.state.params || {}
 
     return {
       headerTitle: `SpotBot`,
       headerRight: (
         <Button
-          onPress={() => alert('This is a button!')}
+          onPress={searchSpot}
           title='Filter'
           color="#fff"
         /> ),
@@ -209,16 +220,20 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View>
+        <SearchSpot spots= {this.state.currentArea.slots} status={true}/>
         <View style={{ height: this.state.showSlotsDetails ? '50%' : '100%', backgroundColor: '#d0e7a6'}}>
           <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation}>
           </MapHome>
         </View>
         { this.state.showSlotsDetails &&
-          <View style={{ height: '50%', backgroundColor: '#d0e7a6'}}>
-            <MaterialIcons style={{display:'inline'}} onPress={this.filterAccessibility.bind(this)} name='filter-list' size={30}/>
-             <FontAwesome style={{position:'absolute', top: 3, right: 5}} name='close' size={30}
-                onPress={this.closeSlot.bind(this)}
-              />
+          <View style={{height: '50%', backgroundColor: '#049588'}}>
+            <View style={{flexDirection: 'row'}}>
+              <MaterialIcons onPress={this.filterAccessibility.bind(this)} color='white' name='filter-list' size={30}/>
+                <Text style={{color: 'white', fontSize: 25, paddingTop: 20, paddingLeft: 50}}>{this.state.currentArea.title}</Text>
+               <FontAwesome style={{position:'absolute', top: 3, right: 5}} color='white' name='close' size={30}
+                  onPress={this.closeSlot.bind(this)}
+                />
+            </View>
               <SlotsScreen homePage={this.homePage.bind(this)} key={1} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
             </View>
         }

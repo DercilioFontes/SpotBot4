@@ -79,7 +79,9 @@ class LoginScreen extends React.Component {
       // Active ActivityIndicator
       this.setState({showProgress: true})
 
-      fetch("http://127.0.0.1:3000/api/user_token", {
+
+
+      fetch("http://127.0.0.1:3000/user_token", {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -126,7 +128,7 @@ class LoginScreen extends React.Component {
         justifyContent: 'center',
         marginTop: 50,
         padding: 20,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#fff',
       },
       title: {
         fontSize: 30,

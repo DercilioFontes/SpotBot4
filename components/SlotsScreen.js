@@ -2,6 +2,7 @@ import React from 'react'
 import { ScrollView, StyleSheet, Button, Text, View, Image, Modal,Icon, TouchableOpacity } from 'react-native'
 import {MapView, Notifications } from 'expo';
 import { StackNavigator, TabBarBottom, DrawerNavigator } from 'react-navigation';
+import uuid from 'uuid/v1'
 import MapHome from './MapHome'
 import Slot from './Slot'
 import ReserveSpot from './ReserveSpot'
@@ -11,6 +12,7 @@ export default class SlotsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      showSpots: true,
       showModal: false,
       user_id: 2,
       spot: {
@@ -23,7 +25,7 @@ export default class SlotsScreen extends React.Component {
     }
   }
   showSlot(slot, user_id) {
-    this.setState({showModal: true, user_id: user_id, spot: slot})
+    this.setState({showModal: true, user_id: user_id, spot: slot, showSpots: false})
   }
 
   reserveClick(newParkingArea) {
@@ -33,23 +35,28 @@ export default class SlotsScreen extends React.Component {
 
   render() {
     const slotsAvailable = this.props.slots.filter(slot => slot.availability === true)
-    const slotList = slotsAvailable.map((slots, index) => {
+    const slotList = slotsAvailable.map((spot) => {
        return (
-          <View>
+          <View key={uuid()} >
           {
-            <Slot key={index} slot={slots} user_id={this.state.user_id} showSlot={this.showSlot.bind(this)} />
+            <Slot spot={spot} user_id={this.state.user_id} showSlot={this.showSlot.bind(this)} />
           }
           </View>
         )
      })
     return (
       <ScrollView>
-        <View style={{backgroundColor: '#d0e7a6'}}>
-         {slotList}
-        { this.state.showModal &&
-            <ReserveSpot spot={this.state.spot} reserveClick={this.reserveClick.bind(this)} user_id={this.state.user_id} />
+        { this.state.showSpots &&
+          <View style={{marginTop: 30}}>
+          {slotList}
+         </View>
         }
-        </View>
+        { this.state.showModal &&
+          <View style={{margin: 5}}>
+            <ReserveSpot spot={this.state.spot} reserveClick={this.reserveClick.bind(this)} user_id={this.state.user_id} />
+          </View>
+        }
+
       </ScrollView>
       )
   }

@@ -11,7 +11,7 @@ export default class MapHome extends React.Component {
     headerTitle: 'SpotBot',
   }
   onMapPress(e) {
-    // navigate('Slots', {slots: parkingArea[0].slots, user_id: this.props.user_id})
+    // navigate('Slots', {spots: parkingArea[0].spots, user_id: this.props.user_id})
     const parkingArea = this.props.parking_areas.filter(
       marker => marker.coordinates.latitude === e.nativeEvent.coordinate.latitude
       && marker.coordinates.longitude === e.nativeEvent.coordinate.longitude )

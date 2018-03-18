@@ -4,6 +4,7 @@ import { Notifications, Permissions, Constants } from 'expo';
 import {FontAwesome} from '@expo/vector-icons'
 
 
+
 export default class ReserveSpot extends React.Component {
   async componentDidMount() {
     let result = await
@@ -93,32 +94,38 @@ export default class ReserveSpot extends React.Component {
         <FontAwesome name='car' style={styles.carIcon} color='#d0e7a6' size={100}/>
         <Text style={styles.text}>{this.props.spot.label}</Text>
         <Text style={styles.information}>{this.props.spot.spot_information}</Text>
-        <TouchableOpacity style={styles.reserveButton} onPress={this.reserveSpot.bind(this)}><Text style={styles.textButton}>Reserve</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.reserveButton} onPress={this.reserveSpot.bind(this)}><Text style={styles.reserveText}>Park Me</Text></TouchableOpacity>
     </View>
   )}
 }
 
 const styles = StyleSheet.create({
+  reserveModal:{
+    backgroundColor: 'white',
+    borderWidth: 1,
+  },
   reserveButton: {
     backgroundColor: '#d0e7a6',
     height: 30,
     alignItems: 'center',
     width: 100,
+    margin: 10,
+    marginLeft: 125,
+    color: 'white',
     padding: 5,
-    position: 'absolute',
-    top: 250,
-    right: 150,
-    color: 'white'
+
   },
   image: {
     borderWidth: 1,
     height: 140,
-    opacity: 0.5
+    opacity: 0.3,
+    width: 365
   },
   text: {
     fontSize: 20,
     fontWeight: 'bold',
-    padding: 10,textAlign: 'center'
+    padding: 10,
+    textAlign: 'center'
   },
   information: {
     fontSize: 15,
@@ -126,12 +133,12 @@ const styles = StyleSheet.create({
   },
   carIcon: {
     position: 'absolute',
-    right: 130,
+    right: 120,
     top: 15,
   },
-  textButton: {
+  reserveText: {
     color: 'white',
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   }
 
 })

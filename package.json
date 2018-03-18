@@ -24,6 +24,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "connect": "3.6.6",
     "eslint": "^4.19.0",
     "expo": "^25.0.0",
     "geolib": "^2.0.24",
@@ -36,10 +37,8 @@
     "react-native-search-bar": "^3.4.0",
     "react-native-vector-icons": "^4.5.0",
     "react-navigation": "^1.5.1",
-    "tcomb-form-native": "^0.6.11",
-    "uuid": "^3.2.1",
-    "auth0-js": "^9.3.0",
     "socks": "2.1.6",
-    "connect": "3.6.6"
+    "tcomb-form-native": "^0.6.11",
+    "uuid": "^3.2.1"
   }
 }

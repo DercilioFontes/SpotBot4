@@ -57,7 +57,7 @@ export default class SlotsScreen extends React.Component {
         }
 
       </ScrollView>
-      )
+    )
   }
 }
 

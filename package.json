@@ -23,6 +23,7 @@
     "geolib": "^2.0.24",
     "react": "16.2.0",
     "react-native": "0.52.0",
+    "react-native-icon-button": "^1.0.0",
     "react-native-material-design-styles": "^0.2.7",
     "react-native-search-bar": "^3.4.0",
     "react-native-vector-icons": "^4.5.0",

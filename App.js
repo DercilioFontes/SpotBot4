@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Button, Text, View, Image, TouchableHighlight, ActivityIndicator, AlertIOS, AsyncStorage, TouchableOpacity, ImageBackground, Modal} from 'react-native'
 import { MapView, Notifications } from 'expo'
 import { StackNavigator, DrawerNavigator } from 'react-navigation'
-import { Ionicons, Feather, MaterialIcons, FontAwesome } from '@expo/vector-icons'
+import { Ionicons, Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons'
 
 // Our components
 import SignUpComponent from './components/Signup'
@@ -74,10 +74,6 @@ class HomeScreen extends React.Component {
         };
     }
 
-
-
-
-
   static navigationOptions = ({ navigation }) => {
     function searchSpot() {
       alert('uou');
@@ -87,15 +83,16 @@ class HomeScreen extends React.Component {
 
     return {
       headerTitleStyle: {
-        fontFamily: 'American Typewriter'
+        fontFamily: 'Apple SD Gothic Neo',
+        fontSize: 30
       },
-      headerTitle: `SPOTBOT`,
-      headerRight: (
-        <Button
-          onPress={searchSpot}
-          title='Filter'
-          color="#fff"
-        /> ),
+      headerTitle: `SpotBot`,
+      // headerRight: (
+      //   <Button
+      //     onPress={searchSpot}
+      //     title='Filter'
+      //     color="#fff"
+      //   /> ),
       headerLeft: (
         <Button
           onPress={() => navigation.navigate('MyModal')}
@@ -179,19 +176,12 @@ class HomeScreen extends React.Component {
           parkingArea.parkingAreaStatus = 'full',
           parkingArea.description = `   Total spots ${totalSlot} /n Status Full`
       }
-
       return parkingArea;
     });
   }
 
 
-
-
-
     componentDidMount() {
-
-
-
       const that = this;
       fetch('http://127.0.0.1:3000/')
         .then(res => res.json())
@@ -238,17 +228,18 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <View  >
         <SearchSpot spots= {this.state.currentArea.slots} status={true}/>
-        <View style={{ height: this.state.showSlotsDetails ? '50%' : '100%', backgroundColor: '#d0e7a6'}}>
-          <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation} />
+        <View style={{ height: this.state.showSlotsDetails ? '60%' : '100%', backgroundColor: '#d0e7a6'}}>
+          <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation}>
+          </MapHome>
         </View>
         { this.state.showSlotsDetails &&
-          <View style={{height: '50%', backgroundColor: '#049588'}}>
-            <View style={{flexDirection: 'row'}}>
-                <MaterialIcons  onPress={this.filterAccessibility.bind(this)} color='white' name='filter-list' size={30}/>
-                <Text style={{color: 'white', fontSize: 25, paddingTop: 20, paddingLeft: 50}}>{this.state.currentArea.title}</Text>
-                <FontAwesome style={{position:'absolute', top: 3, right: 5}} color='white' name='close' size={30}
+          <View style={styles.parkingAreaHeader}>
+            <View style={styles.parkingArea}>
+              <MaterialCommunityIcons onPress={this.filterAccessibility.bind(this)} color='white' name='filter-outline' size={30} style={styles.accessibleIcon}/>
+                <Text style={{color: 'white', fontSize: 20, paddingTop: 5, alignSelf: 'center', }}>{this.state.currentArea.title}</Text>
+               <FontAwesome style={{position:'absolute', top: 3, right: 5}} color='white' name='angle-down' size={30}
                   onPress={this.closeSlot.bind(this)}
                 />
 
@@ -256,7 +247,6 @@ class HomeScreen extends React.Component {
               <SlotsScreen homePage={this.homePage.bind(this)} key={1} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
             </View>
         }
-
       </View>
     )
   }
@@ -367,12 +357,12 @@ const MainStack = StackNavigator(
   },
   {
     initialRouteName: 'Home',
-    /* The header config from HomeScreen is now here */
+    /* HEADER CONFIG - MAIN NAV BAR */
     navigationOptions: {
       headerStyle: {
-        backgroundColor: '#333',
+        backgroundColor: '#005A5C',
       },
-      headerTintColor: '#245FD4',
+      headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
       },
@@ -408,12 +398,14 @@ const styles = StyleSheet.create({
     // borderRadius: 10,
     width:200,
     textAlign: 'center',
-    margin: 15
+    margin: 15,
+    fontFamily: 'Apple SD Gothic Neo'
+
   },
   buttonFilledIn: {
     borderWidth:2,
     borderColor: 'white',
-    color: 'grey',
+    color: '#005A5C',
     padding: 10,
     paddingHorizontal: 30,
     fontSize: 20,
@@ -422,13 +414,26 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderStyle: 'solid',
     borderRadius: 10,
-    margin: 15
+    margin: 15,
+    fontFamily: 'Apple SD Gothic Neo'
+
   },
   main_header: {
     fontSize: 50,
-    color: 'black',
-    marginBottom: 200
+    color: '#fff',
+    marginBottom: 300,
+    fontFamily: 'Apple SD Gothic Neo'
 
+  },
+  parkingAreaHeader: {
+    backgroundColor: '#005A5C',
+  },
+  parkingArea: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  accessibleIcon: {
+    paddingTop: 5
   }
 });
 export default class App extends React.Component {

@@ -46,9 +46,9 @@ export default class SlotsScreen extends React.Component {
     return (
       <ScrollView>
         { this.state.showSpots &&
-          <View style={{marginTop: 30}}>
-            {slotList}
-          </View>
+          <View style={{marginTop: 10}}>
+          {slotList}
+         </View>
         }
         { this.state.showModal &&
           <View style={{margin: 5}}>

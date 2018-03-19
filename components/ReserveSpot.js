@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Modal, TouchableOpacity, Image} from 'react-native';
 import React, {Component} from 'react';
 import { Notifications, Permissions, Constants } from 'expo';
-import {FontAwesome} from '@expo/vector-icons'
+import {FontAwesome, Ionicons} from '@expo/vector-icons'
 
 
 
@@ -90,56 +90,61 @@ export default class ReserveSpot extends React.Component {
 
     return(
     <View style={styles.reserveModal}>
-        <Image style={styles.image} source={require('../images/map.jpg')} />
-        <FontAwesome name='car' style={styles.carIcon} color='#d0e7a6' size={100}/>
+        <Image style={styles.image} source={require('../assets/vancouver.jpg')} />
         <Text style={styles.text}>{this.props.spot.label}</Text>
         <Text style={styles.information}>{this.props.spot.spot_information}</Text>
-        <TouchableOpacity style={styles.reserveButton} onPress={this.reserveSpot.bind(this)}><Text style={styles.reserveText}>Park Me</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.reserveButton} onPress={this.reserveSpot.bind(this)}><Text style={styles.reserveText}>RESERVE SPOT</Text></TouchableOpacity>
     </View>
   )}
 }
 
 const styles = StyleSheet.create({
   reserveModal:{
-    backgroundColor: 'white',
-    borderWidth: 1,
+    backgroundColor: '#fff',
   },
   reserveButton: {
-    backgroundColor: '#d0e7a6',
-    height: 30,
-    alignItems: 'center',
-    width: 100,
-    margin: 10,
-    marginLeft: 125,
-    color: 'white',
-    padding: 5,
+    alignSelf: 'center',
+    borderWidth:2,
+    borderColor: 'white',
+    color: '#059D8E',
+    padding: 10,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    fontSize: 20,
+    width:200,
+    textAlign: 'center',
+    backgroundColor: '#00B2B0',
+    borderStyle: 'solid',
+    margin: 15,
+    fontFamily: 'Apple SD Gothic Neo'
 
   },
   image: {
-    borderWidth: 1,
-    height: 140,
+    height: 60,
     opacity: 0.3,
-    width: 365
+    width: 365,
   },
   text: {
     fontSize: 20,
     fontWeight: 'bold',
     padding: 10,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#F26101'
   },
   information: {
     fontSize: 15,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: 'gray'
   },
   carIcon: {
     position: 'absolute',
-    right: 120,
-    top: 15,
+    top: 5,
+    alignSelf: 'center'
   },
   reserveText: {
     color: 'white',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    alignSelf: 'center'
   }
-
 })
 

@@ -12,20 +12,20 @@ export default class SearchSpot extends React.Component {
     this.state = {
       searchText: '',
       modalVisible: this.props.status,
-      reserveModal: false,
+      reserveModal: true,
       searchSpot: []
     }
   }
-  reserveClick(newParkingArea) {
+  reserveClick(newParkingArea, reserveSpot) {
     this.setState({reserveModal: false})
-    // this.props.homePage(newParkingArea);
+    this.props.homePage(newParkingArea, reserveSpot);
   }
   searchSpot () {
     // console.log(this.props)
     this.setState({
       searchSpot: this.props.spots.filter(spot => spot.label === this.state.searchText.toLowerCase()),
       modalVisible: false,
-      reserveModal: true,
+      reserveModal: false,
       searchText: ''})
     // alert( this.props.spots.filter(spot => spot.label === this.state.searchText.toLowerCase()).length)
   }

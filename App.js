@@ -13,6 +13,7 @@ import SlotsScreen from './components/SlotsScreen'
 import SearchSpot from './components/SearchSpot'
 import Timer from './components/Timer'
 import parkingAreasDB from './db/database'
+import CancelSpot from './components/CancelSpot'
 
 
 
@@ -22,7 +23,9 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      reserveStatus: false,
       statusAccesibilityButton: true,
+      showTimer: false,
       searchSpotStatus: false,
         showSlotsDetails: false,
         annotations: [],
@@ -219,14 +222,28 @@ class HomeScreen extends React.Component {
         }
     }
 
-    homePage(newParkingArea) {
+    homePage(newParkingArea, reserveSpot) {
       const transformRawParking = this.transformRaw(newParkingArea);
       this.setState({
+        showTimer: true,
         showSlotsDetails: false,
-        parking_areas: this.availability(transformRawParking)
+        parking_areas: this.availability(transformRawParking),
+        reserveStatus: true,
+        reserveSpot: reserveSpot
       })
-     console.log("parking area",this.state.parking_areas);
+      console.log("reserve spot", this.state.reserveSpot)
+    }
 
+    cancelClick(newParkingArea, reserveSpot) {
+      const transformRawParking = this.transformRaw(newParkingArea);
+      this.setState({
+        showTimer: false,
+        showSlotsDetails: false,
+        parking_areas: this.availability(transformRawParking),
+        reserveStatus: false,
+        reserveSpot: reserveSpot
+      })
+      console.log("cancel spot", this.state.reserveSpot)
     }
 
 
@@ -234,23 +251,26 @@ class HomeScreen extends React.Component {
     return (
       <View>
         <SearchSpot spots= {this.state.currentArea.slots} status={true}/>
-        <View style={{ height: this.state.showSlotsDetails ? '50%' : '100%', backgroundColor: '#d0e7a6'}}>
-          <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation} />
+        <View style={{ height: this.state.showSlotsDetails ? '40%' : this.state.reserveStatus ? '75%' : '100%', backgroundColor: '#d0e7a6'}}>
+          <MapHome showTimer={this.state.showTimer} onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation} />
         </View>
         { this.state.showSlotsDetails &&
-          <View style={{height: '50%', backgroundColor: '#049588'}}>
-            <View style={{flexDirection: 'row'}}>
-                <MaterialIcons  onPress={this.filterAccessibility.bind(this)} color='white' name='filter-list' size={30}/>
-                <Text style={{color: 'white', fontSize: 25, paddingTop: 20, paddingLeft: 50}}>{this.state.currentArea.title}</Text>
-                <FontAwesome style={{position:'absolute', top: 3, right: 5}} color='white' name='close' size={30}
-                  onPress={this.closeSlot.bind(this)}
-                />
-
-            </View>
-              <SlotsScreen homePage={this.homePage.bind(this)} key={1} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
-            </View>
+              <View style={{height: '60%', backgroundColor: '#049588'}}>
+                <View style={{flexDirection: 'row'}}>
+                    <MaterialIcons  onPress={this.filterAccessibility.bind(this)} color='white' name='filter-list' size={30}/>
+                    <Text style={{color: 'white', fontSize: 25, paddingTop: 20, paddingLeft: 50}}>{this.state.currentArea.title}</Text>
+                    <FontAwesome style={{position:'absolute', top: 3, right: 5}} color='white' name='close' size={30}
+                      onPress={this.closeSlot.bind(this)}
+                    />
+                </View>
+                  <SlotsScreen homePage={this.homePage.bind(this)} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
+              </View>
         }
-
+        { this.state.reserveStatus &&
+          <View style={{height: '30%', backgroundColor: '#049588'}}>
+          <CancelSpot cancelClick={this.cancelClick.bind(this)} spot={this.state.reserveSpot}/>
+         </View>
+        }
       </View>
     )
   }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Button, Text, View, Image, TouchableHighlight, ActivityIndicator, AlertIOS, AsyncStorage, TouchableOpacity, ImageBackground } from 'react-native'
 import { MapView, Notifications } from 'expo'
-import { StackNavigator, DrawerNavigator } from 'react-navigation'
+import { StackNavigator, DrawerNavigator, DrawerItems, SafeAreaView } from 'react-navigation'
 import { Ionicons, Feather, MaterialIcons, FontAwesome } from '@expo/vector-icons'
 
 // Our components
@@ -14,6 +14,14 @@ import SearchSpot from './components/SearchSpot'
 import { typography } from 'react-native-material-design-styles';
 const typographyStyle = StyleSheet.create(typography);
 import parkingAreasDB from './db/database'
+
+const CustomDrawerContentComponent = (props) => (
+  <ScrollView>
+    <SafeAreaView style={styles.container} forceInset={{ top: 'always', horizontal: 'never' }}>
+      <DrawerItems {...props} />
+    </SafeAreaView>
+  </ScrollView>
+);
 
 // Main Screen
 class HomeScreen extends React.Component {
@@ -343,7 +351,31 @@ const MainStack = StackNavigator(
       },
     }
   }
-);
+)
+
+const transitionConfig = () => {
+  return {
+    transitionSpec: {
+      duration: 200,
+      easing: Easing.out(Easing.poly(4)),
+      timing: Animated.timing,
+      useNativeDriver: true,
+    },
+    screenInterpolator: sceneProps => {      
+      const { position, scene } = sceneProps
+
+      const thisSceneIndex = scene.index
+      // const width = layout.initWidth
+
+      const opacity = position.interpolate({
+        inputRange: [thisSceneIndex - 1, thisSceneIndex],
+        outputRange: [ 50, 0],
+      })
+
+      return { opacity }
+    },
+  }
+}
 
 const RootStack = StackNavigator(
   {
@@ -352,6 +384,7 @@ const RootStack = StackNavigator(
     },
     MyModal: {
       screen: ModalScreen,
+      transitionConfig,
     },
   },
   {
@@ -393,7 +426,10 @@ const styles = StyleSheet.create({
     fontSize: 50,
     color: 'black',
     marginBottom: 200
-  }
+  },
+  container: {
+    flex: 1,
+  },
 });
 export default class App extends React.Component {
   render() {

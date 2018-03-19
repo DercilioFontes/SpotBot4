@@ -7,7 +7,9 @@ export default class Timer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      secondsElapsed: 5 * 1
+      secondsElapsed: 10 * 1,
+      showTimer: this.props.showTimer
+
     }
   }
 
@@ -19,11 +21,17 @@ export default class Timer extends React.Component {
   }
 
   componentDidMount() {
-    setInterval(() => {
-      if(this.state.secondsElapsed <= 0) {
+    if(!this.state.showTimer) {
+      clearInterval(this.state.interval);
+      this.setState({showTimer: false});
+      return;
+    }
+    if(this.state.secondsElapsed <= 0) {
         clearInterval(this.state.interval);
+        this.setState({showTimer: false})
         return;
       }
+    setInterval(() => {
 
       interval = this.setState({
                 secondsElapsed: this.state.secondsElapsed - 1
@@ -31,12 +39,18 @@ export default class Timer extends React.Component {
     }, 1000)
   }
 
+
+
   render() {
+  console.log('timer', this.props.showTimer)
     return (
+
       <View>
+      {this.state.showTimer &&
           <Text style={styles.timer}>
             {this.getMinutes()}:{this.getSeconds()}
           </Text>
+        }
       </View>
       )
   }

@@ -35,7 +35,7 @@ export default class ReserveSpot extends React.Component {
       return response.json()
     })
     .then((responseData) => {
-      console.log("cancel spot",  responseData)
+      // console.log("cancel spot",  responseData)
        this.props.cancelClick(responseData, this.props.spot);
 
     })

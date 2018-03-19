@@ -120,7 +120,7 @@ class SignUpScreen extends React.Component {
           return response.json()
         })
         .then((responseData) => {
-          console.log(responseData)
+
 
           // Make a POST request with email and password to set user Token
           fetch('http://127.0.0.1:3000/user_token', {

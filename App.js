@@ -150,7 +150,6 @@ class HomeScreen extends React.Component {
 
 
   transformRaw(pa) {
-      console.log('pa inside transformRaw', pa)
       return pa.parking_areas.map(raw_area => {
         return {
               parking_area_id: raw_area.parking_area.id,
@@ -169,15 +168,17 @@ class HomeScreen extends React.Component {
 
 
   availability(parkingAreas) {
-    console.log("availPAs", parkingAreas);
+
     return parkingAreas.map((parkingArea) => {
-      console.log("I am a parking area, you should park in me:", parkingArea);
+
       const totalSlot = parkingArea.slots.length;
       const unavailable_spots = parkingArea.slots.filter(slot => slot.availability === false)
-      parkingArea.description = `   Total slots  ${totalSlot}`
+      const available_spots = parkingArea.slots.filter(slot => slot.availability === true)
+
+      parkingArea.description = `   Total available spots  ${available_spots.length} `
       if (unavailable_spots.length === totalSlot) {
           parkingArea.parkingAreaStatus = 'full',
-          parkingArea.description = `   Total spots ${totalSlot} /n Status Full`
+          parkingArea.description = `Total spots ${totalSlot} Status Full`
       }
       return parkingArea;
     });
@@ -202,7 +203,7 @@ class HomeScreen extends React.Component {
       if(this.state.statusAccesibilityButton)
         {
           const accessibles = this.state.currentArea.slots.filter(slot => slot.accessible === true && slot.availability === true);
-          console.log(accessibles);
+
           this.setState({
             tempCurrentArea: this.state.currentArea,
             currentArea: {slots: accessibles},
@@ -227,7 +228,7 @@ class HomeScreen extends React.Component {
         reserveStatus: true,
         reserveSpot: reserveSpot
       })
-      console.log("reserve spot", this.state.reserveSpot)
+
     }
 
     cancelClick(newParkingArea, reserveSpot) {
@@ -239,15 +240,13 @@ class HomeScreen extends React.Component {
         reserveStatus: false,
         reserveSpot: reserveSpot
       })
-      console.log("cancel spot", this.state.reserveSpot)
+
     }
 
 
   render() {
     return (
       <View  >
-
-
         <View style={{ height: this.state.showSlotsDetails ? '40%' : this.state.reserveStatus ? '75%' : '100%', backgroundColor: '#d0e7a6'}}>
           <MapHome showTimer={this.state.showTimer} onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation} />
         </View>

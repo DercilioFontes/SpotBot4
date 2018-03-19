@@ -49,7 +49,9 @@ export default class MapHome extends React.Component {
           </MapView.Marker>
 
         ))}
+        {this.props.showTimer &&
          <Timer />
+        }
       </MapView>
 
     )

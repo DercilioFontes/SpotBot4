@@ -45,8 +45,9 @@ export default class Timer extends React.Component {
 
 const styles = StyleSheet.create({
   timer: {
-    color: 'gray',
+    color: 'white',
     position: 'absolute',
+    fontWeight: 'bold',
     top: 400,
     left: 110,
     fontSize: 60

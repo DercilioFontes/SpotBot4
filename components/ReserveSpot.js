@@ -4,6 +4,7 @@ import { Notifications, Permissions, Constants } from 'expo'
 import {FontAwesome} from '@expo/vector-icons'
 
 export default class ReserveSpot extends React.Component {
+
   async componentDidMount () {
     let result = await
     Permissions.askAsync(Permissions.NOTIFICATIONS)
@@ -30,6 +31,35 @@ export default class ReserveSpot extends React.Component {
     })
       .then((response) => {
         // console.log("reserve response from database",response);
+      if(response.status >= 200 && response.status < 300) {
+        return response
+      }
+      throw {
+        badCredentials: response.status == 401,
+        unknownError: response.status != 401
+      }
+    })
+    .then((response) => {
+      return response.json()
+    })
+    .then((responseData) => {
+      console.log("parking spot",  responseData)
+       this.props.reserveClick(responseData);
+
+    })
+    .catch((err) => {
+      this.setState(err)
+      console.log(err)
+    })
+    .finally(() => {
+      //this.setState({showProgress: false})
+
+    })
+
+    }
+  render () {
+    return(
+    <View style={styles.reserveModal}>
         if (response.status >= 200 && response.status < 300) {
           return response
         }

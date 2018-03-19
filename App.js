@@ -11,9 +11,12 @@ import MapHome from './components/MapHome'
 import Slot from './components/Slot'
 import SlotsScreen from './components/SlotsScreen'
 import SearchSpot from './components/SearchSpot'
+import Timer from './components/Timer'
 import { typography } from 'react-native-material-design-styles';
 const typographyStyle = StyleSheet.create(typography);
+
 import parkingAreasDB from './db/database'
+
 
 
 // Main Screen
@@ -22,6 +25,7 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      statusAccesibilityButton: true,
       searchSpotStatus: false,
         showSlotsDetails: false,
         annotations: [],
@@ -105,7 +109,8 @@ class HomeScreen extends React.Component {
     if(parkingArea.parkingAreaStatus !== 'full'){
       this.setState({
         currentArea: parkingArea,
-         showSlotsDetails: true
+         showSlotsDetails: true,
+         statusAccesibilityButton: true
       })
     }
   }
@@ -169,10 +174,10 @@ class HomeScreen extends React.Component {
       console.log("I am a parking area, you should park in me:", parkingArea);
       const totalSlot = parkingArea.slots.length;
       const unavailable_spots = parkingArea.slots.filter(slot => slot.availability === false)
-      parkingArea.description = `Total slots: ${totalSlot}`
+      parkingArea.description = `   Total slots  ${totalSlot}`
       if (unavailable_spots.length === totalSlot) {
           parkingArea.parkingAreaStatus = 'full',
-          parkingArea.description = `Total slots: ${totalSlot} Status:Full`
+          parkingArea.description = `   Total spots ${totalSlot} /n Status Full`
       }
 
       return parkingArea;
@@ -201,12 +206,23 @@ class HomeScreen extends React.Component {
 
     filterAccessibility() {
       var newParking = this.state.currentArea;
-      const accessibles = this.state.currentArea.slots.filter(slot => slot.accessible === true && slot.availability === true);
-      console.log(accessibles);
-      this.setState({
-        currentArea:{slots: accessibles},
-        showSlotsDetails: true
-      })
+      if(this.state.statusAccesibilityButton)
+        {
+          const accessibles = this.state.currentArea.slots.filter(slot => slot.accessible === true && slot.availability === true);
+          console.log(accessibles);
+          this.setState({
+            tempCurrentArea: this.state.currentArea,
+            currentArea: {slots: accessibles},
+            showSlotsDetails: true,
+            statusAccesibilityButton: false
+          })
+        } else {
+           this.setState({
+            currentArea: this.state.tempCurrentArea,
+            showSlotsDetails: true,
+            statusAccesibilityButton: true
+          })
+        }
     }
 
     homePage(newParkingArea) {
@@ -225,17 +241,17 @@ class HomeScreen extends React.Component {
       <View>
         <SearchSpot spots= {this.state.currentArea.slots} status={true}/>
         <View style={{ height: this.state.showSlotsDetails ? '50%' : '100%', backgroundColor: '#d0e7a6'}}>
-          <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation}>
-          </MapHome>
+          <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation} />
         </View>
         { this.state.showSlotsDetails &&
           <View style={{height: '50%', backgroundColor: '#049588'}}>
             <View style={{flexDirection: 'row'}}>
-              <MaterialIcons onPress={this.filterAccessibility.bind(this)} color='white' name='filter-list' size={30}/>
+                <MaterialIcons  onPress={this.filterAccessibility.bind(this)} color='white' name='filter-list' size={30}/>
                 <Text style={{color: 'white', fontSize: 25, paddingTop: 20, paddingLeft: 50}}>{this.state.currentArea.title}</Text>
-               <FontAwesome style={{position:'absolute', top: 3, right: 5}} color='white' name='close' size={30}
+                <FontAwesome style={{position:'absolute', top: 3, right: 5}} color='white' name='close' size={30}
                   onPress={this.closeSlot.bind(this)}
                 />
+
             </View>
               <SlotsScreen homePage={this.homePage.bind(this)} key={1} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
             </View>

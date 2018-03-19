@@ -30,6 +30,7 @@
     "geolib": "^2.0.24",
     "react": "16.2.0",
     "react-native": "0.52.0",
+    "react-native-icon-button": "^1.0.0",
     "react-native-elements": "0.19.0",
     "react-native-maps": "0.19.0",
     "react-native-material-design-styles": "^0.2.7",

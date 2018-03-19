@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Button, Text, View, Image } from 'react-native'
 import {MapView, Notifications } from 'expo';
 import { StackNavigator } from 'react-navigation'
+import Timer from './Timer'
 
 
 
@@ -22,10 +23,10 @@ export default class MapHome extends React.Component {
   render() {
     function checkStatusParkingArea (status) {
       if (status === 'full') {
-        return <View style={styles.full} />
+        return  <Image style={styles.image} source={require('../images/redMarker.gif')} />
       }
       else {
-        return <View style={styles.reserved} />
+        return <Image style={styles.imageGreen} source={require('../images/greenMarker.gif')} />
       }
     }
 
@@ -46,33 +47,15 @@ export default class MapHome extends React.Component {
             {checkStatusParkingArea(marker.parkingAreaStatus)}
 
           </MapView.Marker>
+
         ))}
+         <Timer />
       </MapView>
 
     )
   }
 }
 const styles = StyleSheet.create({
-  full: {
-    borderWidth:3,
-    borderColor: 'white',
-    backgroundColor: 'red',
-    borderRadius: 15,
-    width:30,
-    height:30,
-    justifyContent: 'center',
-    alignItems:'center'
-  },
-  reserved:{
-    borderWidth:3,
-    borderColor: 'white',
-    backgroundColor: 'green',
-    borderRadius: 15,
-    width:30,
-    height:30,
-    justifyContent: 'center',
-    alignItems:'center'
-  },
   radius: {
     backgroundColor: '#fff',
   },
@@ -88,4 +71,19 @@ const styles = StyleSheet.create({
   map: {
     flex: 1
   },
+  image: {
+    width: 31,
+    height:55
+  },
+  imageGreen: {
+    width: 31,
+    height:55
+  },
+  timer: {
+    position: 'absolute',
+    bottom: 100,
+    left: 200
+  }
+
+
 });

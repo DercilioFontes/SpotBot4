@@ -51,10 +51,14 @@ export default class ReserveSpot extends React.Component {
 
     }
 
-    arrivalTimer() {
-      <Timer showTimer={true}/>
+    arrivalButton() {
+      this.props.activateClick(this.props.spot);
+
     }
+
+
   render () {
+
         return(
     <View>
 
@@ -65,7 +69,7 @@ export default class ReserveSpot extends React.Component {
 
       <Text style={styles.information}>{this.props.spot.spot_information}</Text>
       <TouchableOpacity style={styles.reserveButton} onPress={this.cancelSpot.bind(this)}><Text style={styles.reserveText}>Cancel</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.reserveButton} onPress={this.arrivalTimer.bind(this)}><Text style={styles.reserveText}>Arival</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.reserveButton} onPress={this.arrivalButton.bind(this)}><Text style={styles.reserveText}>Start Session</Text></TouchableOpacity>
     </View>
   )}
 }

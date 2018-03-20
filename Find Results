@@ -1,0 +1,195 @@
+Searching 27 files for "console.log" (case sensitive)
+
+/Users/prerana/lighthouse/FinalSpotBotProject/SpotBotClient/App.js:
+  146        })
+  147      } catch (error) {
+  148:       console.log('AsyncStorage error: ' + error.message)
+  149      }
+  150    }
+  ...
+  214              statusAccesibilityButton: false
+  215            })
+  216:           console.log('prerana', this.state.currentArea)
+  217          } else {
+  218             this.setState({
+  ...
+  233          reserveSpot: reserveSpot
+  234        })
+  235:
+  236      }
+  237
+  ...
+  250
+  251      activateClick(activatedSpot) {
+  252:       console.log('activatedSpotClick', activatedSpot)
+  253        // const transformRawParking = this.transformRaw(activatedSpot);
+  254        // this.setState({
+
+/Users/prerana/lighthouse/FinalSpotBotProject/SpotBotClient/components/ActiveReservationModal.js:
+   23        })
+   24        .then((response) => {
+   25:         // console.log("reserve response from database",response);
+   26        if(response.status >= 200 && response.status < 300) {
+   27          return response
+   ..
+   41      .catch((err) => {
+   42        this.setState(err)
+   43:       console.log(err)
+   44      })
+   45      .finally(() => {
+
+/Users/prerana/lighthouse/FinalSpotBotProject/SpotBotClient/components/CancelSpot.js:
+   24        })
+   25        .then((response) => {
+   26:         // console.log("reserve response from database",response);
+   27        if(response.status >= 200 && response.status < 300) {
+   28          return response
+   ..
+   37      })
+   38      .then((responseData) => {
+   39:       // console.log("cancel spot",  responseData)
+   40         this.props.cancelClick(responseData, this.props.spot);
+   41
+   ..
+   43      .catch((err) => {
+   44        this.setState(err)
+   45:       console.log(err)
+   46      })
+   47      .finally(() => {
+
+/Users/prerana/lighthouse/FinalSpotBotProject/SpotBotClient/components/Login.js:
+   55        await AsyncStorage.setItem('token', responseData.jwt)
+   56      } catch (error) {
+   57:       console.log('AsyncStorage error: ' + error.message)
+   58      }
+   59    }
+   ..
+   63
+   64      // REMOVE THIS!!!!!!
+   65:     console.log(value)
+   66
+   67      if (value) {
+   ..
+   95          })
+   96          .then((responseData) => {
+   97:           console.log(responseData)
+   98            this._storeToken(responseData)
+   99          })
+  100          .catch((err) => {
+  101            this.setState(err)
+  102:           console.log(err)
+  103          })
+  104          .finally(() => {
+  105            this.setState({showProgress: false})
+  106:           console.log(this.props.navigation.goBack())
+  107          })
+  108      }
+
+/Users/prerana/lighthouse/FinalSpotBotProject/SpotBotClient/components/MapHome.js:
+   31        }
+   32      }
+   33:     console.log('Maptimer', this.props.showTimer)
+   34      return (
+   35        <MapView
+
+/Users/prerana/lighthouse/FinalSpotBotProject/SpotBotClient/components/NewTimer.js:
+   41  class Timer extends Component {
+   42    componentDidMount() {
+   43:     console.log("Timer CDM");
+   44      this.intervalId = setInterval(this.props.listener, 250);
+   45    }
+
+/Users/prerana/lighthouse/FinalSpotBotProject/SpotBotClient/components/ReserveSpot.js:
+   22      })
+   23        .then((response) => {
+   24:       // console.log("reserve response from database",response);
+   25          if (response.status >= 200 && response.status < 300) {
+   26            return response
+   ..
+   40        .catch((err) => {
+   41          this.setState(err)
+   42:         console.log(err)
+   43        })
+   44        .finally(() => {
+
+/Users/prerana/lighthouse/FinalSpotBotProject/SpotBotClient/components/SearchSpot.js:
+   24      for(const area of this.props.parkingAreas) {
+   25        for(const spot of area.slots) {
+   26:         console.log("label",spot.label, this.state.searchText)
+   27          if(spot.label === this.state.searchText) {
+   28            // alert ('found')
+   ..
+   35        }
+   36      }
+   37:     console.log('searchSpotfound', this.state.s)
+   38      // this.setState({
+   39         // this.props.parkingAreas.forEach(
+   40:        //  parkingArea => console.log(parkingArea.slots.filter(
+   41         //    spot => spot.label === this.state.searchText.toLowerCase()).length);
+   42        // reserveModal: true,
+
+/Users/prerana/lighthouse/FinalSpotBotProject/SpotBotClient/components/Signup.js:
+   79        await AsyncStorage.setItem('token', responseData.jwt)
+   80      } catch (error) {
+   81:       console.log('AsyncStorage error: ' + error.message)
+   82      }
+   83    }
+   ..
+   87
+   88      // REMOVE THIS!!!!!!
+   89:     console.log(value)
+   90
+   91      if (value) {
+   ..
+  153              })
+  154              .then((responseData) => {
+  155:               console.log(responseData)
+  156                this._storeToken(responseData)
+  157              })
+  158              .catch((err) => {
+  159                this.setState(err)
+  160:               console.log(err)
+  161              })
+  162          })
+  163          .catch((err) => {
+  164            this.setState(err)
+  165:           console.log(err)
+  166          })
+  167          .finally(() => {
+  168            this.setState({showProgress: false})
+  169:           console.log(this.props.navigation.goBack())
+  170          })
+  171      }
+
+/Users/prerana/lighthouse/FinalSpotBotProject/SpotBotClient/components/Timer.js:
+   25
+   26    cancelSpot() {
+   27:     console.log('reservespot',this.props)
+   28      fetch(`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
+   29          method: "POST",
+   ..
+   40        })
+   41        .then((response) => {
+   42:         // console.log("reserve response from database",response);
+   43        if(response.status >= 200 && response.status < 300) {
+   44          return response
+   ..
+   53      })
+   54      .then((responseData) => {
+   55:       console.log("cancel spot",  responseData)
+   56         this.props.cancelClick(responseData, this.props.spot);
+   57
+   ..
+   59      .catch((err) => {
+   60        this.setState(err)
+   61:       console.log(err)
+   62      })
+   63      .finally(() => {
+   ..
+   94  class Timer extends Component {
+   95    componentDidMount() {
+   96:     console.log("Timer CDM");
+   97      this.intervalId = setInterval(this.props.listener, 250);
+   98    }
+
+32 matches across 10 files

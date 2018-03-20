@@ -30,7 +30,6 @@ export default class MapHome extends React.Component {
         return <Image style={styles.imageGreen} source={require('../images/greenMarker.jpg')} />
       }
     }
-    console.log('Maptimer', this.props.showTimer)
     return (
       <MapView
         style={styles.map}

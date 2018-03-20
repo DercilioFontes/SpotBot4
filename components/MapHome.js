@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Button, Text, View, Image } from 'react-native'
 import {MapView, Notifications } from 'expo';
 import { StackNavigator } from 'react-navigation'
-import Timer from './Timer'
+import NewTimer from './Timer'
 import SearchSpot from './SearchSpot'
 
 
@@ -51,9 +51,7 @@ export default class MapHome extends React.Component {
 
         ))}
 
-
-         <Timer cancelClick={this.props.cancelClick} spot={this.props.spot} showTimer={this.props.showTimer} />
-
+         <NewTimer cancelClick={this.props.cancelClick} spot={this.props.spot} showTimer={this.props.showTimer} />
 
       </MapView>
 

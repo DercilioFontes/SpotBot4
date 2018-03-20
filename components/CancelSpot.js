@@ -59,6 +59,7 @@ export default class ReserveSpot extends React.Component {
     <View>
 
       <Text style={styles.text}>{this.props.spot.label}</Text>
+
          <Timer style={styles.text} cancelClick={this.props.cancelClick} spot={this.props.spot} showTimer={true} />
 
       <Text style={styles.information}>{this.props.spot.spot_information}</Text>

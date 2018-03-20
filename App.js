@@ -253,8 +253,7 @@ class HomeScreen extends React.Component {
     return (
       <View  >
 
-        <View style={{ height: this.state.showSlotsDetails ? '40%' : this.state.reserveStatus ? '75%' : this.state.cancelNotification ? '90%' : '100%', backgroundColor: '#d0e7a6'}}>
-
+        <View style={{ height: this.state.showSlotsDetails ? '50%' : this.state.reserveStatus ? '70%' : this.state.cancelNotification ? '90%' : '100%', backgroundColor: '#d0e7a6'}}>
           <MapHome cancelClick={this.cancelClick.bind(this)} spot={this.state.reserveSpot} showTimer={this.state.showTimer} onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation} />
         </View>
         { this.state.showSlotsDetails &&
@@ -275,7 +274,7 @@ class HomeScreen extends React.Component {
         }
         {!this.state.reserveStatus &&
           <View style={{height: '10%', backgroundColor: '#049588'}}>
-            <Text> Your reservation has been canceled you can't book same spot for 2hr</Text>
+            <Text> Your reservation has been cancelled </Text>
           </View>
 
         }

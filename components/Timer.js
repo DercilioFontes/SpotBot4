@@ -2,29 +2,27 @@ import {StyleSheet, Text, View, Modal, TouchableOpacity} from 'react-native';
 import React, {Component} from 'react';
 import {MaterialIcons} from '@expo/vector-icons'
 
-
-export default class Timer extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      secondsElapsed: 10 * 1,
-      showTimer: false
-
+function Clock({ countdown }) {
+  return (
+    <View>
+    {countdown > 0 &&
+      <Text> {Math.floor(countdown / 60)}:
+        {(countdown % 60).toString().padStart(2, "0")}
+      </Text>
     }
-  }
+    </View>
+
+  );
+}
+export default class NewTimer extends React.Component {
+  state = { showClock: true, start: new Date(), duration: 10 };
+  updateCountdown = () => {
+    this.setState({
+      duration: Math.floor(10 - (new Date() - this.state.start) / 1000)
+    });
+  };
 
 
-  getSeconds() {
-    if(this.state.secondsElapsed >= 0) {
-      return('0' + this.state.secondsElapsed % 60).slice(-2);
-    }
-  }
-  getMinutes() {
-    if(this.state.secondsElapsed >= 0) {
-      return ('0' + Math.floor(this.state.secondsElapsed / 60) + ':');
-    }
-
-  }
   cancelSpot() {
     console.log('reservespot',this.props)
     fetch(`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
@@ -67,50 +65,41 @@ export default class Timer extends React.Component {
 
     })
 
-
   }
-
-  startTimer() {
-    if(this.props.showTimer) {
-      // let interval = setInterval(() => {
-      //     this.setState({
-      //       secondsElapsed: this.state.secondsElapsed - 1
-      //    })
-      //   }, 1000)
-      // setTimeout(() => {
-      //   clearInterval(this.interval);
-      //   this.setState({secondsElapsed: 10})
-      //   this.cancelSpot();
-      // }, 10000)
-     }
-  }
-
-
-
-
   render() {
+    const clockSection = this.state.showClock && (
+      <Clock countdown={this.state.duration} />
+    );
+    const countdownTimer = this.state.duration > 0 && (
+      <Timer listener={this.updateCountdown} />
+    );
     return (
-
       <View>
       {this.props.showTimer &&
-          <Text style={styles.timer}>
-            {this.startTimer()}
-            {this.getMinutes()} {this.getSeconds()}
-          </Text>
-        }
+        <View>
+          {clockSection}
+          {countdownTimer}
+          {this.state.duration <= 0 &&
+          <View>
+            {this.cancelSpot()}
+          </View>
+          }
+        </View>
+      }
       </View>
-      )
+    );
   }
 }
 
-
-const styles = StyleSheet.create({
-  timer: {
-    color: 'white',
-    position: 'absolute',
-    fontWeight: 'bold',
-    top: 400,
-    left: 110,
-    fontSize: 60
+class Timer extends Component {
+  componentDidMount() {
+    console.log("Timer CDM");
+    this.intervalId = setInterval(this.props.listener,250);
   }
-})
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
+  }
+  render() {
+    return false;
+  }
+}

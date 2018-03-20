@@ -111,21 +111,25 @@ class LoginScreen extends React.Component {
   render () {
 
     return (
-      <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', justifyContent:  'center', padding: 20, backgroundColor: "#545454"   }} behavior={'padding'}>
-        <Image source={require('../assets/logo.png')} style={{width: 200, height: 60, alignSelf:'center', paddingBottom: 60}} />
-        <Form
-          ref="form"
-          type={User}
-          options={options}
-        />
-        <TouchableHighlight style={styles.button} onPress={this._userLogin.bind(this)} underlayColor='#99d9f4'>
-          <Text style={styles.buttonText}>LOGIN</Text>
-        </TouchableHighlight>
+      <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: 20, backgroundColor: "#545454"}} behavior={'padding'}>
+        <Image source={require('../assets/logo.png')} style={{width: 200, height: 60, alignSelf:'center'}} />
+        <View>
+          <Form
+            ref="form"
+            type={User}
+            options={options}
+          />
+          <TouchableHighlight style={styles.button} onPress={this._userLogin.bind(this)} underlayColor='#99d9f4'>
+            <Text style={styles.buttonText}>LOGIN</Text>
+          </TouchableHighlight>
+        </View>
 
         <ActivityIndicator
           animating={this.state.showProgress}
           size='large'
           style={styles.loader}/>
+        {/* Empty View to adjust form position */}
+        <View></View>
       </KeyboardAvoidingView>
 
     )
@@ -133,17 +137,16 @@ class LoginScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    marginTop: 50,
-    padding: 20,
-    backgroundColor: '#ffffff',
+  // container: {
+  //   justifyContent: 'center',
+  //   marginTop: 50,
+  //   padding: 20,
+  //   backgroundColor: '#ffffff',
 
-  },
+  // },
   title: {
     fontSize: 30,
     alignSelf: 'center',
-    marginBottom: 30,
     fontFamily: 'Apple SD Gothic Neo'
 
   },
@@ -159,11 +162,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#00B2B0',
     borderColor: '#00B2B0',
     borderWidth: 1,
-    marginBottom: 10,
     alignSelf: 'stretch',
     justifyContent: 'center',
-    marginTop: 30
-
+    marginTop: 40
   },
   loader: {
     marginTop: 20

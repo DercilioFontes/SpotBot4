@@ -125,11 +125,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#545454'
   },
-  carIcon: {
-    position: 'absolute',
-    top: 5,
-    alignSelf: 'center'
-  },
   reserveText: {
     color: 'white',
     fontWeight: 'bold',

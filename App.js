@@ -264,10 +264,9 @@ class HomeScreen extends React.Component {
               </View>
         }
         { this.state.reserveStatus &&
-          <View style={{height: '30%', backgroundColor: '#049588'}}>
+          <View style={styles.reserveView}>
           <CancelSpot cancelClick={this.cancelClick.bind(this)} spot={this.state.reserveSpot}/>
          </View>
-
         }
       </View>
     )
@@ -478,6 +477,10 @@ const styles = StyleSheet.create({
   },
   accessibleIcon: {
     paddingTop: 5
+  },
+  reserveView: {
+    height: '30%',
+    backgroundColor: '#545454'
   }
 });
 export default class App extends React.Component {

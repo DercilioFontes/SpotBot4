@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   image: {
     height: 60,
     opacity: 0.3,
-    width: 365,
+    width: 370,
   },
   text: {
     fontSize: 20,

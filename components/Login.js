@@ -1,12 +1,24 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableHighlight,
+import { StyleSheet, Image, Text, View, TouchableHighlight,
   ActivityIndicator, AsyncStorage, KeyboardAvoidingView } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { Ionicons, Feather } from '@expo/vector-icons'
 
+
+
+
 // to use in the forms
 import t from 'tcomb-form-native'
+import _ from 'lodash'
 const Form = t.form.Form
+const stylesheet = _.cloneDeep(Form.stylesheet)
+
+
+// Overwrite form styles
+stylesheet.textbox.normal.borderRadius = 0;
+stylesheet.textbox.normal.backgroundColor = '#fff';
+stylesheet.controlLabel.normal.color = '#fff';
+
 
 // Config of the form data and options
 const User = t.struct({
@@ -16,7 +28,11 @@ const User = t.struct({
 
 // Options of the form data
 const options = {
+  stylesheet: stylesheet,
   fields: {
+    name: {
+      stylesheet: stylesheet
+    },
     email: {
       keyboardType: 'email-address'
     },
@@ -41,7 +57,7 @@ class LoginScreen extends React.Component {
       console.log('AsyncStorage error: ' + error.message)
     }
   }
-  
+
   _userLogin () {
     let value = this.refs.form.getValue()
 
@@ -93,57 +109,65 @@ class LoginScreen extends React.Component {
   }
 
   render () {
-    const styles = StyleSheet.create({
-      container: {
-        justifyContent: 'center',
-        marginTop: 50,
-        padding: 20,
-        backgroundColor: '#ffffff'
-      },
-      title: {
-        fontSize: 30,
-        alignSelf: 'center',
-        marginBottom: 30
-      },
-      buttonText: {
-        fontSize: 18,
-        color: 'white',
-        alignSelf: 'center'
-      },
-      button: {
-        height: 36,
-        backgroundColor: '#48BBEC',
-        borderColor: '#48BBEC',
-        borderWidth: 1,
-        borderRadius: 8,
-        marginBottom: 10,
-        alignSelf: 'stretch',
-        justifyContent: 'center'
-      },
-      loader: {
-        marginTop: 20
-      }
-    })
-    return (
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior={'padding'}>
-        <View style={{ flex: 1, alignSelf: 'auto', justifyContent: 'center', padding: 20 }}>
-          <Form
-            ref="form"
-            type={User}
-            options={options}
-          />
-          <TouchableHighlight style={styles.button} onPress={this._userLogin.bind(this)} underlayColor='#99d9f4'>
-            <Text style={styles.buttonText}>Save</Text>
-          </TouchableHighlight>
 
-          <ActivityIndicator
-            animating={this.state.showProgress}
-            size='large'
-            style={styles.loader}/>
-        </View>
+    return (
+      <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', justifyContent:  'center', padding: 20, backgroundColor: "#545454"   }} behavior={'padding'}>
+        <Image source={require('../assets/logo.png')} style={{width: 200, height: 60, alignSelf:'center', paddingBottom: 60}} />
+        <Form
+          ref="form"
+          type={User}
+          options={options}
+        />
+        <TouchableHighlight style={styles.button} onPress={this._userLogin.bind(this)} underlayColor='#99d9f4'>
+          <Text style={styles.buttonText}>LOGIN</Text>
+        </TouchableHighlight>
+
+        <ActivityIndicator
+          animating={this.state.showProgress}
+          size='large'
+          style={styles.loader}/>
       </KeyboardAvoidingView>
+
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    marginTop: 50,
+    padding: 20,
+    backgroundColor: '#ffffff',
+
+  },
+  title: {
+    fontSize: 30,
+    alignSelf: 'center',
+    marginBottom: 30,
+    fontFamily: 'Apple SD Gothic Neo'
+
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center',
+    fontFamily: 'Apple SD Gothic Neo'
+
+  },
+  button: {
+    height: 36,
+    backgroundColor: '#00B2B0',
+    borderColor: '#00B2B0',
+    borderWidth: 1,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    marginTop: 30
+
+  },
+  loader: {
+    marginTop: 20
+  },
+})
 
 export default LoginScreen

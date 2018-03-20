@@ -100,18 +100,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderWidth:2,
     borderColor: 'white',
-    color: '#059D8E',
     padding: 10,
     paddingHorizontal: 30,
     paddingVertical: 10,
-    fontSize: 20,
     width:200,
-    textAlign: 'center',
-    backgroundColor: '#00B2B0',
+    backgroundColor: '#15AEBC',
     borderStyle: 'solid',
     margin: 15,
-    fontFamily: 'Apple SD Gothic Neo'
-
   },
   image: {
     height: 60,
@@ -123,12 +118,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 10,
     textAlign: 'center',
-    color: '#F26101'
+    color: '#0F303F'
   },
   information: {
     fontSize: 15,
     textAlign: 'center',
-    color: 'gray'
+    color: '#545454'
   },
   carIcon: {
     position: 'absolute',

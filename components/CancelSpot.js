@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
     width: 100,
     margin: 10,
     marginLeft: 125,
-    color: 'white',
     padding: 5,
 
   },

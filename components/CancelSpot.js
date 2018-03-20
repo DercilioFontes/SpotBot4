@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Modal, TouchableOpacity, Image} from 'react-nat
 import React, {Component} from 'react';
 import { Notifications, Permissions, Constants } from 'expo';
 import {FontAwesome} from '@expo/vector-icons'
+import Timer from './Timer'
 
 
 
@@ -49,13 +50,26 @@ export default class ReserveSpot extends React.Component {
     })
 
     }
+
+    arrivalButton() {
+      this.props.activateClick(this.props.spot);
+
+    }
+
+
   render () {
-    return(
+
+        return(
     <View>
+
       <Image style={styles.image} source={require('../assets/vancouver.jpg')} />
       <Text style={styles.text}>{this.props.spot.label}</Text>
+
+         <Timer style={styles.text} cancelClick={this.props.cancelClick} spot={this.props.spot} showTimer={true} />
+
       <Text style={styles.information}>{this.props.spot.spot_information}</Text>
-      <TouchableOpacity style={styles.reserveButton} onPress={this.cancelSpot.bind(this)}><Text style={styles.reserveText}>CANCEL</Text></TouchableOpacity>
+      <TouchableOpacity style={styles.reserveButton} onPress={this.cancelSpot.bind(this)}><Text style={styles.reserveText}>Cancel</Text></TouchableOpacity>
+        <TouchableOpacity onPress={this.arrivalButton.bind(this)}><Text style={styles.reserveText}>Start Session</Text></TouchableOpacity>
     </View>
   )}
 }

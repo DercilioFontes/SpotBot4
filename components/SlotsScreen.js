@@ -29,9 +29,11 @@ export default class SlotsScreen extends React.Component {
 
 
   reserveClick(newParkingArea, reserveSpot) {
-    this.setState({showModal: false})
+    this.setState({showModal: false});
     this.props.homePage(newParkingArea, this.state.spot);
   }
+
+
 
   render () {
     const slotsAvailable = this.props.slots.filter(slot => slot.availability === true)

@@ -20,9 +20,10 @@ export default class Timer extends React.Component {
     }
   }
   getMinutes() {
-    if(this.state.secondsElpased >= 0) {
-      // return ('0' + Math.floor(this.state.secondsElapsed / 60) + ':');
+    if(this.state.secondsElapsed >= 0) {
+      return ('0' + Math.floor(this.state.secondsElapsed / 60) + ':');
     }
+
   }
   cancelSpot() {
     console.log('reservespot',this.props)
@@ -72,29 +73,28 @@ export default class Timer extends React.Component {
   startTimer() {
     if(this.props.showTimer) {
       // let interval = setInterval(() => {
-      //       this.setState({
-      //               secondsElapsed: this.state.secondsElapsed - 1
-      //             })
+      //     this.setState({
+      //       secondsElapsed: this.state.secondsElapsed - 1
+      //    })
       //   }, 1000)
-      setTimeout(() => {
-        clearInterval(this.interval)
-        this.cancelSpot();
-      }, 10000)
-    }
+      // setTimeout(() => {
+      //   clearInterval(this.interval);
+      //   this.setState({secondsElapsed: 10})
+      //   this.cancelSpot();
+      // }, 10000)
+     }
   }
 
 
 
 
   render() {
-  console.log('timer', this.props.showTimer)
     return (
 
       <View>
-      {this.startTimer()}
       {this.props.showTimer &&
           <Text style={styles.timer}>
-
+            {this.startTimer()}
             {this.getMinutes()} {this.getSeconds()}
           </Text>
         }

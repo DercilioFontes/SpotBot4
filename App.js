@@ -26,6 +26,7 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      cancelNotification: false,
       reserveStatus: false,
       statusAccesibilityButton: true,
       showTimer: false,
@@ -207,10 +208,11 @@ class HomeScreen extends React.Component {
 
           this.setState({
             tempCurrentArea: this.state.currentArea,
-            currentArea: {slots: accessibles},
+            currentArea: {title: this.state.currentArea.title, slots: accessibles},
             showSlotsDetails: true,
             statusAccesibilityButton: false
           })
+          console.log('prerana', this.state.currentArea)
         } else {
            this.setState({
             currentArea: this.state.tempCurrentArea,
@@ -239,7 +241,8 @@ class HomeScreen extends React.Component {
         showSlotsDetails: false,
         parking_areas: this.availability(transformRawParking),
         reserveStatus: false,
-        reserveSpot: reserveSpot
+        reserveSpot: reserveSpot,
+        cancelNotification: true
       })
 
     }
@@ -249,7 +252,7 @@ class HomeScreen extends React.Component {
 
     return (
       <View  >
-        <View style={{ height: this.state.showSlotsDetails ? '40%' : this.state.reserveStatus ? '75%' : '100%', backgroundColor: '#d0e7a6'}}>
+        <View style={{ height: this.state.showSlotsDetails ? '40%' : this.state.reserveStatus ? '75%' : this.state.cancelNotification ? '90%' : '100%', backgroundColor: '#d0e7a6'}}>
           <MapHome cancelClick={this.cancelClick.bind(this)} spot={this.state.reserveSpot} showTimer={this.state.showTimer} onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation} />
         </View>
         { this.state.showSlotsDetails &&
@@ -268,6 +271,11 @@ class HomeScreen extends React.Component {
           <View style={{height: '30%', backgroundColor: '#049588'}}>
           <CancelSpot cancelClick={this.cancelClick.bind(this)} spot={this.state.reserveSpot}/>
          </View>
+        }
+        {!this.state.reserveStatus &&
+          <View style={{height: '10%', backgroundColor: '#049588'}}>
+            <Text> Your reservation has been canceled you can't book same spot for 2hr</Text>
+          </View>
 
         }
       </View>

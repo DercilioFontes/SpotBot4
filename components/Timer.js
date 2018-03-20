@@ -15,10 +15,10 @@ function Clock({ countdown }) {
   );
 }
 export default class NewTimer extends React.Component {
-  state = { showClock: true, start: new Date(), duration: 10 };
+  state = { showClock: true, start: new Date(), duration: 20 };
   updateCountdown = () => {
     this.setState({
-      duration: Math.floor(10 - (new Date() - this.state.start) / 1000)
+      duration: Math.floor(20 - (new Date() - this.state.start) / 1000)
     });
   };
 
@@ -73,6 +73,7 @@ export default class NewTimer extends React.Component {
     const countdownTimer = this.state.duration > 0 && (
       <Timer listener={this.updateCountdown} />
     );
+    console.log('props in timer component', this.props)
     return (
       <View>
       {this.props.showTimer &&
@@ -94,7 +95,7 @@ export default class NewTimer extends React.Component {
 class Timer extends Component {
   componentDidMount() {
     console.log("Timer CDM");
-    this.intervalId = setInterval(this.props.listener,250);
+    this.intervalId = setInterval(this.props.listener, 250);
   }
   componentWillUnmount() {
     clearInterval(this.intervalId);

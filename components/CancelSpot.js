@@ -55,9 +55,12 @@ export default class ReserveSpot extends React.Component {
       <Timer showTimer={true}/>
     }
   render () {
-    return(
+        return(
     <View>
+
       <Text style={styles.text}>{this.props.spot.label}</Text>
+         <Timer style={styles.text} cancelClick={this.props.cancelClick} spot={this.props.spot} showTimer={true} />
+
       <Text style={styles.information}>{this.props.spot.spot_information}</Text>
       <TouchableOpacity style={styles.reserveButton} onPress={this.cancelSpot.bind(this)}><Text style={styles.reserveText}>Cancel</Text></TouchableOpacity>
         <TouchableOpacity style={styles.reserveButton} onPress={this.arrivalTimer.bind(this)}><Text style={styles.reserveText}>Arival</Text></TouchableOpacity>

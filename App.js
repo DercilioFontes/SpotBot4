@@ -28,7 +28,7 @@ class HomeScreen extends React.Component {
     this.state = {
       activatedSpot:[],
       cancelNotification: false,
-      reserveStatus: false,
+      reserveStatus: 'inactive',
       statusAccesibilityButton: true,
       showTimer: false,
       searchSpotStatus: false,
@@ -261,22 +261,44 @@ class HomeScreen extends React.Component {
       this.setState({
         showTimer: false,
         parking_areas: this.availability(transformRawParking),
-        reserveStatus: 'empty' ,
+        reserveStatus: 'inactive',
         cancelNotification: true
       })
     }
 
+    mapHeight() {
+      alert('hyyyyyyy')
+      // if (this.state.showSlotsDetails) {
+      //   return '50%'
+      // }
+      // if(this.state.reserveStatus === 'reserved') {
+      //   return '70%'
+      // }
+      // if(this.state.reserveStatus === 'empty' || this.state.reserveStatus === 'active') {
+      //   return '50%'
+      // }
+      // if(this.state.cancelNotification) {
+      //   return '90%'
+      // }
+      // if(this.state.reserveStatus === 'inactive') {
+      //   alert('mapheight')
+      //   return '100%'
+      // }
+    }
+    closeNotification() {
+      this.setState({reserveStatus: 'inactive'})
+    }
 
   render() {
 
     return (
       <View  >
-
-        <View style={{ height: this.state.showSlotsDetails ? '50%' : this.state.reserveStatus ? '70%' : this.state.cancelNotification ? '90%' : '100%', backgroundColor: '#d0e7a6'}}>
+        <View style={{zIndex: 0, height: '100%', width: '100%', backgroundColor: '#d0e7a6'}}>
           <MapHome cancelClick={this.cancelClick.bind(this)} spot={this.state.reserveSpot} showTimer={this.state.showTimer} onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation} />
         </View>
+
         { this.state.showSlotsDetails &&
-              <View style={{height: '60%', backgroundColor: '#545454'}}>
+              <View style={{position: 'absolute',left:0, right: 0, bottom: 0, height: '50%', backgroundColor: '#545454'}}>
                 <View style={styles.parkingArea}>
                   <MaterialCommunityIcons onPress={this.filterAccessibility.bind(this)} color='white' name='filter-outline' size={30} style={styles.accessibleIcon}/>
                     <Text style={{ color: 'white', fontSize: 25, width: 250 }}>{this.state.currentArea.title}</Text>
@@ -286,20 +308,22 @@ class HomeScreen extends React.Component {
                   <SlotsScreen homePage={this.homePage.bind(this)} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
               </View>
         }
+
         { this.state.reserveStatus === 'reserved' &&
-          <View style={{height: '30%', backgroundColor: '#049588'}}>
+          <View style={{position: 'absolute',left:0, right: 0, bottom: 0, height: '50%', backgroundColor: '#049588'}}>
           <CancelSpot cancelClick={this.cancelClick.bind(this)} activateClick={this.activateClick.bind(this)} spot={this.state.reserveSpot}/>
          </View>
         }
         { this.state.reserveStatus === 'empty' &&
-          <View style={{height: '50%', backgroundColor: '#049588'}}>
+          <View style={{position: 'absolute',left:0, right: 0, bottom: 0, height: '10%', backgroundColor: '#049588'}}>
             <Text> Your reservation has been cancelled </Text>
+            <TouchableOpacity onPress={this.closeNotification.bind(this)}><Text>Close</Text></TouchableOpacity>
           </View>
 
         }
 
         { this.state.reserveStatus === 'active' &&
-          <View style={{height: '50%', backgroundColor: '#049588'}}>
+          <View style={{position: 'absolute',left:0, right: 0, bottom: 0, height: '10%', backgroundColor: '#049588'}}>
             <ActiveReservationModal activatedSpot={this.state.reserveSpot} endSessionClick={this.endSessionClick.bind(this)}/>
           </View>
 

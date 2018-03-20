@@ -94,7 +94,6 @@ class LoginScreen extends React.Component {
           return response.json()
         })
         .then((responseData) => {
-          console.log(responseData)
           this._storeToken(responseData)
         })
         .catch((err) => {

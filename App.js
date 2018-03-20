@@ -17,7 +17,7 @@ const typographyStyle = StyleSheet.create(typography);
 
 import parkingAreasDB from './db/database'
 import CancelSpot from './components/CancelSpot'
-
+import ActiveReservationModal from './components/ActiveReservationModal'
 
 
 // Main Screen
@@ -26,6 +26,7 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      activatedSpot:[],
       cancelNotification: false,
       reserveStatus: false,
       statusAccesibilityButton: true,
@@ -212,7 +213,7 @@ class HomeScreen extends React.Component {
             showSlotsDetails: true,
             statusAccesibilityButton: false
           })
-          console.log('prerana', this.state.currentArea)
+
         } else {
            this.setState({
             currentArea: this.state.tempCurrentArea,
@@ -228,10 +229,9 @@ class HomeScreen extends React.Component {
         showTimer: true,
         showSlotsDetails: false,
         parking_areas: this.availability(transformRawParking),
-        reserveStatus: true,
+        reserveStatus: 'reserved' ,
         reserveSpot: reserveSpot
       })
-      console.log('reserveSpot', this.state.reserveSpot)
     }
 
     cancelClick(newParkingArea, reserveSpot) {
@@ -240,11 +240,31 @@ class HomeScreen extends React.Component {
         showTimer: false,
         showSlotsDetails: false,
         parking_areas: this.availability(transformRawParking),
-        reserveStatus: false,
+        reserveStatus: 'empty' ,
         reserveSpot: reserveSpot,
         cancelNotification: true
       })
 
+    }
+
+    activateClick(responseData, activatedSpot) {
+
+      this.setState({
+      showTimer: true,
+      reserveStatus: 'active',
+      cancelNotification: false,
+      activatedSpot: activatedSpot
+      })
+    }
+
+    endSessionClick(responseData){
+      const transformRawParking = this.transformRaw(responseData);
+      this.setState({
+        showTimer: false,
+        parking_areas: this.availability(transformRawParking),
+        reserveStatus: 'empty' ,
+        cancelNotification: true
+      })
     }
 
 
@@ -267,14 +287,21 @@ class HomeScreen extends React.Component {
                   <SlotsScreen homePage={this.homePage.bind(this)} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
               </View>
         }
-        { this.state.reserveStatus &&
+        { this.state.reserveStatus === 'reserved' &&
           <View style={{height: '30%', backgroundColor: '#049588'}}>
-          <CancelSpot cancelClick={this.cancelClick.bind(this)} spot={this.state.reserveSpot}/>
+          <CancelSpot cancelClick={this.cancelClick.bind(this)} activateClick={this.activateClick.bind(this)} spot={this.state.reserveSpot}/>
          </View>
         }
-        {!this.state.reserveStatus &&
-          <View style={{height: '10%', backgroundColor: '#049588'}}>
+        { this.state.reserveStatus === 'empty' &&
+          <View style={{height: '50%', backgroundColor: '#049588'}}>
             <Text> Your reservation has been cancelled </Text>
+          </View>
+
+        }
+
+        { this.state.reserveStatus === 'active' &&
+          <View style={{height: '50%', backgroundColor: '#049588'}}>
+            <ActiveReservationModal activatedSpot={this.state.reserveSpot} endSessionClick={this.endSessionClick.bind(this)}/>
           </View>
 
         }

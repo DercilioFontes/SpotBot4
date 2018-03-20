@@ -32,6 +32,7 @@ class HomeScreen extends React.Component {
       searchSpotStatus: false,
         showSlotsDetails: false,
         annotations: [],
+        reserveSpot: [],
         mapRegion: {
           latitude: 49.26,
           longitude: -123.25,
@@ -228,7 +229,7 @@ class HomeScreen extends React.Component {
         reserveStatus: true,
         reserveSpot: reserveSpot
       })
-
+      console.log('reserveSpot', this.state.reserveSpot)
     }
 
     cancelClick(newParkingArea, reserveSpot) {
@@ -245,10 +246,11 @@ class HomeScreen extends React.Component {
 
 
   render() {
+
     return (
       <View  >
         <View style={{ height: this.state.showSlotsDetails ? '40%' : this.state.reserveStatus ? '75%' : '100%', backgroundColor: '#d0e7a6'}}>
-          <MapHome showTimer={this.state.showTimer} onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation} />
+          <MapHome cancelClick={this.cancelClick.bind(this)} spot={this.state.reserveSpot} showTimer={this.state.showTimer} onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation} />
         </View>
         { this.state.showSlotsDetails &&
               <View style={{height: '60%', backgroundColor: '#049588'}}>

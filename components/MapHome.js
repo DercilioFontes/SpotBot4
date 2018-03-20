@@ -50,10 +50,10 @@ export default class MapHome extends React.Component {
           </MapView.Marker>
 
         ))}
-        <SearchSpot parkingAreas={this.props.parking_areas}/>
-        {this.props.showTimer &&
-         <Timer showTimer={this.props.showTimer} />
-        }
+
+
+         <Timer cancelClick={this.props.cancelClick} spot={this.props.spot} showTimer={this.props.showTimer} />
+
 
       </MapView>
 

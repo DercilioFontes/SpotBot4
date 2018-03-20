@@ -20,10 +20,21 @@ export default class SearchSpot extends React.Component {
     this.props.homePage(newParkingArea, reserveSpot);
   }
   searchSpot () {
-    console.log("search spot", this.state.searchText)
-    this.props.parkingAreas.forEach(parkingArea =>
-      console.log(parkingArea.slots.filter(spot => spot.label === this.state.searchText))
-      )
+
+    for(const area of this.props.parkingAreas) {
+      for(const spot of area.slots) {
+        console.log("label",spot.label, this.state.searchText)
+        if(spot.label === this.state.searchText) {
+          // alert ('found')
+          this.setState({
+            reserveModal: true,
+            searchText: '',
+            searchSpot: spot
+          })
+        }
+      }
+    }
+    console.log('searchSpotfound', this.state.s)
     // this.setState({
        // this.props.parkingAreas.forEach(
        //  parkingArea => console.log(parkingArea.slots.filter(

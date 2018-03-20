@@ -6,25 +6,29 @@ export default function Slot ({spot, user_id, showSlot}) {
   return (
       <TouchableOpacity style={styles.spotStyleContainer} onPress={() => showSlot(spot, user_id)}>
         <Image style={styles.image} source={require('../assets/evubc-car.jpg')} />
-        <Text style={styles.label}>{spot.label}</Text>
-        <Text style={styles.information}>{spot.spot_information}</Text>
-        <Text>
+        <View style={{flex:1, flexDirection: 'column', alignItems:"flex-start"}}>
+          <Text style={styles.label}>{spot.label}</Text>
+          <Text style={styles.information}>{spot.spot_information}</Text>
+        </View>
+
+        <View>
           {spot.accessible &&
             <MaterialIcons style={styles.accessibleIconStyle} name='accessible' size={30} color='gray'/>
           }
-        </Text>
+        </View>
       </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
   spotStyleContainer: {
-    alignContent: 'space-around',
+    alignContent: 'center',
     backgroundColor: 'white',
     borderBottomWidth: 1,
     borderColor: '#ccc',
     flexDirection: 'row',
     padding: 5,
+    justifyContent: 'center',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
@@ -32,22 +36,22 @@ const styles = StyleSheet.create({
   image: {
     width: 50,
     height: 50,
-    borderRadius: 3
+    borderRadius: 3,
   },
   accessibleIconStyle:{
-    justifyContent: 'flex-end',
-    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   label: {
     fontSize: 18,
-    color: '#F26101',
+    color: '#15AEBC',
     flex: 1,
-    paddingLeft: 5
+    paddingLeft: 5,
   },
   information:{
     color: 'gray',
-    flex: 2
-
+    flex: 1,
+    paddingLeft: 5
   }
 
 })

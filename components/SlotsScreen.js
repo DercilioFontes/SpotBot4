@@ -37,11 +37,11 @@ export default class SlotsScreen extends React.Component {
     const slotsAvailable = this.props.slots.filter(slot => slot.availability === true)
     const slotList = slotsAvailable.map((spot) => {
       return (
-        <View key={uuid()} >
+        <React.Fragment key={uuid()} >
           {
             <Slot spot={spot} user_id={this.state.user_id} showSlot={this.showSlot.bind(this)} />
           }
-        </View>
+        </React.Fragment>
       )
     })
     return (

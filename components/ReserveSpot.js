@@ -42,7 +42,7 @@ export default class ReserveSpot extends React.Component {
         return response.json()
       })
       .then((responseData) => {
-        console.log('parking spot', responseData)
+
         this.props.reserveClick(responseData)
       })
       .catch((err) => {

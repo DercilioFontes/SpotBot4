@@ -3,6 +3,7 @@ import { StyleSheet, Button, Text, View, Image } from 'react-native'
 import {MapView, Notifications } from 'expo';
 import { StackNavigator } from 'react-navigation'
 import Timer from './Timer'
+import SearchSpot from './SearchSpot'
 
 
 
@@ -29,7 +30,7 @@ export default class MapHome extends React.Component {
         return <Image style={styles.imageGreen} source={require('../images/greenMarker.gif')} />
       }
     }
-
+    console.log('Maptimer', this.props.showTimer)
     return (
       <MapView
         style={styles.map}
@@ -49,7 +50,11 @@ export default class MapHome extends React.Component {
           </MapView.Marker>
 
         ))}
-         <Timer />
+
+
+         <Timer cancelClick={this.props.cancelClick} spot={this.props.spot} showTimer={this.props.showTimer} />
+
+
       </MapView>
 
     )

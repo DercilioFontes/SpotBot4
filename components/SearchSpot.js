@@ -10,27 +10,50 @@ export default class SearchSpot extends React.Component {
     super(props)
     this.state = {
       searchText: '',
-      modalVisible: this.props.status,
       reserveModal: false,
       searchSpot: []
     }
   }
-  reserveClick (newParkingArea) {
+
+  reserveClick(newParkingArea, reserveSpot) {
     this.setState({reserveModal: false})
-    // this.props.homePage(newParkingArea);
+    this.props.homePage(newParkingArea, reserveSpot);
   }
   searchSpot () {
-    // console.log(this.props)
-    this.setState({
-      searchSpot: this.props.spots.filter(spot => spot.label === this.state.searchText.toLowerCase()),
-      modalVisible: false,
-      reserveModal: true,
-      searchText: ''})
+
+    for(const area of this.props.parkingAreas) {
+      for(const spot of area.slots) {
+        console.log("label",spot.label, this.state.searchText)
+        if(spot.label === this.state.searchText) {
+          // alert ('found')
+          this.setState({
+            reserveModal: true,
+            searchText: '',
+            searchSpot: spot
+          })
+        }
+      }
+    }
+    console.log('searchSpotfound', this.state.s)
+    // this.setState({
+       // this.props.parkingAreas.forEach(
+       //  parkingArea => console.log(parkingArea.slots.filter(
+       //    spot => spot.label === this.state.searchText.toLowerCase()).length);
+      // reserveModal: true,
+      // searchText: ''})
     // alert( this.props.spots.filter(spot => spot.label === this.state.searchText.toLowerCase()).length)
   }
   render () {
     return (
       <View>
+
+        <View style={styles.containerStyle}>
+          <TextInput placeholder="Search my spot" style={styles.searchTextStyle} value={this.state.searchText} onChangeText={searchText => this.setState({searchText})} />
+          <View style={styles.searchButton} >
+            <Ionicons name='md-search' onPress={this.searchSpot.bind(this)}  color='black' size={25}/>
+          </View>
+        </View>
+
 
         <Modal
           isVisible={this.state.reserveModal}
@@ -49,7 +72,7 @@ const styles = StyleSheet.create({
   containerStyle: {
     flexDirection: 'row',
     position: 'absolute',
-    top: 65,
+    top: 5,
     right: 20,
     backgroundColor: 'white',
     borderRadius: 10,
@@ -67,17 +90,3 @@ const styles = StyleSheet.create({
   }
 })
 
-// <Modal
-//   isVisible={this.state.modalVisible}
-//   animationInTiming={500}
-//   animationOutTiming={500}
-//   backdropTransitionInTiming={500}
-//   backdropTransitionOutTiming={500}
-// >
-//   <View style={styles.containerStyle}>
-//     <TextInput placeholder="Search my spot" style={styles.searchTextStyle} value={this.state.searchText} onChangeText={searchText => this.setState({searchText})} />
-//     <View style={styles.searchButton} >
-//       <Ionicons name='md-search' onPress={this.searchSpot.bind(this)}  color='black' size={25}/>
-//     </View>
-//   </View>
-// </Modal>

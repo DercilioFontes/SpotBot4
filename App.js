@@ -16,6 +16,7 @@ import { typography } from 'react-native-material-design-styles';
 const typographyStyle = StyleSheet.create(typography);
 
 import parkingAreasDB from './db/database'
+import CancelSpot from './components/CancelSpot'
 
 
 
@@ -25,10 +26,13 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      reserveStatus: false,
       statusAccesibilityButton: true,
+      showTimer: false,
       searchSpotStatus: false,
         showSlotsDetails: false,
         annotations: [],
+        reserveSpot: [],
         mapRegion: {
           latitude: 49.26,
           longitude: -123.25,
@@ -147,7 +151,6 @@ class HomeScreen extends React.Component {
 
 
   transformRaw(pa) {
-      console.log('pa inside transformRaw', pa)
       return pa.parking_areas.map(raw_area => {
         return {
               parking_area_id: raw_area.parking_area.id,
@@ -166,15 +169,17 @@ class HomeScreen extends React.Component {
 
 
   availability(parkingAreas) {
-    console.log("availPAs", parkingAreas);
+
     return parkingAreas.map((parkingArea) => {
-      console.log("I am a parking area, you should park in me:", parkingArea);
+
       const totalSlot = parkingArea.slots.length;
       const unavailable_spots = parkingArea.slots.filter(slot => slot.availability === false)
-      parkingArea.description = `   Total slots  ${totalSlot}`
+      const available_spots = parkingArea.slots.filter(slot => slot.availability === true)
+
+      parkingArea.description = `   Total available spots  ${available_spots.length} `
       if (unavailable_spots.length === totalSlot) {
           parkingArea.parkingAreaStatus = 'full',
-          parkingArea.description = `   Total spots ${totalSlot} /n Status Full`
+          parkingArea.description = `Total spots ${totalSlot} Status Full`
       }
       return parkingArea;
     });
@@ -199,7 +204,7 @@ class HomeScreen extends React.Component {
       if(this.state.statusAccesibilityButton)
         {
           const accessibles = this.state.currentArea.slots.filter(slot => slot.accessible === true && slot.availability === true);
-          console.log(accessibles);
+
           this.setState({
             tempCurrentArea: this.state.currentArea,
             currentArea: {slots: accessibles},
@@ -215,37 +220,55 @@ class HomeScreen extends React.Component {
         }
     }
 
-    homePage(newParkingArea) {
+    homePage(newParkingArea, reserveSpot) {
       const transformRawParking = this.transformRaw(newParkingArea);
       this.setState({
+        showTimer: true,
         showSlotsDetails: false,
-        parking_areas: this.availability(transformRawParking)
+        parking_areas: this.availability(transformRawParking),
+        reserveStatus: true,
+        reserveSpot: reserveSpot
       })
-     console.log("parking area",this.state.parking_areas);
+      console.log('reserveSpot', this.state.reserveSpot)
+    }
+
+    cancelClick(newParkingArea, reserveSpot) {
+      const transformRawParking = this.transformRaw(newParkingArea);
+      this.setState({
+        showTimer: false,
+        showSlotsDetails: false,
+        parking_areas: this.availability(transformRawParking),
+        reserveStatus: false,
+        reserveSpot: reserveSpot
+      })
 
     }
 
 
   render() {
+
     return (
       <View  >
-        <SearchSpot spots= {this.state.currentArea.slots} status={true}/>
-        <View style={{ height: this.state.showSlotsDetails ? '60%' : '100%', backgroundColor: '#d0e7a6'}}>
-          <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation}>
-          </MapHome>
+        <View style={{ height: this.state.showSlotsDetails ? '40%' : this.state.reserveStatus ? '75%' : '100%', backgroundColor: '#d0e7a6'}}>
+          <MapHome cancelClick={this.cancelClick.bind(this)} spot={this.state.reserveSpot} showTimer={this.state.showTimer} onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation} />
         </View>
         { this.state.showSlotsDetails &&
-          <View style={styles.parkingAreaHeader}>
-            <View style={styles.parkingArea}>
-              <MaterialCommunityIcons onPress={this.filterAccessibility.bind(this)} color='white' name='filter-outline' size={30} style={styles.accessibleIcon}/>
-                <Text style={{color: 'white', fontSize: 20, paddingTop: 5, alignSelf: 'center', }}>{this.state.currentArea.title}</Text>
-               <FontAwesome style={{position:'absolute', top: 3, right: 5}} color='white' name='angle-down' size={30}
-                  onPress={this.closeSlot.bind(this)}
-                />
+              <View style={{height: '60%', backgroundColor: '#049588'}}>
+                <View style={{flexDirection: 'row'}}>
+                    <MaterialIcons  onPress={this.filterAccessibility.bind(this)} color='white' name='filter-list' size={30}/>
+                    <Text style={{color: 'white', fontSize: 25, paddingTop: 20, paddingLeft: 50}}>{this.state.currentArea.title}</Text>
+                    <FontAwesome style={{position:'absolute', top: 3, right: 5}} color='white' name='close' size={30}
+                      onPress={this.closeSlot.bind(this)}
+                    />
+                </View>
+                  <SlotsScreen homePage={this.homePage.bind(this)} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
+              </View>
+        }
+        { this.state.reserveStatus &&
+          <View style={{height: '30%', backgroundColor: '#049588'}}>
+          <CancelSpot cancelClick={this.cancelClick.bind(this)} spot={this.state.reserveSpot}/>
+         </View>
 
-            </View>
-              <SlotsScreen homePage={this.homePage.bind(this)} key={1} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
-            </View>
         }
       </View>
     )

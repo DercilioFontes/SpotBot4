@@ -19,8 +19,11 @@ const stylesheet = _.cloneDeep(Form.stylesheet)
 
 // stylesheet.textboxView.normal.borderWidth = 0;
 // stylesheet.textboxView.error.borderWidth = 0;
-// stylesheet.textboxView.normal.borderRadius = 0;
+stylesheet.textbox.normal.borderRadius = 0;
 // stylesheet.textboxView.error.borderRadius = 0;
+stylesheet.textbox.normal.backgroundColor = '#fff';
+stylesheet.controlLabel.normal.color = '#fff';
+
 // stylesheet.textboxView.normal.borderBottomWidth = 1;
 // stylesheet.textboxView.error.borderBottomWidth = 1;
 // stylesheet.textbox.normal.marginBottom = 5;
@@ -183,36 +186,34 @@ class SignUpScreen extends React.Component {
       },
       button: {
         height: 36,
-        backgroundColor: '#48BBEC',
-        borderColor: '#48BBEC',
+        backgroundColor: '#00B2B0',
+        borderColor: '#00B2B0',
         borderWidth: 1,
-        borderRadius: 8,
         marginBottom: 5,
         alignSelf: 'stretch',
         justifyContent: 'center'
       },
       loader: {
         marginTop: 20
-      }
+      },
     })
 
     return (
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior={'padding'}>
-        <View style={{ flex: 1, alignSelf: 'auto', justifyContent: 'center', padding: 20 }}>
+      <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: 20, backgroundColor: "#545454"   }} behavior={'padding'}>
+        <Image source={require('../assets/logo.png')} style={{width: 200, height: 60, alignSelf:'center'}}  />
           <Form
             ref="form"
             type={User}
             options={options}
           />
           <TouchableHighlight style={styles.button} onPress={this._userSignup.bind(this)} underlayColor='#99d9f4'>
-            <Text style={styles.buttonText}>Save</Text>
+            <Text style={styles.buttonText}>SIGNUP</Text>
           </TouchableHighlight>
 
           <ActivityIndicator
             animating={this.state.showProgress}
             size='large'
             style={styles.loader}/>
-        </View>
       </KeyboardAvoidingView>
     )
   }

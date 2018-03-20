@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     width:200,
     textAlign: 'center',
-    backgroundColor: '#00B2B0',
+    backgroundColor: '#15AEBC',
     borderStyle: 'solid',
     margin: 15,
     fontFamily: 'Apple SD Gothic Neo'
@@ -123,12 +123,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 10,
     textAlign: 'center',
-    color: '#F26101'
+    color: '#0F303F'
   },
   information: {
     fontSize: 15,
     textAlign: 'center',
-    color: 'gray'
+    color: '#545454'
   },
   carIcon: {
     position: 'absolute',

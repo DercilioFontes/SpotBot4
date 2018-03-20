@@ -202,7 +202,7 @@ class HomeScreen extends React.Component {
           console.log(accessibles);
           this.setState({
             tempCurrentArea: this.state.currentArea,
-            currentArea: {slots: accessibles},
+            currentArea: {title: this.state.currentArea.title, slots: accessibles},
             showSlotsDetails: true,
             statusAccesibilityButton: false
           })
@@ -228,25 +228,24 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
-      <View  >
+      <View style={{backgroundColor: '#545454'}} >
         <SearchSpot spots= {this.state.currentArea.slots} status={true}/>
         <View style={{ height: this.state.showSlotsDetails ? '60%' : '100%', backgroundColor: '#d0e7a6'}}>
           <MapHome onMapPress={this.onMapPress.bind(this)} parking_areas={this.state.parking_areas} user_id={this.state.users.user_id} mapRegion={this.state.mapRegion}  navigation={this.props.navigation}>
           </MapHome>
-        </View>
-        { this.state.showSlotsDetails &&
-          <View style={styles.parkingAreaHeader}>
-            <View style={styles.parkingArea}>
-              <MaterialCommunityIcons onPress={this.filterAccessibility.bind(this)} color='white' name='filter-outline' size={30} style={styles.accessibleIcon}/>
-                <Text style={{color: 'white', fontSize: 20, paddingTop: 5, alignSelf: 'center', }}>{this.state.currentArea.title}</Text>
-               <FontAwesome style={{position:'absolute', top: 3, right: 5}} color='white' name='angle-down' size={30}
-                  onPress={this.closeSlot.bind(this)}
-                />
-
-            </View>
-              <SlotsScreen homePage={this.homePage.bind(this)} key={1} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
-            </View>
-        }
+      </View>
+      { this.state.showSlotsDetails &&
+        <React.Fragment>
+          <View style={styles.parkingArea}>
+            <MaterialCommunityIcons onPress={this.filterAccessibility.bind(this)} color='white' name='filter-outline' size={30} style={styles.accessibleIcon}/>
+              <Text style={{color: 'white', fontSize: 20, paddingTop: 5, alignSelf: 'center', }}>{this.state.currentArea.title}
+              </Text>
+              <FontAwesome  color='white' name='angle-down' size={30}
+                onPress={this.closeSlot.bind(this)}/>
+          </View>
+            <SlotsScreen homePage={this.homePage.bind(this)} key={1} user_id={this.state.user_id} slots={this.state.currentArea.slots} />
+        </React.Fragment>
+      }
       </View>
     )
   }
@@ -257,31 +256,28 @@ class ModalScreen extends React.Component {
   state = {
     visibleModal: null,
   }
-
-
-
-
   render() {
     const pic = require('./assets/vancouver.jpg')
 
     return (
-      <ImageBackground transparent = {true} source= {pic} style={{ opacity: .7,  flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <ImageBackground transparent = {true} source= {pic} style={{ flexDirection:'column' ,opacity: .7,  flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View>
+          <Image source={require('./assets/logo.png')} style={{width: 250, height: 75, alignSelf:'center', paddingBottom:60}}  />
+        </View>
+        <View>
+          <Text
+            style={styles.buttonOutline}
+            title="Login"
+            onPress={() => this.props.navigation.navigate('Login')}
+          >LOGIN</Text>
+          <Text
+            style={styles.buttonFilledIn}
+            title="Sign up"
+            onPress={() => this.props.navigation.navigate('SignUp')}
+          >SIGNUP
+          </Text>
+        </View>
 
-        <Text style={styles.main_header }>SpotBot</Text>
-        <Text
-          style={styles.buttonOutline}
-          title="Login"
-          onPress={() => this.props.navigation.navigate('Login')}
-        >LOGIN</Text>
-        <Text
-          style={styles.buttonFilledIn}
-          title="Sign up"
-          onPress={() => this.props.navigation.navigate('SignUp')}
-        >SIGNUP</Text>
-        <Button
-          onPress={() => this.props.navigation.goBack()}
-          title="Dismiss"
-        />
       </ImageBackground>
     );
   }
@@ -298,19 +294,29 @@ class SignUpScreen extends React.Component {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
-
+    navigationOptions.headerLeft =  (
+      <Button
+        style= {{fontSize: 1000}}
+        onPress={() => navigation.navigate('MyModal')}
+        title={"\u276E"}
+        color="#0F303F"
+      /> )
+      navigationOptions.headerRight =  (
+        <Button
+          style= {{fontSize: 1000}}
+          onPress={() => navigation.navigate('Home')}
+          title={"\u2715"}
+          color="#0F303F"
+        /> )
     return {
       title: 'Sign Up',
       headerStyle: {
-        backgroundColor: navigationOptions.headerTintColor,
+        backgroundColor: navigationOptions.headerTintColor
       },
-      headerTintColor: navigationOptions.headerStyle.backgroundColor,
-    }
+      headerTintColor: navigationOptions.headerStyle.backgroundColor
+      }
   }
-
   render() {
-
-
     return ( <SignUpComponent navigation={this.props.navigation}/>)
   }
 }
@@ -327,7 +333,20 @@ class LoginScreen extends React.Component {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
-
+    navigationOptions.headerLeft =  (
+      <Button
+        style= {{fontSize: 1000}}
+        onPress={() => navigation.navigate('MyModal')}
+        title={"\u276E"}
+        color="#005A5C"
+      /> )
+      navigationOptions.headerRight =  (
+        <Button
+          style= {{fontSize: 1000}}
+          onPress={() => navigation.navigate('Home')}
+          title={"\u2715"}
+          color="#005A5C"
+        /> )
     return {
       title: 'Login',
       headerStyle: {
@@ -360,7 +379,7 @@ const MainStack = StackNavigator(
     /* HEADER CONFIG - MAIN NAV BAR */
     navigationOptions: {
       headerStyle: {
-        backgroundColor: '#005A5C',
+        backgroundColor: '#545454',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -391,6 +410,7 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     color: 'white',
     padding: 10,
+    marginTop: 410,
     paddingHorizontal: 30,
     fontSize: 20,
     // backgroundColor: 'red',
@@ -399,13 +419,15 @@ const styles = StyleSheet.create({
     width:200,
     textAlign: 'center',
     margin: 15,
-    fontFamily: 'Apple SD Gothic Neo'
+    fontFamily: 'Apple SD Gothic Neo',
+    // fontWeight: 'bold',
 
   },
   buttonFilledIn: {
     borderWidth:2,
     borderColor: 'white',
-    color: '#005A5C',
+    color: '#15AEBC',
+    // fontWeight: 'bold',
     padding: 10,
     paddingHorizontal: 30,
     fontSize: 20,
@@ -425,12 +447,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Apple SD Gothic Neo'
 
   },
-  parkingAreaHeader: {
-    backgroundColor: '#005A5C',
-  },
   parkingArea: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#545454',
+    justifyContent:'space-around'
   },
   accessibleIcon: {
     paddingTop: 5

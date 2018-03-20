@@ -24,10 +24,10 @@ export default class MapHome extends React.Component {
   render() {
     function checkStatusParkingArea (status) {
       if (status === 'full') {
-        return  <Image style={styles.image} source={require('../images/redMarker.gif')} />
+        return  <Image style={styles.image} source={require('../images/redMarker.jpg')} />
       }
       else {
-        return <Image style={styles.imageGreen} source={require('../images/greenMarker.gif')} />
+        return <Image style={styles.imageGreen} source={require('../images/greenMarker.jpg')} />
       }
     }
     console.log('Maptimer', this.props.showTimer)

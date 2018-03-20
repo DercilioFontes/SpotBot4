@@ -88,7 +88,6 @@ class HomeScreen extends React.Component {
 
     return {
       headerTitleStyle: {
-        fontFamily: 'Apple SD Gothic Neo',
         fontSize: 30
       },
       headerTitle: `SpotBot`,
@@ -98,10 +97,10 @@ class HomeScreen extends React.Component {
       //     title='Filter'
       //     color="#fff"
       //   /> ),
-      headerLeft: (
-        <Button
+      headerLeft:
+      ( <Button
           onPress={() => navigation.navigate('MyModal')}
-          title={'\u2630'}
+          title='Login'
           color="#FFF"
         /> )
     }
@@ -268,7 +267,7 @@ class HomeScreen extends React.Component {
               </View>
         }
         { this.state.reserveStatus &&
-          <View style={{height: '30%', backgroundColor: '#049588'}}>
+          <View style={styles.reserveView}>
           <CancelSpot cancelClick={this.cancelClick.bind(this)} spot={this.state.reserveSpot}/>
          </View>
         }
@@ -292,9 +291,11 @@ class ModalScreen extends React.Component {
     const pic = require('./assets/vancouver.jpg')
 
     return (
-      <ImageBackground transparent = {true} source= {pic} style={{ flexDirection:'column' ,opacity: .7,  flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <ImageBackground transparent = {true} source= {pic} style={{ flexDirection:'column' ,opacity: .7,  flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
         <View>
-          <Image source={require('./assets/logo.png')} style={{width: 250, height: 75, alignSelf:'center', paddingBottom:60}}  />
+          <Image source={require('./assets/logo.png')} style={{width: 250, height: 75, alignSelf:'center'}}  />
+        </View>
+        <View>
         </View>
         <View>
           <Text
@@ -326,20 +327,18 @@ class SignUpScreen extends React.Component {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
-    navigationOptions.headerLeft =  (
-      <Button
-        style= {{fontSize: 1000}}
-        onPress={() => navigation.navigate('MyModal')}
-        title={"\u276E"}
-        color="#0F303F"
-      /> )
-      navigationOptions.headerRight =  (
-        <Button
-          style= {{fontSize: 1000}}
-          onPress={() => navigation.navigate('Home')}
-          title={"\u2715"}
-          color="#0F303F"
-        /> )
+    // navigationOptions.headerLeft =  (
+    //   <Button
+    //     onPress={() => navigation.navigate('MyModal')}
+    //     title="<"
+    //     color="#0F303F"
+    //   /> )
+    //   navigationOptions.headerRight =  (
+    //     <Button
+    //       onPress={() => navigation.navigate('Home')}
+    //       title="X"
+    //       color="#0F303F"
+    //     /> )
     return {
       title: 'Sign Up',
       headerStyle: {
@@ -365,20 +364,20 @@ class LoginScreen extends React.Component {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
-    navigationOptions.headerLeft =  (
-      <Button
-        style= {{fontSize: 1000}}
-        onPress={() => navigation.navigate('MyModal')}
-        title={"\u276E"}
-        color="#005A5C"
-      /> )
-      navigationOptions.headerRight =  (
-        <Button
-          style= {{fontSize: 1000}}
-          onPress={() => navigation.navigate('Home')}
-          title={"\u2715"}
-          color="#005A5C"
-        /> )
+    // navigationOptions.headerLeft =  (
+    //   <Button
+    //     style= {{fontSize: 1000}}
+    //     onPress={() => navigation.navigate('MyModal')}
+    //     title="<"
+    //     color="#005A5C"
+    //   /> )
+    //   navigationOptions.headerRight =  (
+    //     <Button
+    //       style= {{fontSize: 1000}}
+    //       onPress={() => navigation.navigate('Home')}
+    //       title="X"
+    //       color="#005A5C"
+    //     /> )
     return {
       title: 'Login',
       headerStyle: {
@@ -442,16 +441,13 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     color: 'white',
     padding: 10,
-    marginTop: 410,
     paddingHorizontal: 30,
     fontSize: 20,
-    // backgroundColor: 'red',
     borderStyle: 'solid',
     // borderRadius: 10,
     width:200,
     textAlign: 'center',
     margin: 15,
-    fontFamily: 'Apple SD Gothic Neo',
     // fontWeight: 'bold',
 
   },
@@ -466,17 +462,13 @@ const styles = StyleSheet.create({
     width:200,
     textAlign: 'center',
     backgroundColor: 'white',
-    borderStyle: 'solid',
-    borderRadius: 10,
+    // borderStyle: 'solid',
     margin: 15,
-    fontFamily: 'Apple SD Gothic Neo'
 
   },
   main_header: {
     fontSize: 50,
     color: '#fff',
-    marginBottom: 300,
-    fontFamily: 'Apple SD Gothic Neo'
 
   },
   parkingArea: {
@@ -487,6 +479,10 @@ const styles = StyleSheet.create({
   },
   accessibleIcon: {
     paddingTop: 5
+  },
+  reserveView: {
+    height: '30%',
+    backgroundColor: '#545454'
   }
 });
 export default class App extends React.Component {

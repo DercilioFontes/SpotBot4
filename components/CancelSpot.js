@@ -58,6 +58,7 @@ export default class ReserveSpot extends React.Component {
         return(
     <View>
 
+      <Image style={styles.image} source={require('../assets/vancouver.jpg')} />
       <Text style={styles.text}>{this.props.spot.label}</Text>
 
          <Timer style={styles.text} cancelClick={this.props.cancelClick} spot={this.props.spot} showTimer={true} />
@@ -69,46 +70,45 @@ export default class ReserveSpot extends React.Component {
   )}
 }
 
+
+
 const styles = StyleSheet.create({
   reserveModal:{
-    backgroundColor: 'white',
-    borderWidth: 1,
+    backgroundColor: '#fff',
   },
   reserveButton: {
-    backgroundColor: '#d0e7a6',
-    height: 30,
-    alignItems: 'center',
-    width: 100,
-    margin: 10,
-    marginLeft: 125,
-    padding: 5,
-
+    alignSelf: 'center',
+    borderWidth:2,
+    borderColor: 'white',
+    padding: 10,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    width:200,
+    backgroundColor: '#15AEBC',
+    borderStyle: 'solid',
+    margin: 15,
   },
   image: {
-    borderWidth: 1,
-    height: 140,
+    height: 60,
     opacity: 0.3,
-    width: 365
+    width: 365,
   },
   text: {
     fontSize: 20,
     fontWeight: 'bold',
     padding: 10,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#0F303F'
   },
   information: {
     fontSize: 15,
-    textAlign: 'center'
-  },
-  carIcon: {
-    position: 'absolute',
-    right: 120,
-    top: 15,
+    textAlign: 'center',
+    color: '#545454'
   },
   reserveText: {
     color: 'white',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    alignSelf: 'center'
   }
-
 })
 

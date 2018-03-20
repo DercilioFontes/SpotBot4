@@ -147,14 +147,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     alignSelf: 'center',
-    fontFamily: 'Apple SD Gothic Neo'
 
   },
   buttonText: {
     fontSize: 18,
     color: 'white',
     alignSelf: 'center',
-    fontFamily: 'Apple SD Gothic Neo'
 
   },
   button: {

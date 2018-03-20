@@ -52,9 +52,6 @@ export default class MapHome extends React.Component {
         ))}
 
 
-         <Timer cancelClick={this.props.cancelClick} spot={this.props.spot} showTimer={this.props.showTimer} />
-
-
       </MapView>
 
     )

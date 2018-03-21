@@ -1,23 +1,28 @@
 import React, {Component} from 'react'
 import { StyleSheet, Text, View, Modal, TouchableOpacity, Image } from 'react-native'
 
-import Timer from './Timer'
+import EndTimer from './endTimer'
 
 export default class ActiveReservationModal extends React.Component {
-  endSession () {
-    fetch(`http://127.0.0.1:3000/spots/${this.props.activatedSpot.id}/reservations`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        reservation: {
-          user_id: this.props.user_id,
-          reservation_status: 'ended'
-        }
+
+
+
+  endSession() {
+     fetch(`http://127.0.0.1:3000/spots/${this.props.activatedSpot.id}/reservations`, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          reservation: {
+            user_id: this.props.user_id,
+            reservation_status: 'ended'
+          }
+        })
+
       })
-    })
+
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
           return response
@@ -44,8 +49,10 @@ export default class ActiveReservationModal extends React.Component {
 
   render () {
     return (
-      <View>
-        <Timer showTimer={true} spot={this.props.activatedSpot}/>
+
+
+        <View>
+        <EndTimer showTimer={true} spot={this.props.activatedSpot} endSessionClick={this.props.endSessionClick}/>
         <Text> Your reservation is active </Text>
         <TouchableOpacity onPress={this.endSession.bind(this)}><Text>End Session</Text></TouchableOpacity>
       </View>

@@ -154,12 +154,13 @@ class SignUpScreen extends React.Component {
 
   render () {
     const styles = StyleSheet.create({
-      // container: {
-      //   justifyContent: 'center',
-      //   marginTop: 50,
-      //   padding: 20,
-      //   backgroundColor: '#ffffff',
-      // },
+      container: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
+        backgroundColor: '#545454'
+      },
       buttonText: {
         fontSize: 20,
         color: 'white',
@@ -180,7 +181,7 @@ class SignUpScreen extends React.Component {
     })
 
     return (
-      <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: 20, backgroundColor: '#545454'}} behavior={'padding'}>
+      <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
         <Image source={require('../assets/logo.png')} style={{width: 200, height: 60, alignSelf: 'center'}} />
         <Form
           ref="form"

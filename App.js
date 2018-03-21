@@ -373,8 +373,8 @@ class SignUpScreen extends React.Component {
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
     navigationOptions.headerLeft =  (
-      <HeaderButtons IconComponent={SimpleLineIcons} iconSize={26} color="#545454">
-      <HeaderButtons.Item title="Home" iconName="arrow-left" onPress={() => navigation.navigate('MyModal')} />
+      <HeaderButtons IconComponent={Octicons} iconSize={30} color="#545454">
+      <HeaderButtons.Item title="Home" iconName="chevron-left" onPress={() => navigation.navigate('MyModal')} />
     </HeaderButtons>
     )
     navigationOptions.headerRight =  (
@@ -409,7 +409,7 @@ class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
     navigationOptions.headerLeft =  (
-      <HeaderButtons IconComponent={Octicons} iconSize={26} color="#545454">
+      <HeaderButtons IconComponent={Octicons} iconSize={30} color="#545454">
       <HeaderButtons.Item title="Home" iconName="chevron-left" onPress={() => navigation.navigate('MyModal')} />
     </HeaderButtons>
     )

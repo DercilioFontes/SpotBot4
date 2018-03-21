@@ -24,10 +24,10 @@ export default class MapHome extends React.Component {
   render() {
     function checkStatusParkingArea (status) {
       if (status === 'full') {
-        return  <Image style={styles.image} source={require('../images/redMarker.jpg')} />
+        return  <Image style={styles.image} source={require('../images/redmarkerPNG.png')} />
       }
       else {
-        return <Image style={styles.imageGreen} source={require('../images/greenMarker.jpg')} />
+        return <Image style={styles.imageGreen} source={require('../images/greenmarkerPNG2.png')} />
       }
     }
     return (
@@ -74,12 +74,12 @@ const styles = StyleSheet.create({
     flex: 1
   },
   image: {
-    width: 31,
-    height:55
+    width: 35,
+    height:50
   },
   imageGreen: {
-    width: 31,
-    height:55
+    width: 35,
+    height:50
   },
   timer: {
     position: 'absolute',

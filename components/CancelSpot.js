@@ -5,20 +5,23 @@ import {FontAwesome} from '@expo/vector-icons'
 import Timer from './Timer'
 
 export default class ReserveSpot extends React.Component {
-  cancelSpot () {
-    fetch (`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        reservation: {
-          user_id: this.props.user_id,
-          reservation_status: 'empty'
-        }
+
+
+  cancelSpot() {
+    fetch(`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          reservation: {
+            user_id: this.props.user_id,
+            reservation_status: 'empty'
+          }
+        })
       })
-    })
+
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
           return response

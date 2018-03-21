@@ -52,14 +52,24 @@ export default class ReserveSpot extends React.Component {
 
   render () {
     return (
-      <View>
+      <View style={{flex: 1, flexDirection: 'column'}}>
+      <View style={{flexDirection: 'column', flex: 'space-between'}}>
         <Image style={styles.image} source={require('../assets/vancouver.jpg')} />
         <Text style={styles.text}>{this.props.spot.label}</Text>
         <Timer style={styles.text} cancelClick={this.props.cancelClick} spot={this.props.spot} showTimer={true} />
         <Text style={styles.information}>{this.props.spot.spot_information}</Text>
-        <TouchableOpacity style={styles.reserveButton} onPress={this.cancelSpot.bind(this)}><Text style={styles.reserveText}>Cancel</Text></TouchableOpacity>
-        <TouchableOpacity onPress={this.arrivalButton.bind(this)}><Text style={styles.reserveText}>Start Session</Text></TouchableOpacity>
+        </View>
+        <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row'}}>
+          <TouchableOpacity style={styles.reserveButton} onPress={this.arrivalButton.bind(this)}>
+            <Text style={styles.reserveText}>Start</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.cancel} onPress={this.cancelSpot.bind(this)}>
+            <Text style={styles.cancelText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+
       </View>
+
     )
   }
 }
@@ -73,12 +83,13 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'white',
     padding: 10,
-    paddingHorizontal: 30,
+    paddingHorizontal: 10,
     paddingVertical: 10,
-    width: 200,
+    width: 100,
     backgroundColor: '#15AEBC',
     borderStyle: 'solid',
-    margin: 15
+    height: 50
+
   },
   image: {
     height: 60,
@@ -101,5 +112,22 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     alignSelf: 'center'
+  },
+  cancelText: {
+    color: '#15AEBC',
+    fontWeight: 'bold',
+    alignSelf: 'center'
+  },
+  cancel: {
+    borderWidth: 2,
+    borderColor: '#15AEBC',
+    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    width: 100,
+    backgroundColor: 'white',
+    borderStyle: 'solid',
+    height: 50
+
   }
 })

@@ -36,6 +36,7 @@ export default class ReserveSpot extends React.Component {
       .then((responseData) => {
 
         this.props.reserveClick(responseData)
+
       })
       .catch((err) => {
         this.setState(err)

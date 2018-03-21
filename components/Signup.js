@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, Button, Text, View, Image, TouchableHighlight,
   ActivityIndicator, AlertIOS, AsyncStorage, KeyboardAvoidingView } from 'react-native'
 import { StackNavigator } from 'react-navigation'
-// import ReactOnRails from 'react-on-rails'
 import { Ionicons, Feather } from '@expo/vector-icons'
 
 // to use in the forms

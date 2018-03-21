@@ -99,7 +99,7 @@ class HomeScreen extends React.Component {
       //     title='Filter'
       //     color="#fff"
       //   /> ),
-      headerLeft: ( 
+      headerLeft: (
         <HeaderButtons IconComponent={Entypo} iconSize={26} color="#FFF">
           <HeaderButtons.Item title="Menu" iconName="menu" onPress={() => navigation.navigate('MyModal')} />
         </HeaderButtons>
@@ -292,7 +292,7 @@ class HomeScreen extends React.Component {
         </View>
 
         { this.state.showSlotsDetails &&
-              <View style={{position: 'absolute',left:0, right: 0, bottom: 0, height: '50%', backgroundColor: '#545454'}}>
+              <View style={{position: 'absolute',left:0, right: 0, bottom: 0, height: '40%', backgroundColor: '#545454'}}>
                 <View style={styles.parkingArea}>
                   <MaterialCommunityIcons onPress={this.filterAccessibility.bind(this)} color='white' name='filter-outline' size={30} style={styles.accessibleIcon}/>
                     <Text style={{ color: 'white', fontSize: 25, width: 250 }}>{this.state.currentArea.title}</Text>
@@ -304,12 +304,12 @@ class HomeScreen extends React.Component {
         }
 
         { this.state.reserveStatus === 'reserved' &&
-          <View style={{position: 'absolute',left:0, right: 0, bottom: 0, height: '50%', backgroundColor: '#049588'}}>
+          <View style={{position: 'absolute',left:0, right: 0, bottom: 0, height: '40%', backgroundColor: '#049588'}}>
           <CancelSpot cancelClick={this.cancelClick.bind(this)} activateClick={this.activateClick.bind(this)} spot={this.state.reserveSpot}/>
          </View>
         }
         { this.state.reserveStatus === 'empty' &&
-          <View style={{position: 'absolute',left:0, right: 0, bottom: 0, height: '10%', backgroundColor: '#049588'}}>
+          <View style={{position: 'absolute',left:0, right: 0, bottom: 0, height: '20%', backgroundColor: '#049588'}}>
             <Text> Your reservation has been cancelled </Text>
             <TouchableOpacity onPress={this.closeNotification.bind(this)}><Text>Close</Text></TouchableOpacity>
           </View>
@@ -317,7 +317,7 @@ class HomeScreen extends React.Component {
         }
 
         { this.state.reserveStatus === 'active' &&
-          <View style={{position: 'absolute',left:0, right: 0, bottom: 0, height: '10%', backgroundColor: '#049588'}}>
+          <View style={{position: 'absolute',left:0, right: 0, bottom: 0, height: '30%', backgroundColor: '#049588'}}>
             <ActiveReservationModal activatedSpot={this.state.reserveSpot} endSessionClick={this.endSessionClick.bind(this)}/>
           </View>
 
@@ -372,12 +372,12 @@ class SignUpScreen extends React.Component {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
-    navigationOptions.headerLeft =  ( 
+    navigationOptions.headerLeft =  (
       <HeaderButtons IconComponent={SimpleLineIcons} iconSize={26} color="#545454">
       <HeaderButtons.Item title="Home" iconName="arrow-left" onPress={() => navigation.navigate('MyModal')} />
     </HeaderButtons>
     )
-    navigationOptions.headerRight =  ( 
+    navigationOptions.headerRight =  (
       <HeaderButtons IconComponent={Octicons} iconSize={26} color="#545454">
         <HeaderButtons.Item title="Home" iconName="x" onPress={() => navigation.navigate('Home')} />
       </HeaderButtons>
@@ -408,17 +408,17 @@ class LoginScreen extends React.Component {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
-    navigationOptions.headerLeft =  ( 
+    navigationOptions.headerLeft =  (
       <HeaderButtons IconComponent={Octicons} iconSize={26} color="#545454">
       <HeaderButtons.Item title="Home" iconName="chevron-left" onPress={() => navigation.navigate('MyModal')} />
     </HeaderButtons>
     )
-    navigationOptions.headerRight =  ( 
+    navigationOptions.headerRight =  (
       <HeaderButtons IconComponent={Octicons} iconSize={26} color="#545454">
         <HeaderButtons.Item title="Home" iconName="x" onPress={() => navigation.navigate('Home')} />
       </HeaderButtons>
     )
-    
+
     return {
       title: 'Login',
       headerStyle: {

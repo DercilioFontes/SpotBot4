@@ -12,22 +12,9 @@ const Form = t.form.Form
 const stylesheet = _.cloneDeep(Form.stylesheet)
 
 // Form stylesheet
-// stylesheet.textbox.normal.borderWidth = 0;
-// stylesheet.textbox.error.borderWidth = 0;
-// stylesheet.textbox.normal.marginBottom = 0;
-// stylesheet.textbox.error.marginBottom = 0;
-
-// stylesheet.textboxView.normal.borderWidth = 0;
-// stylesheet.textboxView.error.borderWidth = 0;
-stylesheet.textbox.normal.borderRadius = 0;
-// stylesheet.textboxView.error.borderRadius = 0;
-stylesheet.textbox.normal.backgroundColor = '#fff';
-stylesheet.controlLabel.normal.color = '#fff';
-
-// stylesheet.textboxView.normal.borderBottomWidth = 1;
-// stylesheet.textboxView.error.borderBottomWidth = 1;
-// stylesheet.textbox.normal.marginBottom = 5;
-// stylesheet.textbox.error.marginBottom = 5;
+stylesheet.textbox.normal.borderRadius = 0
+stylesheet.textbox.normal.backgroundColor = '#fff'
+stylesheet.controlLabel.normal.color = '#fff'
 
 // Config of the form data and options
 const User = t.struct({
@@ -84,15 +71,11 @@ class SignUpScreen extends React.Component {
 
   _userSignup () {
     let value = this.refs.form.getValue()
-
-    // REMOVE THIS!!!!!!
-    console.log(value)
-
     if (value) {
       // Active ActivityIndicator
       this.setState({showProgress: true})
 
-      fetch('http://127.0.0.1:3000/users', {
+      fetch ('http://127.0.0.1:3000/users', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -123,8 +106,6 @@ class SignUpScreen extends React.Component {
           return response.json()
         })
         .then((responseData) => {
-
-
           // Make a POST request with email and password to set user Token
           fetch('http://127.0.0.1:3000/user_token', {
             method: 'POST',
@@ -195,25 +176,25 @@ class SignUpScreen extends React.Component {
       },
       loader: {
         marginTop: 20
-      },
+      }
     })
 
     return (
-      <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: 20, backgroundColor: "#545454"   }} behavior={'padding'}>
-        <Image source={require('../assets/logo.png')} style={{width: 200, height: 60, alignSelf:'center'}}  />
-          <Form
-            ref="form"
-            type={User}
-            options={options}
-          />
-          <TouchableHighlight style={styles.button} onPress={this._userSignup.bind(this)} underlayColor='#99d9f4'>
-            <Text style={styles.buttonText}>SIGNUP</Text>
-          </TouchableHighlight>
+      <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: 20, backgroundColor: '#545454'}} behavior={'padding'}>
+        <Image source={require('../assets/logo.png')} style={{width: 200, height: 60, alignSelf: 'center'}} />
+        <Form
+          ref="form"
+          type={User}
+          options={options}
+        />
+        <TouchableHighlight style={styles.button} onPress={this._userSignup.bind(this)} underlayColor='#99d9f4'>
+          <Text style={styles.buttonText}>SIGNUP</Text>
+        </TouchableHighlight>
 
-          <ActivityIndicator
-            animating={this.state.showProgress}
-            size='large'
-            style={styles.loader}/>
+        <ActivityIndicator
+          animating={this.state.showProgress}
+          size='large'
+          style={styles.loader}/>
       </KeyboardAvoidingView>
     )
   }

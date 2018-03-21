@@ -27,13 +27,10 @@ export default class SlotsScreen extends React.Component {
     this.setState({showModal: true, user_id: user_id, spot: slot, showSpots: false})
   }
 
-
-  reserveClick(newParkingArea, reserveSpot) {
-    this.setState({showModal: false});
-    this.props.homePage(newParkingArea, this.state.spot);
+  reserveClick (newParkingArea, reserveSpot) {
+    this.setState({showModal: false})
+    this.props.homePage(newParkingArea, this.state.spot)
   }
-
-
 
   render () {
     const slotsAvailable = this.props.slots.filter(slot => slot.availability === true)
@@ -50,15 +47,14 @@ export default class SlotsScreen extends React.Component {
       <ScrollView>
         { this.state.showSpots &&
           <View style={{marginTop: 10}}>
-          {slotList}
-         </View>
+           ]{slotList}
+          ]</View>
         }
         { this.state.showModal &&
           <View style={{margin: 5}}>
             <ReserveSpot spot={this.state.spot} reserveClick={this.reserveClick.bind(this)} user_id={this.state.user_id} />
           </View>
         }
-
       </ScrollView>
     )
   }

@@ -5,23 +5,20 @@ import {FontAwesome} from '@expo/vector-icons'
 import Timer from './Timer'
 
 export default class ReserveSpot extends React.Component {
-
-
-  cancelSpot() {
+  cancelSpot () {
     fetch(`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          reservation: {
-            user_id: this.props.user_id,
-            reservation_status: 'empty'
-          }
-        })
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        reservation: {
+          user_id: this.props.user_id,
+          reservation_status: 'empty'
+        }
       })
-
+    })
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
           return response
@@ -53,11 +50,11 @@ export default class ReserveSpot extends React.Component {
   render () {
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
-      <View style={{flexDirection: 'column', flex: 'space-between'}}>
-        <Image style={styles.image} source={require('../assets/vancouver.jpg')} />
-        <Text style={styles.text}>{this.props.spot.label}</Text>
-        <Timer style={styles.text} cancelClick={this.props.cancelClick} spot={this.props.spot} showTimer={true} />
-        <Text style={styles.information}>{this.props.spot.spot_information}</Text>
+        <View style={{flexDirection: 'column'}}>
+          <Image style={styles.image} source={require('../assets/vancouver.jpg')} />
+          <Text style={styles.text}>{this.props.spot.label}</Text>
+          <Timer style={styles.text} cancelClick={this.props.cancelClick} spot={this.props.spot} showTimer={true} />
+          <Text style={styles.information}>{this.props.spot.spot_information}</Text>
         </View>
         <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row'}}>
           <TouchableOpacity style={styles.reserveButton} onPress={this.arrivalButton.bind(this)}>
@@ -67,9 +64,7 @@ export default class ReserveSpot extends React.Component {
             <Text style={styles.cancelText}>Cancel</Text>
           </TouchableOpacity>
         </View>
-
       </View>
-
     )
   }
 }

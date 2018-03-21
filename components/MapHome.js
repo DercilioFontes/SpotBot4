@@ -5,20 +5,18 @@ import { StackNavigator } from 'react-navigation'
 import Timer from './Timer'
 import SearchSpot from './SearchSpot'
 
-
-
 export default class MapHome extends React.Component {
 
   static navigationOptions = {
     headerTitle: 'SpotBot',
   }
+
   onMapPress(e) {
     // navigate('Slots', {spots: parkingArea[0].spots, user_id: this.props.user_id})
     const parkingArea = this.props.parking_areas.filter(
       marker => marker.coordinates.latitude === e.nativeEvent.coordinate.latitude
       && marker.coordinates.longitude === e.nativeEvent.coordinate.longitude )
     this.props.onMapPress(parkingArea[0]);
-
   }
 
   render() {
@@ -30,13 +28,13 @@ export default class MapHome extends React.Component {
         return <Image style={styles.imageGreen} source={require('../images/greenmarkerPNG2.png')} />
       }
     }
+
     return (
       <MapView
         style={styles.map}
         mapType='hybrid'
         initialRegion={this.props.mapRegion}
       >
-
       {this.props.parking_areas.map((marker, index) => (
         <MapView.Marker key={index}
           zIndex={9999}
@@ -46,17 +44,13 @@ export default class MapHome extends React.Component {
           onPress={this.onMapPress.bind(this)}
           >
             {checkStatusParkingArea(marker.parkingAreaStatus)}
-
           </MapView.Marker>
-
         ))}
-
-
       </MapView>
-
     )
   }
 }
+
 const styles = StyleSheet.create({
   radius: {
     backgroundColor: '#fff',
@@ -86,6 +80,4 @@ const styles = StyleSheet.create({
     bottom: 100,
     left: 200
   }
-
-
 });

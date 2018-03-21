@@ -62,8 +62,8 @@ export default class NewTimer extends React.Component {
     .finally(() => {
       //this.setState({showProgress: false})
     })
-
   }
+  
   render() {
     const clockSection = this.state.showClock && (
       <Clock countdown={this.state.duration} />

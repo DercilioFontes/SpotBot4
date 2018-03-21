@@ -11,7 +11,6 @@ function Clock({ countdown }) {
       </Text>
     }
     </View>
-
   );
 }
 export default class EndTimer extends React.Component {
@@ -24,7 +23,6 @@ export default class EndTimer extends React.Component {
       duration: Math.floor(10 - (new Date() - this.state.start) / 1000)
     });
   };
-
 
   endSpot() {
     console.log('reservespot',this.props)
@@ -55,11 +53,7 @@ export default class EndTimer extends React.Component {
       return response.json()
     })
     .then((responseData) => {
-
        this.props.endSessionClick(responseData, this.props.spot);
-
-
-
     })
     .catch((err) => {
       this.setState(err)
@@ -67,10 +61,9 @@ export default class EndTimer extends React.Component {
     })
     .finally(() => {
       //this.setState({showProgress: false})
-
     })
-
   }
+  
   render() {
     const clockSection = this.state.showClock && (
       <Clock countdown={this.state.duration} />

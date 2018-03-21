@@ -12,10 +12,9 @@ export default class CancelReservationMessage extends React.Component {
     return (
       <View>
         <View style={styles.header}>
-         <Image style={styles.cancelImage} source={require('../images/cancel.png')} />
+          <Text style={styles.label}> {this.props.activatedSpot.label} </Text>
         </View>
         <View style={styles.content}>
-          <Text style={styles.label}> {this.props.activatedSpot.label} </Text>
           <Text style={styles.textContent}> Your reservation has been cancelled </Text>
           <TouchableOpacity style={styles.endSessionButtom}  onPress={this.closeNotification.bind(this)}><Text style={styles.endSessionnText}>Close</Text></TouchableOpacity>
         </View>
@@ -27,20 +26,22 @@ const styles = StyleSheet.create({
   header: {
     padding: 20,
     height: '40%',
-    backgroundColor: '#3fc59c'
+    backgroundColor: '#545454'
   },
   content: {
     backgroundColor: 'white',
     height: '60%',
+    padding: 10
   },
   textContent: {
     textAlign: 'center',
     fontSize: 16
   },
   label:{
-    fontSize: 25,
+    fontSize: 40,
     fontWeight: 'bold',
     textAlign: 'center',
+    color: 'white'
   },
   endSessionnText: {
     color: 'white',
@@ -54,10 +55,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'white',
     width: 100,
-    backgroundColor: '#e2747e',
+    backgroundColor: '#15AEbc',
     borderStyle: 'solid',
-    height: 40,
-    borderRadius: 10
+    height: 40
   },
   cancelImage: {
     position: 'absolute',

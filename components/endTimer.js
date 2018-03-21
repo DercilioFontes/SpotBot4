@@ -14,18 +14,20 @@ function Clock({ countdown }) {
 
   );
 }
-export default class NewTimer extends React.Component {
+export default class EndTimer extends React.Component {
   state = {
     showClock: true,
     start: new Date(),
     duration: 20 };
   updateCountdown = () => {
     this.setState({
-      duration: Math.floor(20 - (new Date() - this.state.start) / 1000)
+      duration: Math.floor(10 - (new Date() - this.state.start) / 1000)
     });
   };
 
-  cancelSpot() {
+
+  endSpot() {
+    console.log('reservespot',this.props)
     fetch(`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
         method: "POST",
         headers: {
@@ -35,11 +37,12 @@ export default class NewTimer extends React.Component {
         body: JSON.stringify({
           reservation: {
             user_id: this.props.user_id,
-            reservation_status: 'cancel'
+            reservation_status: 'inactive'
           }
         })
       })
       .then((response) => {
+        // console.log("reserve response from database",response);
       if(response.status >= 200 && response.status < 300) {
         return response
       }
@@ -52,7 +55,11 @@ export default class NewTimer extends React.Component {
       return response.json()
     })
     .then((responseData) => {
-       this.props.cancelClick(responseData, this.props.spot);
+
+       this.props.endSessionClick(responseData, this.props.spot);
+
+
+
     })
     .catch((err) => {
       this.setState(err)
@@ -60,17 +67,18 @@ export default class NewTimer extends React.Component {
     })
     .finally(() => {
       //this.setState({showProgress: false})
+
     })
 
   }
   render() {
     const clockSection = this.state.showClock && (
       <Clock countdown={this.state.duration} />
-    )
+    );
     const countdownTimer = this.state.duration > 0 && (
       <Timer listener={this.updateCountdown} />
-    )
-
+    );
+    console.log('props in timer component', this.props)
     return (
       <View>
       {this.props.showTimer &&
@@ -79,7 +87,7 @@ export default class NewTimer extends React.Component {
           {countdownTimer}
           {this.state.duration <= 0 &&
           <View>
-            {this.cancelSpot()}
+            {this.endSpot()}
           </View>
           }
         </View>
@@ -91,6 +99,7 @@ export default class NewTimer extends React.Component {
 
 class Timer extends Component {
   componentDidMount() {
+    console.log("Timer CDM");
     this.intervalId = setInterval(this.props.listener, 250);
   }
   componentWillUnmount() {

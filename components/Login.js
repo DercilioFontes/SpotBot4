@@ -60,7 +60,7 @@ class LoginScreen extends React.Component {
       // Active ActivityIndicator
       this.setState({showProgress: true})
 
-      fetch ('http://127.0.0.1:3000/user_token', {
+      fetch ('https://spot-bot-server.herokuapp.com/user_token', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

@@ -76,7 +76,7 @@ class SignUpScreen extends React.Component {
       // Active ActivityIndicator
       this.setState({showProgress: true})
 
-      fetch ('http://127.0.0.1:3000/users', {
+      fetch ('https://spot-bot-server.herokuapp.com/users', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -108,7 +108,7 @@ class SignUpScreen extends React.Component {
         })
         .then((responseData) => {
           // Make a POST request with email and password to set user Token
-          fetch ('http://127.0.0.1:3000/user_token', {
+          fetch ('https://spot-bot-server.herokuapp.com/user_token', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',

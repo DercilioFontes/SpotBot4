@@ -3,11 +3,12 @@ import React, {Component} from 'react';
 import {MaterialIcons} from '@expo/vector-icons'
 
 function Clock({ countdown }) {
+  const count = countdown ? 0 : countdown;
   return (
     <View>
     {countdown > 0 &&
-      <Text> {Math.floor(countdown / 60)}:
-        {(countdown % 60).toString().padStart(2, "0")}
+      <Text> {Math.floor(count / 60)}:
+        {(count % 60).toString().padStart(2, "0")}
       </Text>
     }
     </View>
@@ -26,7 +27,7 @@ export default class NewTimer extends React.Component {
   };
 
   cancelSpot() {
-    fetch(`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
+    fetch(`https://spot-bot-server.herokuapp.com/spots/${this.props.spot.id}/reservations`, {
         method: "POST",
         headers: {
           'Accept': 'application/json',

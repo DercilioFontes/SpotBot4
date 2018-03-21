@@ -5,8 +5,6 @@ import { StackNavigator } from 'react-navigation'
 import Timer from './Timer'
 import SearchSpot from './SearchSpot'
 
-
-
 export default class MapHome extends React.Component {
 
   static navigationOptions = {
@@ -36,7 +34,6 @@ export default class MapHome extends React.Component {
         mapType='hybrid'
         initialRegion={this.props.mapRegion}
       >
-
       {this.props.parking_areas.map((marker, index) => (
         <MapView.Marker key={index}
           zIndex={9999}
@@ -46,17 +43,13 @@ export default class MapHome extends React.Component {
           onPress={this.onMapPress.bind(this)}
           >
             {checkStatusParkingArea(marker.parkingAreaStatus)}
-
           </MapView.Marker>
-
         ))}
-
-
       </MapView>
-
     )
   }
 }
+
 const styles = StyleSheet.create({
   radius: {
     backgroundColor: '#fff',
@@ -86,6 +79,4 @@ const styles = StyleSheet.create({
     bottom: 100,
     left: 200
   }
-
-
 });

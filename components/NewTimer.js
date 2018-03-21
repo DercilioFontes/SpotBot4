@@ -7,9 +7,8 @@ function Clock({ countdown }) {
     <View>
       <Text> {Math.floor(countdown / 60)}:
       {(countdown % 60).toString().padStart(2, "0")}
-    </Text>
+      </Text>
     </View>
-
   );
 }
 export default class NewTimer extends React.Component {
@@ -29,7 +28,6 @@ export default class NewTimer extends React.Component {
     return (
       <View>
         <Text>
-
         </Text>
         {clockSection}
         {countdownTimer}

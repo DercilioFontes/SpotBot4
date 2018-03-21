@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Button, Text, View, Image, TouchableHighlight, ActivityIndicator, AlertIOS, AsyncStorage, TouchableOpacity, ImageBackground, Modal} from 'react-native'
+import { StyleSheet, Button, Text, View, Image, TouchableHighlight, ActivityIndicator, AlertIOS, AsyncStorage, TouchableOpacity, ImageBackground, Modal } from 'react-native'
 import { MapView, Notifications } from 'expo'
 import { StackNavigator, DrawerNavigator } from 'react-navigation'
 import HeaderButtons from 'react-navigation-header-buttons'
@@ -183,7 +183,7 @@ class HomeScreen extends React.Component {
 
   componentDidMount() {
     const that = this;
-    fetch('http://127.0.0.1:3000/')
+    fetch('https://spot-bot-server.herokuapp.com/')
       .then(res => res.json())
       .then(this.transformRaw)
       .then(this.availability)

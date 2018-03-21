@@ -11,7 +11,6 @@ function Clock({ countdown }) {
       </Text>
     }
     </View>
-
   );
 }
 export default class EndTimer extends React.Component {
@@ -25,10 +24,9 @@ export default class EndTimer extends React.Component {
     });
   };
 
-
   endSpot() {
     console.log('reservespot',this.props)
-    fetch(`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
+    fetch(`https://spot-bot-server.herokuapp.com/spots/${this.props.spot.id}/reservations`, {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -55,11 +53,7 @@ export default class EndTimer extends React.Component {
       return response.json()
     })
     .then((responseData) => {
-
-       this.props.endSessionClick(responseData, this.props.spot);
-
-
-
+      this.props.endSessionClick(responseData, this.props.spot);
     })
     .catch((err) => {
       this.setState(err)
@@ -67,10 +61,9 @@ export default class EndTimer extends React.Component {
     })
     .finally(() => {
       //this.setState({showProgress: false})
-
     })
-
   }
+
   render() {
     const clockSection = this.state.showClock && (
       <Clock countdown={this.state.duration} />
@@ -99,7 +92,6 @@ export default class EndTimer extends React.Component {
 
 class Timer extends Component {
   componentDidMount() {
-    console.log("Timer CDM");
     this.intervalId = setInterval(this.props.listener, 250);
   }
   componentWillUnmount() {

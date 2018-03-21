@@ -20,6 +20,8 @@ const typographyStyle = StyleSheet.create(typography);
 import parkingAreasDB from './db/database'
 import CancelSpot from './components/CancelSpot'
 import ActiveReservationModal from './components/ActiveReservationModal'
+import CancelReservationMessage from './components/CancelReservationMessage'
+
 
 // Main Screen
 class HomeScreen extends React.Component {
@@ -194,6 +196,8 @@ class HomeScreen extends React.Component {
       })
   }
 
+
+
   filterAccessibility() {
     var newParking = this.state.currentArea;
     if(this.state.statusAccesibilityButton)
@@ -260,25 +264,7 @@ class HomeScreen extends React.Component {
       })
     }
 
-    mapHeight() {
-      alert('hyyyyyyy')
-      // if (this.state.showSlotsDetails) {
-      //   return '50%'
-      // }
-      // if(this.state.reserveStatus === 'reserved') {
-      //   return '70%'
-      // }
-      // if(this.state.reserveStatus === 'empty' || this.state.reserveStatus === 'active') {
-      //   return '50%'
-      // }
-      // if(this.state.cancelNotification) {
-      //   return '90%'
-      // }
-      // if(this.state.reserveStatus === 'inactive') {
-      //   alert('mapheight')
-      //   return '100%'
-      // }
-    }
+
     closeNotification() {
       this.setState({reserveStatus: 'inactive'})
     }
@@ -309,11 +295,9 @@ class HomeScreen extends React.Component {
          </View>
         }
         { this.state.reserveStatus === 'empty' &&
-          <View style={{position: 'absolute',left:0, right: 0, bottom: 0, height: '20%', backgroundColor: '#049588'}}>
-            <Text> Your reservation has been cancelled </Text>
-            <TouchableOpacity onPress={this.closeNotification.bind(this)}><Text>Close</Text></TouchableOpacity>
+         <View style={{position: 'absolute',left:0, right: 0, bottom: 0, height: '30%', backgroundColor: '#049588'}}>
+            <CancelReservationMessage activatedSpot={this.state.reserveSpot} closeNotification={this.closeNotification.bind(this)}/>
           </View>
-
         }
 
         { this.state.reserveStatus === 'active' &&

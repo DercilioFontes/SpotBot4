@@ -33,7 +33,6 @@ export default class MapHome extends React.Component {
     return (
       <MapView
         style={styles.map}
-        mapType='hybrid'
         initialRegion={this.props.mapRegion}
       >
 

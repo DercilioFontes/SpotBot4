@@ -53,13 +53,13 @@ export default class ReserveSpot extends React.Component {
   render () {
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
-      <View style={{flexDirection: 'column', flex: 'space-between'}}>
+      <View style={styles.reserveModal}>
         <Image style={styles.image} source={require('../assets/vancouver.jpg')} />
         <Text style={styles.text}>{this.props.spot.label}</Text>
         <Timer style={styles.text} cancelClick={this.props.cancelClick} spot={this.props.spot} showTimer={true} />
         <Text style={styles.information}>{this.props.spot.spot_information}</Text>
         </View>
-        <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row'}}>
+        <View style={{backgroundColor: 'white', flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row'}}>
           <TouchableOpacity style={styles.reserveButton} onPress={this.arrivalButton.bind(this)}>
             <Text style={styles.reserveText}>Start</Text>
           </TouchableOpacity>
@@ -76,7 +76,10 @@ export default class ReserveSpot extends React.Component {
 
 const styles = StyleSheet.create({
   reserveModal: {
-    backgroundColor: '#fff'
+   flexDirection: 'column',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingBottom: 10,
   },
   reserveButton: {
     alignSelf: 'center',

@@ -8,6 +8,10 @@ import Timer from './Timer'
 
 export default class ReserveSpot extends React.Component {
 
+  // state = {
+  //   componentType: cancelSpot
+  // }
+
   cancelSpot() {
     fetch(`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
         method: "POST",

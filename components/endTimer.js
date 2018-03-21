@@ -14,19 +14,19 @@ function Clock({ countdown }) {
 
   );
 }
-export default class NewTimer extends React.Component {
+export default class EndTimer extends React.Component {
   state = {
     showClock: true,
     start: new Date(),
     duration: 20 };
   updateCountdown = () => {
     this.setState({
-      duration: Math.floor(20 - (new Date() - this.state.start) / 1000)
+      duration: Math.floor(10 - (new Date() - this.state.start) / 1000)
     });
   };
 
 
-  cancelSpot() {
+  endSpot() {
     console.log('reservespot',this.props)
     fetch(`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
         method: "POST",
@@ -37,7 +37,7 @@ export default class NewTimer extends React.Component {
         body: JSON.stringify({
           reservation: {
             user_id: this.props.user_id,
-            reservation_status: 'cancel'
+            reservation_status: 'inactive'
           }
         })
       })
@@ -56,7 +56,7 @@ export default class NewTimer extends React.Component {
     })
     .then((responseData) => {
 
-       this.props.cancelClick(responseData, this.props.spot);
+       this.props.endSessionClick(responseData, this.props.spot);
 
 
 
@@ -87,7 +87,7 @@ export default class NewTimer extends React.Component {
           {countdownTimer}
           {this.state.duration <= 0 &&
           <View>
-            {this.cancelSpot()}
+            {this.endSpot()}
           </View>
           }
         </View>

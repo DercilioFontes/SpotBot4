@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, Modal, TouchableOpacity, Image} from 'react-native';
 
-import Timer from './Timer'
+import EndTimer from './endTimer'
 
 
 
 export default class ActiveReservationModal extends React.Component {
+
 
   endSession() {
     console.log("activateSpot******************", this.props)
@@ -61,7 +62,7 @@ export default class ActiveReservationModal extends React.Component {
     return (
 
         <View>
-        <Timer showTimer={true} spot={this.props.activatedSpot}/>
+        <EndTimer showTimer={true} spot={this.props.activatedSpot} endSessionClick={this.props.endSessionClick}/>
         <Text> Your reservation is active </Text>
         <TouchableOpacity onPress={this.endSession.bind(this)}><Text>End Session</Text></TouchableOpacity>
 

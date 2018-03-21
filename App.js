@@ -257,6 +257,7 @@ class HomeScreen extends React.Component {
     }
 
     endSessionClick(responseData){
+
       const transformRawParking = this.transformRaw(responseData);
       this.setState({
         showTimer: false,

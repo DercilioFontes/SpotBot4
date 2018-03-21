@@ -94,7 +94,7 @@ class HomeScreen extends React.Component {
       headerTitleStyle: {
         fontSize: 30
       },
-      headerTitle: `SpotBot`,
+      headerTitle:  <Image source={require('./assets/logo.png')} style={{width: 150, height: 45, alignSelf:'center'}} />,
       // headerRight: (
       //   <Button
       //     onPress={searchSpot}

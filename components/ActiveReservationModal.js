@@ -61,9 +61,9 @@ export default class ActiveReservationModal extends React.Component {
 }
 const styles = StyleSheet.create({
   header: {
-    padding: 20,
+    padding: 10,
     height: '40%',
-    backgroundColor: '#3fc59c'
+    backgroundColor: '#545454'
   },
   content: {
     backgroundColor: 'white',
@@ -90,9 +90,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'white',
     width: 100,
-    backgroundColor: '#e2747e',
+    backgroundColor: '#15aebc',
     borderStyle: 'solid',
-    height: 40,
-    borderRadius: 10
+    height: 40
   }
   })

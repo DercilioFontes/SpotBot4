@@ -4,21 +4,16 @@ import { StyleSheet, Image, Text, View, TouchableHighlight,
 import { StackNavigator } from 'react-navigation'
 import { Ionicons, Feather } from '@expo/vector-icons'
 
-
-
-
 // to use in the forms
 import t from 'tcomb-form-native'
 import _ from 'lodash'
 const Form = t.form.Form
 const stylesheet = _.cloneDeep(Form.stylesheet)
 
-
 // Overwrite form styles
-stylesheet.textbox.normal.borderRadius = 0;
-stylesheet.textbox.normal.backgroundColor = '#fff';
-stylesheet.controlLabel.normal.color = '#fff';
-
+stylesheet.textbox.normal.borderRadius = 0
+stylesheet.textbox.normal.backgroundColor = '#fff'
+stylesheet.controlLabel.normal.color = '#fff'
 
 // Config of the form data and options
 const User = t.struct({
@@ -61,14 +56,11 @@ class LoginScreen extends React.Component {
   _userLogin () {
     let value = this.refs.form.getValue()
 
-    // REMOVE THIS!!!!!!
-    console.log(value)
-
     if (value) {
       // Active ActivityIndicator
       this.setState({showProgress: true})
 
-      fetch('http://127.0.0.1:3000/user_token', {
+      fetch ('http://127.0.0.1:3000/user_token', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -108,10 +100,9 @@ class LoginScreen extends React.Component {
   }
 
   render () {
-
     return (
-      <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: 20, backgroundColor: "#545454"}} behavior={'padding'}>
-        <Image source={require('../assets/logo.png')} style={{width: 200, height: 60, alignSelf:'center'}} />
+      <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: 20, backgroundColor: '#545454'}} behavior={'padding'}>
+        <Image source={require('../assets/logo.png')} style={{width: 200, height: 60, alignSelf: 'center'}} />
         <View>
           <Form
             ref="form"
@@ -122,7 +113,6 @@ class LoginScreen extends React.Component {
             <Text style={styles.buttonText}>LOGIN</Text>
           </TouchableHighlight>
         </View>
-
         <ActivityIndicator
           animating={this.state.showProgress}
           size='large'
@@ -130,28 +120,19 @@ class LoginScreen extends React.Component {
         {/* Empty View to adjust form position */}
         <View></View>
       </KeyboardAvoidingView>
-
     )
   }
 }
 
 const styles = StyleSheet.create({
-  // container: {
-  //   justifyContent: 'center',
-  //   marginTop: 50,
-  //   padding: 20,
-  //   backgroundColor: '#ffffff',
-
-  // },
   title: {
     fontSize: 30,
-    alignSelf: 'center',
-
+    alignSelf: 'center'
   },
   buttonText: {
     fontSize: 18,
     color: 'white',
-    alignSelf: 'center',
+    alignSelf: 'center'
 
   },
   button: {
@@ -165,7 +146,7 @@ const styles = StyleSheet.create({
   },
   loader: {
     marginTop: 20
-  },
+  }
 })
 
 export default LoginScreen

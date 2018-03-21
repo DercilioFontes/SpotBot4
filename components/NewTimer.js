@@ -40,7 +40,6 @@ export default class NewTimer extends React.Component {
 
 class Timer extends Component {
   componentDidMount() {
-    console.log("Timer CDM");
     this.intervalId = setInterval(this.props.listener, 250);
   }
   componentWillUnmount() {

@@ -2,7 +2,9 @@ import React from 'react'
 import { StyleSheet, Button, Text, View, Image, TouchableHighlight, ActivityIndicator, AlertIOS, AsyncStorage, TouchableOpacity, ImageBackground, Modal} from 'react-native'
 import { MapView, Notifications } from 'expo'
 import { StackNavigator, DrawerNavigator } from 'react-navigation'
-import { Ionicons, Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons'
+import HeaderButtons from 'react-navigation-header-buttons'
+import { Ionicons, Entypo, Octicons, Feather, MaterialIcons, FontAwesome, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons'
+import uuid from 'uuid/v1'
 
 // Our components
 import SignUpComponent from './components/Signup'
@@ -18,7 +20,6 @@ const typographyStyle = StyleSheet.create(typography);
 import parkingAreasDB from './db/database'
 import CancelSpot from './components/CancelSpot'
 import ActiveReservationModal from './components/ActiveReservationModal'
-
 
 // Main Screen
 class HomeScreen extends React.Component {
@@ -47,44 +48,44 @@ class HomeScreen extends React.Component {
           name: 'empty'
         },
         currentArea: {
-            title: 'Marker1',
-            parkingAreaStatus: 'full',
-            description: 'Description about spot1',
-            coordinates: {
-              latitude: 49.269966,
-              longitude: -123.251043,
-            },
-            slots: [{
-              spot_id: 1,
-              label: 'spot1',
-              occupied: true,
-              accessible: false,
-              spot_information: "this is spot 1"
-              },
-              {
-              spot_id: 1,
-              label: 'spot2',
-              occupied: true,
-              accessible: false,
-              spot_information: "this is spot 1"
-              },
-              {
-              spot_id: 1,
-              label: 'spot3',
-              occupied: true,
-              accessible: true,
-              spot_information: "this is spot 1"
-            }]
+          title: 'Marker1',
+          parkingAreaStatus: 'full',
+          description: 'Description about spot1',
+          coordinates: {
+            latitude: 49.269966,
+            longitude: -123.251043,
           },
+          slots: [{
+            spot_id: 1,
+            label: 'spot1',
+            occupied: true,
+            accessible: false,
+            spot_information: "this is spot 1"
+            },
+            {
+            spot_id: 1,
+            label: 'spot2',
+            occupied: true,
+            accessible: false,
+            spot_information: "this is spot 1"
+            },
+            {
+            spot_id: 1,
+            label: 'spot3',
+            occupied: true,
+            accessible: true,
+            spot_information: "this is spot 1"
+          }]
+        },
         parking_areas: parkingAreasDB
-        };
+      };
     }
 
   static navigationOptions = ({ navigation }) => {
-    function searchSpot() {
-      alert('uou');
+    // function searchSpot() {
+    //   alert('uou');
 
-    }
+    // }
     const params = navigation.state.params || {}
 
     return {
@@ -98,12 +99,11 @@ class HomeScreen extends React.Component {
       //     title='Filter'
       //     color="#fff"
       //   /> ),
-      headerLeft:
-      ( <Button
-          onPress={() => navigation.navigate('MyModal')}
-          title='Login'
-          color="#FFF"
-        /> )
+      headerLeft: ( 
+        <HeaderButtons IconComponent={Entypo} iconSize={26} color="#FFF">
+          <HeaderButtons.Item title="Menu" iconName="menu" onPress={() => navigation.navigate('MyModal')} />
+        </HeaderButtons>
+      )
     }
   }
 
@@ -148,26 +148,21 @@ class HomeScreen extends React.Component {
     }
   }
 
-
-
-
   transformRaw(pa) {
       return pa.parking_areas.map(raw_area => {
         return {
-              parking_area_id: raw_area.parking_area.id,
-              title: raw_area.parking_area.parking_area_name,
-              description: raw_area.parking_area.parking_area_name,
-              parkingAreaStatus:'reserved',
-              coordinates: {
-                latitude: raw_area.parking_area.latitude,
-                longitude: raw_area.parking_area.longitude,
-              },
-              slots: raw_area.spots
-
+          parking_area_id: raw_area.parking_area.id,
+          title: raw_area.parking_area.parking_area_name,
+          description: raw_area.parking_area.parking_area_name,
+          parkingAreaStatus:'reserved',
+          coordinates: {
+            latitude: raw_area.parking_area.latitude,
+            longitude: raw_area.parking_area.longitude,
+          },
+          slots: raw_area.spots
         }
     })
   }
-
 
   availability(parkingAreas) {
 
@@ -186,40 +181,38 @@ class HomeScreen extends React.Component {
     });
   }
 
-
-    componentDidMount() {
-      const that = this;
-      fetch('http://127.0.0.1:3000/')
-        .then(res => res.json())
-        .then(this.transformRaw)
-        .then(this.availability)
-        .then(newParkingStatus =>
-          {
-
-            that.setState({parking_areas: newParkingStatus})
-        })
-    }
-
-    filterAccessibility() {
-      var newParking = this.state.currentArea;
-      if(this.state.statusAccesibilityButton)
+  componentDidMount() {
+    const that = this;
+    fetch('http://127.0.0.1:3000/')
+      .then(res => res.json())
+      .then(this.transformRaw)
+      .then(this.availability)
+      .then(newParkingStatus =>
         {
-          const accessibles = this.state.currentArea.slots.filter(slot => slot.accessible === true && slot.availability === true);
 
+          that.setState({parking_areas: newParkingStatus})
+      })
+  }
+
+  filterAccessibility() {
+    var newParking = this.state.currentArea;
+    if(this.state.statusAccesibilityButton)
+      {
+        const accessibles = this.state.currentArea.slots.filter(slot => slot.accessible === true && slot.availability === true);
+
+        this.setState({
+          tempCurrentArea: this.state.currentArea,
+          currentArea: {title: this.state.currentArea.title, slots: accessibles},
+          showSlotsDetails: true,
+          statusAccesibilityButton: false
+        })
+      } else {
           this.setState({
-            tempCurrentArea: this.state.currentArea,
-            currentArea: {title: this.state.currentArea.title, slots: accessibles},
-            showSlotsDetails: true,
-            statusAccesibilityButton: false
-          })
-
-        } else {
-           this.setState({
-            currentArea: this.state.tempCurrentArea,
-            showSlotsDetails: true,
-            statusAccesibilityButton: true
-          })
-        }
+          currentArea: this.state.tempCurrentArea,
+          showSlotsDetails: true,
+          statusAccesibilityButton: true
+        })
+      }
     }
 
     homePage(newParkingArea, reserveSpot) {
@@ -244,7 +237,7 @@ class HomeScreen extends React.Component {
         cancelNotification: true
       })
 
-    }
+  }
 
     activateClick(responseData, activatedSpot) {
 
@@ -378,24 +371,23 @@ class SignUpScreen extends React.Component {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
-    // navigationOptions.headerLeft =  (
-    //   <Button
-    //     onPress={() => navigation.navigate('MyModal')}
-    //     title="<"
-    //     color="#0F303F"
-    //   /> )
-    //   navigationOptions.headerRight =  (
-    //     <Button
-    //       onPress={() => navigation.navigate('Home')}
-    //       title="X"
-    //       color="#0F303F"
-    //     /> )
+    navigationOptions.headerLeft =  ( 
+      <HeaderButtons IconComponent={SimpleLineIcons} iconSize={26} color="#545454">
+      <HeaderButtons.Item title="Home" iconName="arrow-left" onPress={() => navigation.navigate('MyModal')} />
+    </HeaderButtons>
+    )
+    navigationOptions.headerRight =  ( 
+      <HeaderButtons IconComponent={Octicons} iconSize={26} color="#545454">
+        <HeaderButtons.Item title="Home" iconName="x" onPress={() => navigation.navigate('Home')} />
+      </HeaderButtons>
+    )
+
     return {
       title: 'Sign Up',
       headerStyle: {
-        backgroundColor: navigationOptions.headerTintColor
+        backgroundColor: navigationOptions.headerTintColor,
       },
-      headerTintColor: navigationOptions.headerStyle.backgroundColor
+      headerTintColor: navigationOptions.headerStyle.backgroundColor,
       }
   }
   render() {
@@ -415,20 +407,17 @@ class LoginScreen extends React.Component {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
-    // navigationOptions.headerLeft =  (
-    //   <Button
-    //     style= {{fontSize: 1000}}
-    //     onPress={() => navigation.navigate('MyModal')}
-    //     title="<"
-    //     color="#005A5C"
-    //   /> )
-    //   navigationOptions.headerRight =  (
-    //     <Button
-    //       style= {{fontSize: 1000}}
-    //       onPress={() => navigation.navigate('Home')}
-    //       title="X"
-    //       color="#005A5C"
-    //     /> )
+    navigationOptions.headerLeft =  ( 
+      <HeaderButtons IconComponent={Octicons} iconSize={26} color="#545454">
+      <HeaderButtons.Item title="Home" iconName="chevron-left" onPress={() => navigation.navigate('MyModal')} />
+    </HeaderButtons>
+    )
+    navigationOptions.headerRight =  ( 
+      <HeaderButtons IconComponent={Octicons} iconSize={26} color="#545454">
+        <HeaderButtons.Item title="Home" iconName="x" onPress={() => navigation.navigate('Home')} />
+      </HeaderButtons>
+    )
+    
     return {
       title: 'Login',
       headerStyle: {
@@ -465,8 +454,9 @@ const MainStack = StackNavigator(
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
-        fontWeight: 'bold',
+        fontWeight: '800',
       },
+      headerBackTitle: null
     }
   }
 );
@@ -536,6 +526,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#545454'
   }
 });
+
 export default class App extends React.Component {
   render() {
     return <RootStack />;

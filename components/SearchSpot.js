@@ -15,17 +15,14 @@ export default class SearchSpot extends React.Component {
     }
   }
 
-  reserveClick(newParkingArea, reserveSpot) {
+  reserveClick (newParkingArea, reserveSpot) {
     this.setState({reserveModal: false})
-    this.props.homePage(newParkingArea, reserveSpot);
+    this.props.homePage(newParkingArea, reserveSpot)
   }
   searchSpot () {
-
-    for(const area of this.props.parkingAreas) {
-      for(const spot of area.slots) {
-        console.log("label",spot.label, this.state.searchText)
-        if(spot.label === this.state.searchText) {
-          // alert ('found')
+    for (const area of this.props.parkingAreas) {
+      for (const spot of area.slots) {
+        if (spot.label === this.state.searchText) {
           this.setState({
             reserveModal: true,
             searchText: '',
@@ -34,26 +31,17 @@ export default class SearchSpot extends React.Component {
         }
       }
     }
-    console.log('searchSpotfound', this.state.s)
-    // this.setState({
-       // this.props.parkingAreas.forEach(
-       //  parkingArea => console.log(parkingArea.slots.filter(
-       //    spot => spot.label === this.state.searchText.toLowerCase()).length);
-      // reserveModal: true,
-      // searchText: ''})
-    // alert( this.props.spots.filter(spot => spot.label === this.state.searchText.toLowerCase()).length)
   }
+
   render () {
     return (
       <View>
-
         <View style={styles.containerStyle}>
           <TextInput placeholder="Search my spot" style={styles.searchTextStyle} value={this.state.searchText} onChangeText={searchText => this.setState({searchText})} />
           <View style={styles.searchButton} >
-            <Ionicons name='md-search' onPress={this.searchSpot.bind(this)}  color='black' size={25}/>
+            <Ionicons name='md-search' onPress={this.searchSpot.bind(this)} color='black' size={25}/>
           </View>
         </View>
-
 
         <Modal
           isVisible={this.state.reserveModal}
@@ -68,6 +56,7 @@ export default class SearchSpot extends React.Component {
     )
   }
 }
+
 const styles = StyleSheet.create({
   containerStyle: {
     flexDirection: 'row',
@@ -86,7 +75,5 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   searchButton: {
-
   }
 })
-

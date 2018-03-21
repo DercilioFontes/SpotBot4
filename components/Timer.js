@@ -22,9 +22,7 @@ export default class NewTimer extends React.Component {
     });
   };
 
-
   cancelSpot() {
-    console.log('reservespot',this.props)
     fetch(`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
         method: "POST",
         headers: {
@@ -39,7 +37,6 @@ export default class NewTimer extends React.Component {
         })
       })
       .then((response) => {
-        // console.log("reserve response from database",response);
       if(response.status >= 200 && response.status < 300) {
         return response
       }
@@ -52,11 +49,7 @@ export default class NewTimer extends React.Component {
       return response.json()
     })
     .then((responseData) => {
-
        this.props.cancelClick(responseData, this.props.spot);
-
-
-
     })
     .catch((err) => {
       this.setState(err)
@@ -64,18 +57,17 @@ export default class NewTimer extends React.Component {
     })
     .finally(() => {
       //this.setState({showProgress: false})
-
     })
 
   }
   render() {
     const clockSection = this.state.showClock && (
       <Clock countdown={this.state.duration} />
-    );
+    )
     const countdownTimer = this.state.duration > 0 && (
       <Timer listener={this.updateCountdown} />
-    );
-    console.log('props in timer component', this.props)
+    )
+
     return (
       <View>
       {this.props.showTimer &&
@@ -96,7 +88,6 @@ export default class NewTimer extends React.Component {
 
 class Timer extends Component {
   componentDidMount() {
-    console.log("Timer CDM");
     this.intervalId = setInterval(this.props.listener, 250);
   }
   componentWillUnmount() {

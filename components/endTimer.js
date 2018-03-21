@@ -5,7 +5,7 @@ import {MaterialIcons} from '@expo/vector-icons'
 function Clock({ countdown }) {
   return (
     <View>
-
+    <Text style={styles.arrival}>Charging time remaining</Text>
     {countdown > 0 &&
       <Text style={styles.timer}> {'0' + Math.floor(countdown / 60)}:
         {(countdown % 60).toString().padStart(2, "0")}
@@ -63,7 +63,7 @@ export default class EndTimer extends React.Component {
       //this.setState({showProgress: false})
     })
   }
-  
+
   render() {
     const clockSection = this.state.showClock && (
       <Clock countdown={this.state.duration} />
@@ -105,12 +105,13 @@ class Timer extends Component {
 const styles = StyleSheet.create({
   timer: {
     textAlign: 'center',
-    fontSize: 50,
+    fontSize: 45,
     color: 'white'
   },
   arrival:{
     color: 'white',
     textAlign: 'center',
-    fontSize: 30
+    fontSize: 20,
+
   }
   })

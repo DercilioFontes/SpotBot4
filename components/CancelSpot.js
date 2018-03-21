@@ -86,13 +86,13 @@ const styles = StyleSheet.create({
     width: 100,
     backgroundColor: '#15AEBC',
     borderStyle: 'solid',
-    height: 50
+    height: 45
 
   },
   image: {
     height: 60,
     opacity: 0.3,
-    width: 370
+    width: 380
   },
   text: {
     fontSize: 20,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     width: 100,
     backgroundColor: 'white',
     borderStyle: 'solid',
-    height: 50
+    height: 45
 
   }
 })

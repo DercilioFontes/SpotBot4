@@ -12,21 +12,21 @@ let parkingAreas = [
       label: 'spot1',
       occupied: true,
       accessible: false,
-      spot_information: "this is spot 1"
-      },
-      {
+      spot_information: 'this is spot 1'
+    },
+    {
       spot_id: 1,
       label: 'spot2',
       occupied: false,
       accessible: true,
-      spot_information: "this is spot 1"
-      },
-      {
+      spot_information: 'this is spot 1'
+    },
+    {
       spot_id: 1,
       label: 'spot3',
       occupied: true,
       accessible: false,
-      spot_information: "this is spot 1"
+      spot_information: 'this is spot 1'
     }]
   },
   {
@@ -42,21 +42,21 @@ let parkingAreas = [
       label: 'alpha',
       occupied: true,
       accessible: true,
-      spot_information: "this is spot 1"
-      },
-      {
+      spot_information: 'this is spot 1'
+    },
+    {
       spot_id: 1,
       label: 'bravo',
       occupied: true,
       accessible: false,
-      spot_information: "this is spot 1"
-      },
-      {
+      spot_information: 'this is spot 1'
+    },
+    {
       spot_id: 1,
       label: 'charlie',
       occupied: true,
       accessible: false,
-      spot_information: "this is spot 1"
+      spot_information: 'this is spot 1'
     }]
   },
   {
@@ -72,50 +72,50 @@ let parkingAreas = [
       label: 'raspberry',
       occupied: true,
       accessible: false,
-      spot_information: "this is spot 1"
-      },
-      {
+      spot_information: 'this is spot 1'
+    },
+    {
       spot_id: 1,
       label: 'kiwi',
       occupied: true,
       accessible: true,
-      spot_information: "this is spot 1"
-      },
-      {
+      spot_information: 'this is spot 1'
+    },
+    {
       spot_id: 1,
       label: 'raspberry',
       occupied: true,
       accessible: false,
-      spot_information: "this is spot 1"
-      },
-      {
+      spot_information: 'this is spot 1'
+    },
+    {
       spot_id: 1,
       label: 'kiwi',
       occupied: true,
       accessible: true,
-      spot_information: "this is spot 1"
-      },
-      {
+      spot_information: 'this is spot 1'
+    },
+    {
       spot_id: 1,
       label: 'kiwi',
       occupied: true,
       accessible: true,
-      spot_information: "this is spot 1"
-      },
-      {
+      spot_information: 'this is spot 1'
+    },
+    {
       spot_id: 1,
       label: 'raspberry',
       occupied: true,
       accessible: false,
-      spot_information: "this is spot 1"
-      },
-      {
+      spot_information: 'this is spot 1'
+    },
+    {
       spot_id: 1,
       label: 'kiwi',
       occupied: true,
       accessible: true,
-      spot_information: "this is spot 1"
+      spot_information: 'this is spot 1'
     }]
   }]
 
-  export default parkingAreas
+export default parkingAreas

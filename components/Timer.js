@@ -5,8 +5,9 @@ import {MaterialIcons} from '@expo/vector-icons'
 function Clock({ countdown }) {
   return (
     <View>
+      <Text style={styles.arrival}>Arrival time remaining</Text>
     {countdown > 0 &&
-      <Text> {Math.floor(countdown / 60)}:
+      <Text style={styles.timer}> {'0' + Math.floor(countdown / 60)}:
         {(countdown % 60).toString().padStart(2, "0")}
       </Text>
     }
@@ -21,7 +22,7 @@ export default class NewTimer extends React.Component {
     duration: 20 };
   updateCountdown = () => {
     this.setState({
-      duration: Math.floor(20 - (new Date() - this.state.start) / 1000)
+      duration: Math.floor(90 - (new Date() - this.state.start) / 1000)
     });
   };
 
@@ -61,8 +62,8 @@ export default class NewTimer extends React.Component {
     .finally(() => {
       //this.setState({showProgress: false})
     })
-
   }
+  
   render() {
     const clockSection = this.state.showClock && (
       <Clock countdown={this.state.duration} />
@@ -100,3 +101,15 @@ class Timer extends Component {
     return false;
   }
 }
+const styles = StyleSheet.create({
+  timer: {
+    textAlign: 'center',
+    fontSize: 30,
+    color: 'white'
+  },
+  arrival:{
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 20
+  }
+  })

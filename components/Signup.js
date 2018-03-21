@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, Button, Text, View, Image, TouchableHighlight,
   ActivityIndicator, AlertIOS, AsyncStorage, KeyboardAvoidingView } from 'react-native'
 import { StackNavigator } from 'react-navigation'
-// import ReactOnRails from 'react-on-rails'
 import { Ionicons, Feather } from '@expo/vector-icons'
 
 // to use in the forms
@@ -71,7 +70,6 @@ class SignUpScreen extends React.Component {
 
   _userSignup () {
     let value = this.refs.form.getValue()
-
     if (value) {
       // Active ActivityIndicator
       this.setState({showProgress: true})
@@ -108,7 +106,7 @@ class SignUpScreen extends React.Component {
         })
         .then((responseData) => {
           // Make a POST request with email and password to set user Token
-          fetch ('http://127.0.0.1:3000/user_token', {
+          fetch('http://127.0.0.1:3000/user_token', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -148,13 +146,20 @@ class SignUpScreen extends React.Component {
         })
         .finally(() => {
           this.setState({showProgress: false})
-          this.props.navigation.goBack()
+          console.log(this.props.navigation.goBack())
         })
     }
   }
 
   render () {
     const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
+        backgroundColor: '#545454'
+      },
       buttonText: {
         fontSize: 20,
         color: 'white',
@@ -175,8 +180,8 @@ class SignUpScreen extends React.Component {
     })
 
     return (
-      <KeyboardAvoidingView style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: 20, backgroundColor: '#545454' }} behavior={'padding'}>
-        <Image source={require('../assets/logo.png')} style={{ width: 200, height: 60, alignSelf: 'center' }} />
+      <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
+        <Image source={require('../assets/logo.png')} style={{width: 200, height: 60, alignSelf: 'center'}} />
         <Form
           ref="form"
           type={User}

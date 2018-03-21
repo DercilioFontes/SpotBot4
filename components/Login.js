@@ -101,7 +101,7 @@ class LoginScreen extends React.Component {
 
   render () {
     return (
-      <KeyboardAvoidingView style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: 20, backgroundColor: '#545454'}} behavior={'padding'}>
+      <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
         <Image source={require('../assets/logo.png')} style={{width: 200, height: 60, alignSelf: 'center'}} />
         <View>
           <Form
@@ -125,6 +125,13 @@ class LoginScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    backgroundColor: '#545454'
+  },
   title: {
     fontSize: 30,
     alignSelf: 'center'
@@ -133,7 +140,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
     alignSelf: 'center'
-
   },
   button: {
     height: 36,
@@ -142,7 +148,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignSelf: 'stretch',
     justifyContent: 'center',
-    marginTop: 40
+    marginTop: 30
   },
   loader: {
     marginTop: 20

@@ -5,23 +5,20 @@ import {FontAwesome} from '@expo/vector-icons'
 import Timer from './Timer'
 
 export default class ReserveSpot extends React.Component {
-
-
-  cancelSpot() {
+  cancelSpot () {
     fetch(`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          reservation: {
-            user_id: this.props.user_id,
-            reservation_status: 'empty'
-          }
-        })
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        reservation: {
+          user_id: this.props.user_id,
+          reservation_status: 'empty'
+        }
       })
-
+    })
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
           return response
@@ -52,13 +49,21 @@ export default class ReserveSpot extends React.Component {
 
   render () {
     return (
-      <View>
+      <View style={{flex: 1, flexDirection: 'column'}}>
+      <View style={styles.reserveModal}>
         <Image style={styles.image} source={require('../assets/vancouver.jpg')} />
         <Text style={styles.text}>{this.props.spot.label}</Text>
         <Timer style={styles.text} cancelClick={this.props.cancelClick} spot={this.props.spot} showTimer={true} />
         <Text style={styles.information}>{this.props.spot.spot_information}</Text>
-        <TouchableOpacity style={styles.reserveButton} onPress={this.cancelSpot.bind(this)}><Text style={styles.reserveText}>Cancel</Text></TouchableOpacity>
-        <TouchableOpacity onPress={this.arrivalButton.bind(this)}><Text style={styles.reserveText}>Start Session</Text></TouchableOpacity>
+        </View>
+        <View style={{backgroundColor: 'white', flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row'}}>
+          <TouchableOpacity style={styles.reserveButton} onPress={this.arrivalButton.bind(this)}>
+            <Text style={styles.reserveText}>Start</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.cancel} onPress={this.cancelSpot.bind(this)}>
+            <Text style={styles.cancelText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -66,19 +71,23 @@ export default class ReserveSpot extends React.Component {
 
 const styles = StyleSheet.create({
   reserveModal: {
-    backgroundColor: '#fff'
+   flexDirection: 'column',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingBottom: 10,
   },
   reserveButton: {
     alignSelf: 'center',
     borderWidth: 2,
     borderColor: 'white',
     padding: 10,
-    paddingHorizontal: 30,
+    paddingHorizontal: 10,
     paddingVertical: 10,
-    width: 200,
+    width: 100,
     backgroundColor: '#15AEBC',
     borderStyle: 'solid',
-    margin: 15
+    height: 50
+
   },
   image: {
     height: 60,
@@ -101,5 +110,22 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     alignSelf: 'center'
+  },
+  cancelText: {
+    color: '#15AEBC',
+    fontWeight: 'bold',
+    alignSelf: 'center'
+  },
+  cancel: {
+    borderWidth: 2,
+    borderColor: '#15AEBC',
+    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    width: 100,
+    backgroundColor: 'white',
+    borderStyle: 'solid',
+    height: 50
+
   }
 })

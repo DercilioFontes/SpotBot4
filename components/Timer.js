@@ -52,8 +52,10 @@ export default class NewTimer extends React.Component {
       return response.json()
     })
     .then((responseData) => {
-      console.log("cancel spot",  responseData)
+
        this.props.cancelClick(responseData, this.props.spot);
+
+
 
     })
     .catch((err) => {
@@ -73,6 +75,7 @@ export default class NewTimer extends React.Component {
     const countdownTimer = this.state.duration > 0 && (
       <Timer listener={this.updateCountdown} />
     );
+    console.log('props in timer component', this.props)
     return (
       <View>
       {this.props.showTimer &&

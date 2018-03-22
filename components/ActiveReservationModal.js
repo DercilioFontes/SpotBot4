@@ -6,7 +6,7 @@ import EndTimer from './endTimer'
 export default class ActiveReservationModal extends React.Component {
 
   endSession() {
-     fetch(`http://127.0.0.1:3000/spots/${this.props.activatedSpot.id}/reservations`, {
+     fetch(`https://spot-bot-server.herokuapp.com/spots/${this.props.activatedSpot.id}/reservations`, {
         method: "POST",
         headers: {
           'Accept': 'application/json',

@@ -5,7 +5,7 @@ import {FontAwesome, Ionicons} from '@expo/vector-icons'
 
 export default class ReserveSpot extends React.Component {
   reserveSpot () {
-    fetch (`http://127.0.0.1:3000/spots/${this.props.spot.id}/reservations`, {
+    fetch (`https://spot-bot-server.herokuapp.com/spots/${this.props.spot.id}/reservations`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

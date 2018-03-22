@@ -185,7 +185,7 @@ class HomeScreen extends React.Component {
 
   componentDidMount() {
     const that = this;
-    fetch('http://127.0.0.1:3000/')
+    fetch('https://spot-bot-server.herokuapp.com/')
       .then(res => res.json())
       .then(this.transformRaw)
       .then(this.availability)

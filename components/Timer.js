@@ -7,7 +7,7 @@ function Clock({ countdown }) {
     <View>
       <Text style={styles.arrival}>Arrival time remaining</Text>
     {countdown > 0 &&
-      <Text style={styles.timer}> {'0' + Math.floor(countdown / 60)}:
+      <Text style={styles.timer}> {Math.floor(countdown / 60)}:
         {(countdown % 60).toString().padStart(2, "0")}
       </Text>
     }
@@ -19,10 +19,10 @@ export default class NewTimer extends React.Component {
   state = {
     showClock: true,
     start: new Date(),
-    duration: 20 };
+    duration: 1800 };
   updateCountdown = () => {
     this.setState({
-      duration: Math.floor(90 - (new Date() - this.state.start) / 1000)
+      duration: Math.floor(1800 - (new Date() - this.state.start) / 1000)
     });
   };
 

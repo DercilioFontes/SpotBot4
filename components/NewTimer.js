@@ -16,7 +16,7 @@ export default class NewTimer extends React.Component {
   state = { showClock: true, start: new Date(), duration: 10 };
   updateCountdown = () => {
     this.setState({
-      duration: Math.floor(10 - (new Date() - this.state.start) / 1000)
+      duration: Math.floor(1800 - (new Date() - this.state.start) / 1000)
     });
   };
   render() {

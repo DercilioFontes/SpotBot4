@@ -33,6 +33,7 @@ export default class MapHome extends React.Component {
       <MapView
         style={styles.map}
         initialRegion={this.props.mapRegion}
+        mapType={'hybrid'}
       >
       {this.props.parking_areas.map((marker, index) => (
         <MapView.Marker key={index}

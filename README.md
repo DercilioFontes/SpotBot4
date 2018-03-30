@@ -5,7 +5,7 @@ A reservation app for electric vehicle charging stations at UBC.
 
 ## User Action Flow
 
-![Action GIF](https://github.com/DercilioFontes/SpotBot4/blob/master/docs/driven-demo.gif =250x500)
+![Action GIF](https://raw.githubusercontent.com/DercilioFontes/SpotBot4/master/docs/driven-demo.gif)
 
 Users can view all parking lots with stations in the map view. Availability status is indicated via colour. Red means all stations at the given location are full, while green indicates atleast one space is available. 
 

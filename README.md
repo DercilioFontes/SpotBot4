@@ -31,7 +31,9 @@ Download and set up Expo Simulator [here](https://docs.expo.io/versions/latest/i
 
 Alternatively, download the Expo app on your phone.
 
-Before setting up this client side of the app, got to [this repo](https://github.com/pabloaredu/SpotBotServer) and follow the installation instructions. 
+*Running this app also requires you to install and run a server side app.*
+
+Before setting up this client side of the app, go to [this repo and follow the installation instructions to install the server side of the app.](https://github.com/pabloaredu/SpotBotServer) 
 
 ### Prerequisites
 

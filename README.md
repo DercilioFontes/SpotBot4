@@ -1,8 +1,11 @@
 # Driven
 A reservation app for electric vehicle charging stations at UBC. 
 
+<img src="https://github.com/DercilioFontes/SpotBot4/blob/master/docs/login-signup-screen.png" alt="HomePage" style="width: 125px; height: 250px;"/>
 
+## User Action Flow
 
+![Action GIF](https://github.com/DercilioFontes/SpotBot4/blob/master/docs/driven-demo.gif =250x500)
 
 Users can view all parking lots with stations in the map view. Availability status is indicated via colour. Red means all stations at the given location are full, while green indicates atleast one space is available. 
 
@@ -24,28 +27,23 @@ Once the session is ended by the user, the user has 15 minutes to move their car
 
 ## Getting Started
 
-Download and set up Expo Simulator 
+Download and set up Expo Simulator [here](https://docs.expo.io/versions/latest/index.html) or a simulator of your choice.
+
+Alternatively, download the Expo app on your phone.
+
+Before setting up this client side of the app, got to [this repo](https://github.com/pabloaredu/SpotBotServer) and follow the installation instructions. 
 
 ### Prerequisites
 
+* Nodejs to run app client side
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
+Clone this and navigate to the project in your terminal. Run npm install. 
 
-Say what the step will be
+Next, navigate to your copy of the spotbot server and run it on local host 3000. 
 
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+Run npm start in the client side terminal, then scan the QR with your phone or follow the terminal prompts to open your simulator. 
 
 ## Trouble Shooting
 
@@ -56,28 +54,24 @@ If you're not able to scan the QR code, make sure your phone's camera is focusin
 If this causes problems for you, you may want to try changing your terminal's color theme to have more contrast, or running Create React Native App from a different terminal. You can also manually enter the URL printed by the packager script in the Expo app's search bar to load it manually.
 
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [React Native](http://www.reactnative.com/)
+* [Node js](https://nodejs.org/en/)
+* [Expo](https://expo.io/)
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* [Julia Bartley](https://github.com/bartleyjulia)
+* [Pablo Arellano](https://github.com/pabloaredu)
+* [Dercilio Fontes](https://github.com/DercilioFontes)
+* [Prerana Shrestha](https://github.com/PreranaShrestha)
+ 
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
-
+Thank you to all Lighthouse Staff and Mentors who guided our completion of this project! Also to our families who supported us while we spent 12+ hours a day at Ligthhouse during our Web Dev course. 
 
 
 

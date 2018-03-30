@@ -5,7 +5,7 @@ A reservation app for electric vehicle charging stations at UBC.
 
 ## User Action Flow
 
-![Action GIF](https://raw.githubusercontent.com/DercilioFontes/SpotBot4/master/docs/driven-demo.gif)
+![Action GIF](https://media.giphy.com/media/ygBGIOG5ISw4TPsO72/giphy.gif)
 
 Users can view all parking lots with stations in the map view. Availability status is indicated via colour. Red means all stations at the given location are full, while green indicates atleast one space is available. 
 
@@ -72,7 +72,3 @@ If this causes problems for you, you may want to try changing your terminal's co
 ## Acknowledgments
 
 Thank you to all Lighthouse Staff and Mentors who guided our completion of this project! Also to our families who supported us while we spent 12+ hours a day at Ligthhouse during our Web Dev course. 
-
-
-
-

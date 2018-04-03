@@ -3,7 +3,7 @@ A reservation app for electric vehicle charging stations at UBC.
 
 
 <p align="center">
-  <img src=">https://raw.githubusercontent.com/DercilioFontes/SpotBot4/master/docs/login-signup-screen.png"/>
+  <img src="https://raw.githubusercontent.com/DercilioFontes/SpotBot4/master/docs/login-signup-screen.png"/>
 </p
 
 ## User Action Flow
